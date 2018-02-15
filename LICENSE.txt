@@ -1,0 +1,11 @@
+Copyright (C) NyanCode - All Rights Reserved.
+Unauthorized copying of this file, via any medium is strictly prohibited.
+Proprietary and confidential.
+
+Written by
+Kavin Ruengprateepsang,
+Kunanon Srisuntiroj,
+Nathan Yiangsupapaanontr
+Pornprom Kiawjak,
+Thitipat Worrarat,
+September 1943
