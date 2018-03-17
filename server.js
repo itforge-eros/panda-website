@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+const env = process.env.NODE_ENV || 'dev';
+const port = (env == 'production' ? 80 : 3000);
 
 // Set view location
 app.set('views', './views');
@@ -14,4 +16,4 @@ app.get('/', function(req, res) {
 });
 
 // Start the server
-app.listen(3000, () => console.log('Listening on port 3000\nPress Ctrl+C to stop'));
+app.listen(port, () => console.log('Listening on port 3000\nPress Ctrl+C to stop'));
