@@ -1,0 +1,23 @@
+{
+  "name": "panda-website",
+  "version": "1.0.0",
+  "description": "Panda website",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itforge-eros/panda-website.git"
+  },
+  "author": "",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "bugs": {
+    "url": "https://github.com/itforge-eros/panda-website/issues"
+  },
+  "homepage": "https://github.com/itforge-eros/panda-website#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "semantic-ui": "^2.3.0"
+  }
+}
