@@ -1,10 +1,38 @@
 html
 	head
 		title= title
-		link(rel='stylesheet' href='public/styles/normalize.css')
-		link(rel='stylesheet' href='public/styles/style.css')
-		link(rel='stylesheet' href='public/styles/fontawesome.min.css')
+		include parts/stylesheet
 	body.search-page
 		include parts/nav
 		div.content
-			h1.page-title ค้นหาสถานที่
+			div.container.steep
+				h1.page-title.text-center ค้นหาสถานที่
+				div.search-box
+					div.row.flex
+						div.input-with-icon.inp-flex
+							i.fas.fa-building
+							input(type="text", placeholder="M23 IT")
+						div.input-with-icon.inp-date
+							i.fas.fa-calendar-alt
+							input(type="text", placeholder="date")
+					div.row.flex#search-advanced
+						div.input-with-icon.inp-flex
+							i.fas.fa-building
+							div.select
+								select(aria-label="Choose a faculty")
+									option(value="1") Option 1
+									option(value="2") Option 2
+									option(value="3") Option 3
+						div.input-with-icon.inp-28
+							i.fas.fa-building
+							input(type="text", placeholder="room")
+						div.input-with-icon.inp-28
+							i.fas.fa-building
+							input(type="text", placeholder="seat")
+					div.row.text-center.marg-b-1
+						button ซ่อนตัวเลือก
+					div.row.text-center
+						button.raised
+							i.fas.fa-search
+							|  ค้นหา
+			img#search-house(src="public/img/search-house.svg")

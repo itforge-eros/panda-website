@@ -1,0 +1,29 @@
+// Component: Input
+
+input, .select select
+	display: inline-block
+	border: 2px solid #BDBDBD
+	background-color: #FFF
+	border-radius: 10px
+	padding: 10px 15px
+	line-height: 1.4em
+	&:focus
+		border-color: $color-primary
+.input-with-icon
+	display: inline-block
+	position: relative
+	i
+		position: absolute
+		top: 17px
+		left: 17px
+		z-index: 1
+	input, .select select
+		width: 100%
+		text-indent: 30px
+		&::-webkit-input-placeholder, &::-moz-placeholder, &:-ms-input-placeholder
+			line-height: 1.4em
+		&:disabled
+			border-color: #E5E5E5
+			color: #E5E5E5
+.select
+	width: 100%

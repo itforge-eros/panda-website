@@ -20,6 +20,7 @@
   padding-left: 1.5rem;
   color: #555;
   cursor: pointer;
+  line-height: 1.5em
 }
 .control input {
   position: absolute;
@@ -151,17 +152,6 @@
   background-color: #ddd;
 }
 */
-
-/* Focus */
-.select select:focus {
-  box-shadow: 0 0 0 .075rem #fff, 0 0 0 .2rem #0074d9;
-}
-
-/* Active/open */
-.select select:active {
-  color: #fff;
-  background-color: #0074d9;
-}
 
 /* Hide the arrow in IE10 and up */
 .select select::-ms-expand {
