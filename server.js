@@ -10,9 +10,12 @@ app.set('view engine', 'pug');
 // Set publicly-accessible path
 app.use('/public', express.static(__dirname + '/public'));
 
+// Data
+let searchPageData = {title: 'Search', user: 'Nathan', isApprover: true, isAdmin: true};
+
 // Routes
 app.get('/', function(req, res) {
-	res.render('index', {title: 'Hello'});
+	res.render('index', searchPageData);
 });
 
 // Start the server
