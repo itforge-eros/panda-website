@@ -38,9 +38,19 @@ html
 							button(v-on:click="toggleAdvanced()")
 								i.fas.fa-xs.fa-sliders-h
 								|  {{ showAdvanced ? 'ซ่อน' : 'แสดง' }}ตัวเลือก
-						div.row.text-center
+						div.row.text-center.marg-b-1
 							button.raised(@click="doSearch()")
 								i.fas.fa-search
 								|  ค้นหา
 				img#search-house(src="public/img/search-house.svg")
+				div.container.steep#search-results(v-if="!firstSearch")
+					each i in [1,2,3,4]
+						a.card.hoverable.search-result-card(href="#")
+							h1.result-title M23
+							div.result-time 2 hrs max available
+							p คณะเทคโนโลยีสารสนเทศ
+							i.fas.fa-users
+							|  20
+							i.fas.fa-volume-down
+							i.fas.fa-desktop
 	script(src="public/scripts/search-page.js")

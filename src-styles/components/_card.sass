@@ -1,0 +1,32 @@
+// Component: Card
+
+.card
+	display: block
+	position: relative
+	padding: 20px
+	background-color: #FFF
+	border-radius: 6px
+	box-shadow: $shadow-card
+	&.hoverable
+		transition: box-shadow .1s
+		&:hover
+			box-shadow: $shadow-card-hover
+	&.search-result-card
+		margin-bottom: 1em
+		&:last-of-type
+			margin-bottom: 3em
+		h1.result-title
+			font-size: 1.25em
+			margin-top: 0
+			margin-bottom: 5px
+		p
+			margin-top: 0
+			margin-bottom: 6px
+		.result-time
+			position: absolute
+			top: 20px
+			right: 20px
+
+a.card
+	text-decoration: none
+	color: inherit
