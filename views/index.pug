@@ -1,6 +1,6 @@
 html
 	head
-		title= title
+		title= session.pageTitle
 		include parts/stylesheet
 		include parts/scripts
 	body.search-page
@@ -13,7 +13,7 @@ html
 						div.row.flex
 							div.input-with-icon.inp-flex
 								i.fas.fa-building
-								input(type="text", placeholder="M23 IT", name="s-quick")
+								input(type="text", placeholder="M23 IT", name="s-quick", v-model="s_quick")
 							div.input-with-icon.inp-date
 								i.fas.fa-calendar-alt
 								input(type="text", placeholder="date", name="s-date")
@@ -34,11 +34,11 @@ html
 						div.row.text-center.marg-b-1#labels(v-show="!showAdvanced")
 							div.marg-b-1 ลองคลิกตัวอย่างเหล่านี้ <i class="fas fa-hand-point-down"></i>
 							ul.label-list
-								li#tryLabel-1 M03 IT
-								li#tryLabel-1 M03 IT
-								li#tryLabel-1 M03 IT
+								li(v-for="sample in trySamples" @click="s_quick = sample") {{ sample }}
 						div.row.text-center.marg-b-1
-							button(v-on:click="showAdvanced = !showAdvanced") {{ showAdvanced ? 'ซ่อน' : 'แสดง' }}ตัวเลือก
+							button(v-on:click="showAdvanced = !showAdvanced")
+								i.fas.fa-xs.fa-sliders-h
+								|  {{ showAdvanced ? 'ซ่อน' : 'แสดง' }}ตัวเลือก
 						div.row.text-center
 							button.raised
 								i.fas.fa-search

@@ -3,20 +3,23 @@ nav
 	ul.menu
 		li
 			a.icon-link(href="#")
-				<i class="fas fa-search"></i>
-		if isAdmin
+				i.fas.fa-search
+		if user.isAdmin
 			li
 				a.icon-link(href="#")
-					<i class="fas fa-building"></i>
+					i.fas.fa-building
 			li
 				a.icon-link(href="#")
-					<i class="fas fa-users"></i>
-		if isApprover
+					i.fas.fa-users
+		if user.isApprover
 			li
 				a.icon-link(href="#")
-					<i class="fas fa-clipboard-check"></i>
+					i.fas.fa-clipboard-check
 		li
 			a.icon-link(href="#")
-				<i class="fas fa-book"></i>
-		a.sign-out(href="out")= user + ' '
-			i.fas.fa-times-circle
+				i.fas.fa-book
+		a.sign-out(href=session.authenUrl)= (session.currentUser ? session.currentUser : 'ลงชื่อเข้าใช้') + ' '
+			if session.currentUser
+				i.fas.fa-times-circle
+			else
+				i.fas.fa-sign-in-alt

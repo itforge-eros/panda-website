@@ -1,7 +1,10 @@
+const trySamples = ["M03 IT", "Auditorium", "อาคารเรียนรวม"];
+
 var app = new Vue({
-	el: '#app',
+	el: "#app",
 	data: {
-		msg: 'Hello',
-		showAdvanced: false
+		s_quick: "",
+		showAdvanced: false,
+		trySamples: trySamples
 	}
-})
+});
