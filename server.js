@@ -11,7 +11,7 @@ app.set('view engine', 'pug');
 app.use('/public', express.static(__dirname + '/public'));
 
 // Data
-let searchPageData = {title: 'Search', user: 'Nathan', isApprover: true, isAdmin: true};
+let searchPageData = {env: env, title: 'Search', user: 'Nathan', isApprover: true, isAdmin: true};
 
 // Routes
 app.get('/', function(req, res) {

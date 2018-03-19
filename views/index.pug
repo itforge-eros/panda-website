@@ -2,43 +2,46 @@ html
 	head
 		title= title
 		include parts/stylesheet
+		include parts/scripts
 	body.search-page
 		include parts/nav
-		div.content
-			div.container.steep
-				h1.page-title.text-center ค้นหาสถานที่
-				div.search-box
-					div.row.flex
-						div.input-with-icon.inp-flex
-							i.fas.fa-building
-							input(type="text", placeholder="M23 IT", name="s-quick")
-						div.input-with-icon.inp-date
-							i.fas.fa-calendar-alt
-							input(type="text", placeholder="date", name="s-date")
-					div.row.flex#search-advanced
-						div.input-with-icon.inp-flex
-							i.fas.fa-map-marker
-							div.select
-								select(aria-label="Choose a faculty", name="s-faculty")
-									option(value="1") คณะเทคโนโลยีสารสนเทศ
-									option(value="2") คณะเทคโนโลยีสารสนเทศ
-									option(value="3") คณะเทคโนโลยีสารสนเทศ
-						div.input-with-icon.inp-25
-							i.fas.fa-hashtag
-							input(type="text", placeholder="room", name="s-room")
-						div.input-with-icon.inp-25
-							i.fas.fa-users
-							input(type="text", placeholder="seats", name="s-seats")
-					div.row.text-center.marg-b-1#labels
-						div.marg-b-1 ลองคลิกตัวอย่างเหล่านี้ <i class="fas fa-hand-point-down"></i>
-						ul.label-list
-							li#tryLabel-1 M03 IT
-							li#tryLabel-1 M03 IT
-							li#tryLabel-1 M03 IT
-					div.row.text-center.marg-b-1
-						button ซ่อนตัวเลือก
-					div.row.text-center
-						button.raised
-							i.fas.fa-search
-							|  ค้นหา
-			img#search-house(src="public/img/search-house.svg")
+		div#app
+			div.content
+				div.container.steep
+					h1.page-title.text-center ค้นหาสถานที่
+					div.search-box
+						div.row.flex
+							div.input-with-icon.inp-flex
+								i.fas.fa-building
+								input(type="text", placeholder="M23 IT", name="s-quick")
+							div.input-with-icon.inp-date
+								i.fas.fa-calendar-alt
+								input(type="text", placeholder="date", name="s-date")
+						div.row.flex#search-advanced(v-if="showAdvanced")
+							div.input-with-icon.inp-flex
+								i.fas.fa-map-marker
+								div.select
+									select(aria-label="Choose a faculty", name="s-faculty")
+										option(value="1") คณะเทคโนโลยีสารสนเทศ
+										option(value="2") คณะเทคโนโลยีสารสนเทศ
+										option(value="3") คณะเทคโนโลยีสารสนเทศ
+							div.input-with-icon.inp-25
+								i.fas.fa-hashtag
+								input(type="text", placeholder="room", name="s-room")
+							div.input-with-icon.inp-25
+								i.fas.fa-users
+								input(type="text", placeholder="seats", name="s-seats")
+						div.row.text-center.marg-b-1#labels(v-show="!showAdvanced")
+							div.marg-b-1 ลองคลิกตัวอย่างเหล่านี้ <i class="fas fa-hand-point-down"></i>
+							ul.label-list
+								li#tryLabel-1 M03 IT
+								li#tryLabel-1 M03 IT
+								li#tryLabel-1 M03 IT
+						div.row.text-center.marg-b-1
+							button(v-on:click="showAdvanced = !showAdvanced") {{ showAdvanced ? 'ซ่อน' : 'แสดง' }}ตัวเลือก
+						div.row.text-center
+							button.raised
+								i.fas.fa-search
+								|  ค้นหา
+				img#search-house(src="public/img/search-house.svg")
+	script(src="public/scripts/search-page.js")
