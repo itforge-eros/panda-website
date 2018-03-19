@@ -18,10 +18,16 @@ let session = {
 	authenUrl: "logout"
 };
 let user = { isAdmin: true, isApprover: true };
+let faculty = [
+	{ name: "คณะเทคโนโลยีสารสนเทศ", slug: "fac-it" },
+	{ name: "คณะเทคโนโลยีการเกษตร", slug: "fac-agro" },
+	{ name: "คณะสถาปัตยกรรมศาสตร์", slug: "fac-arch" },
+	{ name: "คณะวิทยาศาสตร์", slug: "fac-sci" }
+];
 
 // Routes
 app.get("/", function(req, res) {
-	res.render("index", { session: session, user: user });
+	res.render("index", { session: session, user: user, faculty: faculty });
 });
 app.get("/login", function(req, res) {
 	session.currentUser = "Nathan";

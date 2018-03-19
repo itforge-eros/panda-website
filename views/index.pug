@@ -8,7 +8,7 @@ html
 		div#app
 			div.content
 				div.container.steep
-					h1.page-title.text-center ค้นหาสถานที่
+					h1.page-title.text-center#page-title ค้นหาสถานที่
 					div.search-box
 						div.row.flex
 							div.input-with-icon.inp-flex
@@ -16,31 +16,30 @@ html
 								input(type="text", placeholder="M23 IT", name="s-quick", v-model="s_quick")
 							div.input-with-icon.inp-date
 								i.fas.fa-calendar-alt
-								input(type="text", placeholder="date", name="s-date")
+								input(type="text", placeholder="date", name="s-date", v-model="s_date")
 						div.row.flex#search-advanced(v-if="showAdvanced")
 							div.input-with-icon.inp-flex
 								i.fas.fa-map-marker
 								div.select
-									select(aria-label="Choose a faculty", name="s-faculty")
-										option(value="1") คณะเทคโนโลยีสารสนเทศ
-										option(value="2") คณะเทคโนโลยีสารสนเทศ
-										option(value="3") คณะเทคโนโลยีสารสนเทศ
+									select(aria-label="Choose a faculty", name="s-faculty", v-model="s_faculty")
+										each fac in faculty
+											option(value=fac.slug)= fac.name
 							div.input-with-icon.inp-25
 								i.fas.fa-hashtag
-								input(type="text", placeholder="room", name="s-room")
+								input(type="text", placeholder="room", name="s-room", v-model="s_room")
 							div.input-with-icon.inp-25
 								i.fas.fa-users
-								input(type="text", placeholder="seats", name="s-seats")
+								input(type="text", placeholder="seats", name="s-seats", v-model="s_seats")
 						div.row.text-center.marg-b-1#labels(v-show="!showAdvanced")
 							div.marg-b-1 ลองคลิกตัวอย่างเหล่านี้ <i class="fas fa-hand-point-down"></i>
 							ul.label-list
 								li(v-for="sample in trySamples" @click="s_quick = sample") {{ sample }}
 						div.row.text-center.marg-b-1
-							button(v-on:click="showAdvanced = !showAdvanced")
+							button(v-on:click="toggleAdvanced()")
 								i.fas.fa-xs.fa-sliders-h
 								|  {{ showAdvanced ? 'ซ่อน' : 'แสดง' }}ตัวเลือก
 						div.row.text-center
-							button.raised
+							button.raised(@click="doSearch()")
 								i.fas.fa-search
 								|  ค้นหา
 				img#search-house(src="public/img/search-house.svg")
