@@ -1,5 +1,10 @@
 const trySamples = ["M03 IT", "Auditorium", "อาคารเรียนรวม"];
 
+Vue.component("result-card", {
+	props: ['slug', 'name', 'seats', 'amenities'],
+	template: "#result-card"
+});
+
 var app = new Vue({
 	el: "#app",
 	data: {

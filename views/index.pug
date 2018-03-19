@@ -45,12 +45,18 @@ html
 				img#search-house(src="public/img/search-house.svg")
 				div.container.steep#search-results(v-if="!firstSearch")
 					each i in [1,2,3,4]
-						a.card.hoverable.search-result-card(href="#")
-							h1.result-title M23
-							div.result-time 2 hrs max available
-							p คณะเทคโนโลยีสารสนเทศ
-							i.fas.fa-users
-							|  20
-							i.fas.fa-volume-down
-							i.fas.fa-desktop
+						result-card(slug="hello", name="M23", seats="50", :amenities="['pc', 'sound']")
+	script(type="text/x-template", id="result-card")
+		a.card.hoverable.search-result-card(href="slug")
+			h1.result-title {{ name }}
+			div.result-time 2 hrs max available
+			p คณะเทคโนโลยีสารสนเทศ
+			div.amenities
+				span
+					i.fas.fa-users
+					|  {{ seats }}
+				span(v-if="amenities.includes('sound')")
+					i.fas.fa-volume-up
+				span(v-if="amenities.includes('pc')")
+					i.fas.fa-desktop
 	script(src="public/scripts/search-page.js")
