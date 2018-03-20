@@ -1,6 +1,6 @@
 html
 	head
-		title= session.pageTitle
+		title= Search
 		include parts/stylesheet
 		include parts/scripts
 	body.search-page
@@ -8,7 +8,8 @@ html
 		div#app
 			div.content
 				div.container.steep
-					h1.page-title.text-center#page-title ค้นหาสถานที่
+					.page-title-wrap#page-title
+						h1.page-title.text-center ค้นหาสถานที่
 					div.search-box
 						div.row.flex
 							div.input-with-icon.inp-flex
@@ -45,9 +46,9 @@ html
 				img#search-house(src="public/img/search-house.svg")
 				div.container.steep#search-results(v-if="!firstSearch")
 					each i in [1,2,3,4]
-						result-card(slug="hello", name="M23", seats="50", :amenities="['pc', 'sound', 'aircon', 'proj']")
+						result-card(slug="single", name="M23", seats="50", :amenities="['pc', 'sound', 'aircon', 'proj']")
 	script(type="text/x-template", id="result-card")
-		a.card.hoverable.search-result-card(href="slug")
+		a.card.hoverable.search-result-card(v-bind:href="slug")
 			h1.result-title {{ name }}
 			div.result-time 2 hrs max available
 			p คณะเทคโนโลยีสารสนเทศ

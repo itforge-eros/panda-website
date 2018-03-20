@@ -13,7 +13,6 @@ app.use("/public", express.static(__dirname + "/public"));
 // Data
 let session = {
 	env: env,
-	pageTitle: "Search",
 	currentUser: "",
 	authenUrl: "logout"
 };
@@ -38,6 +37,9 @@ app.get("/logout", function(req, res) {
 	session.currentUser = "";
 	session.authenUrl = "login";
 	res.redirect("/");
+});
+app.get("/single", function(req, res) {
+	res.render("single-space", { session: session, user: user, faculty: faculty });
 });
 
 // Start the server
