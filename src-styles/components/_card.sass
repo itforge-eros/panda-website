@@ -3,10 +3,13 @@
 .card
 	display: block
 	position: relative
-	padding: 20px
+	padding: $gap-size-20
 	background-color: #FFF
+	border: 1px solid #E0E0E0
 	border-radius: 6px
-	box-shadow: $shadow-card
+	&.shadow
+		border: none
+		box-shadow: $shadow-card
 	&.hoverable
 		transition: box-shadow .1s
 		&:hover
@@ -24,8 +27,8 @@
 			margin-bottom: 6px
 		.result-time
 			position: absolute
-			top: 20px
-			right: 20px
+			top: $gap-size-20
+			right: $gap-size-20
 		.amenities
 			span
 				margin-right: 0.6em

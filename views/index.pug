@@ -1,5 +1,7 @@
 html
 	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="initial-scale=1, width=device-width")
 		title= Search
 		include parts/stylesheet
 		include parts/scripts
@@ -48,7 +50,7 @@ html
 					each i in [1,2,3,4]
 						result-card(slug="single", name="M23", seats="50", :amenities="['pc', 'sound', 'aircon', 'proj']")
 	script(type="text/x-template", id="result-card")
-		a.card.hoverable.search-result-card(v-bind:href="slug")
+		a.card.shadow.hoverable.search-result-card(v-bind:href="slug")
 			h1.result-title {{ name }}
 			div.result-time 2 hrs max available
 			p คณะเทคโนโลยีสารสนเทศ

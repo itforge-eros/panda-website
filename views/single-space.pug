@@ -1,13 +1,76 @@
 html
 	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="initial-scale=1, width=device-width")
 		title M03
 		include parts/stylesheet
 		include parts/scripts
 	body.single-space
 		include parts/nav
+		-
+			var slots1 = [];
+			var slots2 = [];
+			var hr = 8;
+			for (var i = 1; i <= 12; i++) {
+				slots1.push({id: i, t: i%2 == 0 ? '.30' : hr});
+				if (i%2 != 0) hr++;
+			}
+			for (var i = 1; i <= 12; i++) {
+				slots2.push({id: i, t: i%2 == 0 ? '.30' : hr});
+				if (i%2 != 0) hr++;
+			}
 		div#app
 			div.content
 				div.container
-					.page-title-wrap
+					div.page-title-wrap
 						h1.page-title M03
 						h2.page-subtitle คณะเทคโนโลยีสารสนเทศ
+				div.container
+					div.row.flex.marg-b-1#row-1
+						div.featured-img
+							img(src="/public/img/single-feat.jpeg", alt="M23")
+						div.amenities-box
+							div.card
+								span.amenity
+									i.fas.fa-2x.fa-users
+									span 90 ที่นั่ง
+								span.amenity
+									i.fas.fa-2x.fa-volume-up
+									span ระบบเสียง
+								span.amenity
+									i.fas.fa-2x.fa-desktop
+									span คอมฯผู้สอน
+								span.amenity
+									img.i(src="public/img/icons/snow.svg")
+									span แอร์
+								span.amenity
+									img.i(src="public/img/icons/projector.svg")
+									span โปรเจ็กเตอร์
+					div.row#row-2
+						div.card.shadow
+							div.reservation-box
+								div.date
+									i.fas.fa-chevron-circle-left
+									div.input-with-icon.inp-date
+										i.fas.fa-calendar-alt
+										input(type="text", placeholder="date", name="r-date", v-model="r_date")
+									i.fas.fa-chevron-circle-right
+								div.slot-wrap-wrapper
+									div.slot-wrap
+										table.times.text-center
+											tr
+												each time in ['8','.30','9','.30','10','.30','11','.30','12','.30','13','.30']
+													td= time
+										div.slots#slots-1
+											each slot in slots1
+												span.slot(id='time-'+slot.id)= slot.t
+									div.slot-wrap
+										table.times.text-center
+											tr
+												each time in ['8','.30','9','.30','10','.30','11','.30','12','.30','13','.30']
+													td= time
+										div.slots#slots-2
+											each slot in slots2
+												span.slot.unavailable(id='time-'+slot.id)= slot.t
+								hr
+						div.card Hello
