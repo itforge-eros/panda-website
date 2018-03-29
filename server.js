@@ -47,6 +47,9 @@ app.get("/fill-request", function(req, res) {
 app.get("/request-sent", function(req, res) {
 	res.render("request-sent", { session: session, user: user, faculty: faculty });
 });
+app.get("/my-request", function(req, res) {
+	res.render("my-request", { session: session, user: user, faculty: faculty });
+});
 
 // Start the server
 app.listen(port, () =>

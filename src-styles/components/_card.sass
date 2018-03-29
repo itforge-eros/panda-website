@@ -15,10 +15,10 @@
 		&:hover
 			box-shadow: $shadow-card-hover
 	&.search-result-card
-		margin-bottom: 1em
+		margin-bottom: $gap-size-20
 		&:last-of-type
 			margin-bottom: 3em
-		h1.result-title
+		h1
 			font-size: 1.25em
 			margin-top: 0
 			margin-bottom: 5px
@@ -36,7 +36,31 @@
 					position: relative
 					top: 4px
 					height: 19px
+	&.request-card
+		display: flex
+		align-items: center
+		margin-bottom: $gap-size-20
+		.req-info
+			flex: 1
+		.req-status
+			width: 52px
+			text-align: center
+		h1
+			font-size: 1.25em
+			margin-top: 0
+			margin-bottom: 5px
+		p
+			margin-top: 0
+			margin-bottom: 6px
+		.grayed
+			color: #4F4F4F
 
 a.card
 	text-decoration: none
 	color: inherit
+
+@media screen and (max-width: 767px)
+	.card
+		&.request-card
+			.req-status
+				display: none

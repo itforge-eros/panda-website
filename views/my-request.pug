@@ -1,0 +1,24 @@
+html
+	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="initial-scale=1, width=device-width")
+		title Request Sent!
+		include parts/stylesheet
+		include parts/scripts
+	body.my-request
+		include parts/nav
+		div#app
+			div.content
+				div.container
+					div.page-title-wrap
+						h1.page-title คำร้องของฉัน
+					div
+						each i in [1,2,3,4]
+							a.card.shadow.hoverable.request-card
+								div.req-info
+									h1 M03, คณะเทคโนโลยีสารสนเทศ
+									p 30 กุมภาพันธ์ 2561 เวลา 10.00 - 12.00 น.
+									p.grayed รอการอนุมัติ
+									p.grayed ยืนคำร้องเมื่อ: 28 กุมภาพันธ์ 2561
+								div.req-status
+									img(src="public/img/wait.svg", alt="success", width="48", height="48")
