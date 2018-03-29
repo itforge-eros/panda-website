@@ -10,13 +10,13 @@ html
 		-
 			var slots1 = [];
 			var slots2 = [];
-			var hr = 8;
+			var start_hr = 8;
 			for (var i = 1; i <= 12; i++) {
-				slots1.push({id: i, t: i%2 == 0 ? '.30' : hr});
+				slots1.push({id: i, t: i%2 == 0 ? '.30' : start_hr});
 				if (i%2 != 0) hr++;
 			}
 			for (var i = 1; i <= 12; i++) {
-				slots2.push({id: i, t: i%2 == 0 ? '.30' : hr});
+				slots2.push({id: i+12, t: i%2 == 0 ? '.30' : start_hr});
 				if (i%2 != 0) hr++;
 			}
 		div#app
@@ -63,14 +63,19 @@ html
 													td= time
 										div.slots#slots-1
 											each slot in slots1
-												span.slot(id='time-'+slot.id)= slot.t
+												time-slot(id='slot-'+slot.id, :available="true", :position=slot.id)= slot.t
 									div.slot-wrap
 										table.times.text-center
 											tr
-												each time in ['8','.30','9','.30','10','.30','11','.30','12','.30','13','.30']
+												each time in ['14','.30','15','.30','16','.30','17','.30','18','.30','19','.30']
 													td= time
 										div.slots#slots-2
 											each slot in slots2
-												span.slot.unavailable(id='time-'+slot.id)= slot.t
+												time-slot(id='slot-'+slot.id, :available="false", :position=slot.id)= slot.t
 								hr
+								p.text-center(v-show="chosenTimes.length == 0") กรุณาเลือกเวลาเพื่อจอง
+								p.text-center(v-show="chosenTimes.length != 0") ที่เลือกไว้: {{ chosenTimePeriod }}
+								div.text-center(v-show="chosenTimes.length != 0")
+									a.button.raised(href="fill-request") จอง
 						div.card Hello
+	script(src="public/scripts/single-page.js")

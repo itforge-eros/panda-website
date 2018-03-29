@@ -41,6 +41,9 @@ app.get("/logout", function(req, res) {
 app.get("/single", function(req, res) {
 	res.render("single-space", { session: session, user: user, faculty: faculty });
 });
+app.get("/fill-request", function(req, res) {
+	res.render("fill-request", { session: session, user: user, faculty: faculty });
+});
 
 // Start the server
 app.listen(port, () =>
