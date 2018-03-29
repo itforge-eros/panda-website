@@ -32,7 +32,21 @@ app.get("/any-url-to-catch", function(req, res) {
 
 ## Project Structure
 
-_coming soon_
+```
+panda-website/
+├── node_modules/	<-- Node module resources
+├── public/			<-- Publicly-accessible directory
+├── src-scripts/	<-- Source script files
+├── src-styles/		<-- Source style files
+├── views/			<-- Page files
+├── .gitignore
+├── LICENSE.txt
+├── README.md
+├── gulpfile.js
+├── package-lock.json
+├── package.json
+├── server.js		<-- Runnable server application
+```
 
 ## Tips
 
