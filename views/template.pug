@@ -1,0 +1,16 @@
+html
+	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="initial-scale=1, width=device-width")
+		title Page Title Here
+		include parts/stylesheet
+		include parts/scripts
+	body.page-file-name //-change class name to match this file's name
+		include parts/nav
+		div#app
+			div.content
+				div.container
+					div.page-title-wrap
+						h1.page-title Title Here
+						h2.page-subtitle Subtitle Here (optional)
+					//- content goes here
