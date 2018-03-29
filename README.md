@@ -13,7 +13,7 @@ KMITL Online Space Reservation System, website part.
 
 ### How to Create a New Page
 
-1. Create a new `.pug` file in the `views` directory. Eg. `single-space.pug`
+1. Create a new `.pug` file in the `views` directory. Eg. `single-space.pug`.
 2. Copy the page structure from `views/template.pug` to your new file and change `body`'s class name to match the file's name (eg. `body.single-space`).
 3. Add a new route to `server.js`. Example:
 
@@ -22,6 +22,13 @@ app.get("/any-url-to-catch", function(req, res) {
 	res.render("single-space"); // the Pug file name
 });
 ```
+
+### How to Create a New Script File
+
+1. Create a new `.js` file in the `src-scripts` directory. Eg. `single-space.js`.
+2. Include the file in a Pug page by adding `script(src="public/scripts/single-space.js")` to the page.
+
+> File name should match the page's file name where possible.
 
 ## Project Structure
 
