@@ -1,0 +1,21 @@
+// Component: Table
+
+table.styled
+	width: 100%
+	tr
+		background-color: #FFF
+		&:nth-child(even)
+			background-color: #F2F2F2
+	td
+		padding: 0.7em 1em
+		border: none
+
+@media screen and (max-width: 767px)
+	table.styled
+		tr:nth-child(even)
+			background-color: #FFF
+		td
+			display: block
+			&:first-of-type
+				background-color: #F2F2F2
+				font-weight: bold

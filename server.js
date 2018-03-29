@@ -23,6 +23,14 @@ let faculty = [
 	{ name: "คณะสถาปัตยกรรมศาสตร์", slug: "fac-arch" },
 	{ name: "คณะวิทยาศาสตร์", slug: "fac-sci" }
 ];
+let requestInfo = [
+	{ name: "ผู้จอง", data: "นาย สมศรี ชาวไร่" },
+	{ name: "ยื่นคำร้องเมื่อ", data: "28 กุมภาพันธ์ 2561"},
+	{ name: "วันที่ต้องการจอง", data: "30 กุมภาพันธ์ 2561"},
+	{ name: "เวลาที่ต้องการจอง", data: "10.00 - 12.00"},
+	{ name: "จำนวนที่นั่ง", data: "50"},
+	{ name: "เหตุผล", data: "อย่าอยากรู้ให้มากได้ปะ"},
+];
 
 // Routes
 app.get("/", function(req, res) {
@@ -30,25 +38,49 @@ app.get("/", function(req, res) {
 });
 app.get("/login", function(req, res) {
 	session.currentUser = "Nathan";
-	session.authenUrl = "logout";
+	session.authenUrl = "/logout";
 	res.redirect("/");
 });
 app.get("/logout", function(req, res) {
 	session.currentUser = "";
-	session.authenUrl = "login";
+	session.authenUrl = "/login";
 	res.redirect("/");
 });
 app.get("/single", function(req, res) {
-	res.render("single-space", { session: session, user: user, faculty: faculty });
+	res.render("single-space", {
+		session: session,
+		user: user,
+		faculty: faculty
+	});
 });
 app.get("/fill-request", function(req, res) {
-	res.render("fill-request", { session: session, user: user, faculty: faculty });
+	res.render("fill-request", {
+		session: session,
+		user: user,
+		faculty: faculty
+	});
 });
 app.get("/request-sent", function(req, res) {
-	res.render("request-sent", { session: session, user: user, faculty: faculty });
+	res.render("request-sent", {
+		session: session,
+		user: user,
+		faculty: faculty
+	});
 });
 app.get("/my-request", function(req, res) {
-	res.render("my-request", { session: session, user: user, faculty: faculty });
+	res.render("my-request", {
+		session: session,
+		user: user,
+		faculty: faculty
+	});
+});
+app.get("/request/:id", function(req, res) {
+	res.render("single-request", {
+		session: session,
+		user: user,
+		id: req.params.id,
+		reqInfo: requestInfo
+	});
 });
 
 // Start the server
