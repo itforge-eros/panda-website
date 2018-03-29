@@ -9,7 +9,19 @@ KMITL Online Space Reservation System, website part.
 
 ## Contributing
 
-* Always run `gulp` to compile Sass and JS files.
+> Always run `gulp` to compile Sass and JS files.
+
+### How to Create a New Page
+
+1. Create a new `.pug` file in the `views` directory. Eg. `single-space.pug`
+2. Copy the page structure from `views/template.pug` to your new file and change `body`'s class name to match the file's name (eg. `body.single-space`).
+3. Add a new route to `server.js`. Example:
+
+```{javascript}
+app.get("/any-url-to-catch", function(req, res) {
+	res.render("single-space"); // the Pug file name
+});
+```
 
 ## Project Structure
 
