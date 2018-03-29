@@ -83,6 +83,23 @@ app.get("/request/:id", function(req, res) {
 	});
 });
 
+app.get("/manage-request/:id", function(req, res) {
+		res.render("manage-request", {
+		session: session,
+		user: user,
+		id: req.params.id,
+		reqInfo: requestInfo
+	});
+});
+
+app.get("/request-list", function(req, res) {
+		res.render("request-list", {
+		session: session,
+		user: user,
+		faculty: faculty
+	});
+});
+
 // Start the server
 app.listen(port, () =>
 	console.log("Listening on port 3000\nPress Ctrl+C to stop")
