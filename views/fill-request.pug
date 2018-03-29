@@ -12,4 +12,27 @@ html
 				div.container
 					div.page-title-wrap
 						h1.page-title กรุณากรอกรายละเอียด
-					p ผู้จอง นาย สมศรี ชาวไร่
+					div(style="margin-bottom: 3em")
+						p
+							strong ผู้จอง: 
+							| นาย สมศรี ชาวไร่<br>
+							| นักศึกษา คณะเทคโนโลยีสารสนเทศ
+						p
+							strong สถานที่: 
+							| M03, คณะเทคโนโลยีสารสนเทศ
+						p
+							strong วันที่ต้องการจอง: 
+							| 30 กุมภาพันธ์ 2561
+						p
+							strong เวลาที่ต้องการจอง: 
+							| 10.00 - 12.00 น.
+					form
+						div.input-wrap
+							label(for="seats") จำนวนที่นั่ง
+							input(type="text", name="seats", required)
+							span.err กรุณากรอกข้อมูล
+						div.input-wrap
+							label(for="reason") เหตุผลในการจอง
+							textarea(name="reason", rows="4", required)
+							span.err กรุณากรอกข้อมูล
+						button.raised ส่งข้อมูล

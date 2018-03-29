@@ -1,6 +1,6 @@
 // Component: Input
 
-input, .select select
+input, .select select, textarea
 	display: inline-block
 	border: 2px solid #BDBDBD
 	background-color: #FFF
@@ -31,3 +31,17 @@ input, .select select
 	select
 		padding-right: 33px
 		-webkit-padding-end: 33px
+
+textarea
+	width: 100%
+
+label
+	display: block
+	margin-bottom: 0.5em
+
+.input-wrap
+	margin-bottom: $gap-size-20
+	span.err
+		display: block
+		margin-top: 0.5em
+		color: $color-red
