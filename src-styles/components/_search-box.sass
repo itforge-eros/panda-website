@@ -41,3 +41,14 @@
 				margin-right: 0
 			&:hover
 				box-shadow: $shadow-small-hover
+
+@media screen and (max-width: $container-steep-width - 1)
+	.search-box
+		.flex
+			display: block
+			div
+				width: 100%
+				margin-right: 0 !important
+		ul.label-list
+			li
+				margin-bottom: 1em

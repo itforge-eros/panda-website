@@ -19,8 +19,27 @@ nav
 		li
 			a.icon-link(href="/my-request")
 				i.fas.fa-book
-		a.sign-out(href=session.authenUrl)= (session.currentUser ? session.currentUser : 'ลงชื่อเข้าใช้') + ' '
+		a.authen(href=session.authenUrl)= (session.currentUser ? session.currentUser : 'เข้าสู่ระบบ') + ' '
 			if session.currentUser
 				i.fas.fa-times-circle
 			else
 				i.fas.fa-sign-in-alt
+nav.mobile-nav
+	ul
+		li
+			a.icon-link(href="/")
+				i.fas.fa-search
+		if user.isAdmin
+			li
+				a.icon-link(href="/manage-space")
+					i.fas.fa-building
+			li
+				a.icon-link(href="/manage-role")
+					i.fas.fa-users
+		if user.isApprover
+			li
+				a.icon-link(href="/manage-request")
+					i.fas.fa-clipboard-check
+		li
+			a.icon-link(href="/my-request")
+				i.fas.fa-book

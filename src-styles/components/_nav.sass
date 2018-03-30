@@ -26,7 +26,7 @@ nav
 	a
 		text-decoration: none
 		color: inherit
-		&.sign-out
+		&.authen
 			margin-left: 1.2em
 			padding: 2px 4px
 			border: 1px solid #D2D2D2
@@ -38,6 +38,23 @@ nav
 				color: #FFF
 		&:hover
 			color: $color-primary
+
+nav.mobile-nav
+	display: none
+	position: fixed
+	bottom: 0
+	z-index: 2
+	padding: 1em 0
+	box-shadow: 0 -4px 10px rgba(0,0,0,0.12)
+	ul
+		display: flex
+		justify-content: space-around
+		list-style-type: none
+		padding-left: 0
+		margin: 0
+	&.ios
+		opacity: 0.8
+		backdrop-filter: blur(10px)
 
 ul.tabs
 	border-bottom: 1px solid $color-primary
@@ -59,3 +76,11 @@ ul.tabs
 		a
 			text-decoration: none
 			color: $color-grey
+
+@media screen and (max-width: 430px)
+	nav
+		ul.menu
+			li
+				display: none
+		&.mobile-nav
+			display: block
