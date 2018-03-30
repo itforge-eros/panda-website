@@ -1,0 +1,32 @@
+html
+	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="initial-scale=1, width=device-width")
+		title จัดสิทธิ์ Student
+		include parts/stylesheet
+		include parts/scripts
+	body.page-file-name
+		include parts/nav
+		div#app
+			div.content
+				div.container
+					div.page-title-wrap
+						h2.page-pretitle จัดการสิทธิ์
+						h1.page-title Student
+					form(action="")
+						div.marg-b-1
+							label(for="role-name") ชื่อสิทธิ์
+							input(type="text", name="role-name", style="width:100%")
+						div.marg-b-1
+							label(for="role-name") อำนาจ
+							table
+								each item in [1,2,3,4,5,6,7,8]
+									tr
+										td
+											label.control.checkbox
+												input(type="checkbox")
+												span.control-indicator
+												| สร้างสถานที่
+						button.raised
+							i.fas.fa-save
+							| บันทึก

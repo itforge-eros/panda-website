@@ -1,15 +1,13 @@
 // Component: Table
 
-table.styled
-	border-spacing: 0
+table
 	width: 100%
-	tr
-		background-color: #FFF
-		&:nth-child(odd)
-			background-color: #F2F2F2
+	&.styled
+		border-spacing: 0
 	td
 		padding: 0.7em 1em
 		border: none
+		background-color: #FFF
 		&.actions
 			text-align: right
 			a
@@ -21,18 +19,30 @@ table.styled
 	tr.status
 		color: #FFF
 		&.pending
-			background-color: $color-secondary
+			background-color: $color-secondary !important
 		&.approved
-			background-color: $color-green
+			background-color: $color-green !important
 		&.rejected
-			background-color: $color-red
+			background-color: $color-red !important
+	&.striped
+		tr
+			background-color: #FFF
+			&:nth-child(odd)
+				background-color: #F2F2F2
 .w-10
 	width: 10%
 
 @media screen and (max-width: 767px)
-	table.styled
-		tr:nth-child(odd)
-			background-color: #FFF
+	table
+		&.striped
+			tr:nth-child(odd)
+				background-color: #FFF
+			td
+				&:first-of-type
+					background-color: #F2F2F2
+					font-weight: bold
+				&.actions
+					background-color: #FFF
 		tr.status
 			&.pending
 				td:first-of-type
@@ -54,10 +64,5 @@ table.styled
 					background-color: $color-red-normal
 		td
 			display: block
-			&:first-of-type
-				background-color: #F2F2F2
-				font-weight: bold
-			&.actions
-				background-color: #FFF
 	.w-10
 		width: 100%
