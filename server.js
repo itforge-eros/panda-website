@@ -121,6 +121,13 @@ app.get("/manage-space", function(req, res) {
 		user: user
 	});
 });
+app.get("/manage-report", function(req, res) {
+		res.render("manage-report", {
+		session: session,
+		user: user
+	});
+});
+
 
 // Start the server
 app.listen(port, () =>
