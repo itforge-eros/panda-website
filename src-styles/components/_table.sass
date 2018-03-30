@@ -26,9 +26,12 @@ table.styled
 			background-color: $color-green
 		&.rejected
 			background-color: $color-red
+.w-10
+	width: 10%
+
 @media screen and (max-width: 767px)
 	table.styled
-		tr:nth-child(even)
+		tr:nth-child(odd)
 			background-color: #FFF
 		tr.status
 			&.pending
@@ -56,3 +59,5 @@ table.styled
 				font-weight: bold
 			&.actions
 				background-color: #FFF
+	.w-10
+		width: 100%

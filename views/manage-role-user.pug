@@ -1,0 +1,30 @@
+html
+	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="initial-scale=1, width=device-width")
+		title จัดการผุ้ใช้ในสิทธิ์
+		include parts/stylesheet
+		include parts/scripts
+	body.page-file-name
+		include parts/nav
+		div#app
+			div.content
+				div.container
+					div.page-title-wrap
+						h2.page-pretitle จัดการผู้ใช้ในสิทธิ์
+						h1.page-title Student
+					div
+						a.button.marg-b-1(href="#")
+							i.fas.fa-plus-circle
+							| เพิ่มผู้ใช้เข้าสิทธิ์นี้
+						form(action="")
+							label(for="role-name") พิมพ์รหัสประจำตัวคั่นด้วยลูกน้ำและกด Enter
+							input(type="text", name="role-name", style="width:100%")
+					table.styled
+						each item in [1,2,3,4,5,6,7,8]
+							tr
+								td.w-10 12345678
+								td Kumanop Ob-Ob-Ob
+								td.actions
+									a(href="#")
+										i.fas.fa-trash

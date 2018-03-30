@@ -103,6 +103,12 @@ app.get("/manage-role", function(req, res) {
 		user: user
 	});
 });
+app.get("/manage-role/:id/users", function(req, res) {
+		res.render("manage-role-user", {
+		session: session,
+		user: user
+	});
+});
 
 // Start the server
 app.listen(port, () =>
