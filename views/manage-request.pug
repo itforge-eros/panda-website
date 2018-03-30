@@ -13,7 +13,7 @@ html
 					div.page-title-wrap
 						h1.page-title รายละเอียดคำร้อง
 						h2.page-subtitle คำร้อง ##{id}
-					table.styled
+					table.styled.marg-b-2
 						tr.status
 							td(width="30%") สถานะ
 							td(width="70%") รอการอนุมัติ (1 ใน 2)
@@ -21,11 +21,9 @@ html
 							tr
 								td= item.name
 								td= item.data
-					a.button.approve
-						span 
-							img(src = "../public/img/success.svg" width="10%" style="margin-right: 5px")
-							span Approve
-					a.button.reject
-						span 
-							img(src = "../public/img/success.svg" width="10%" style="margin-right: 5px")
-							span Reject
+					a.button.raised
+						i.fas.fa-check
+						|  อนุมัติ
+					a.button.raised.color-red
+						i.fas.fa-times
+						|  ปฏิเสธ
