@@ -127,6 +127,13 @@ app.get("/manage-report", function(req, res) {
 		user: user
 	});
 });
+app.get("/manage-report/:id", function(req, res) {
+		res.render("manage-report-single", {
+		session: session,
+		user: user,
+		id: req.params.id
+	});
+});
 
 
 // Start the server

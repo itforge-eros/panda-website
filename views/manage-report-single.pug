@@ -1,0 +1,24 @@
+html
+	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="initial-scale=1, width=device-width")
+		title Report ##{id}
+		include parts/stylesheet
+		include parts/scripts
+	body.page-file-name
+		include parts/nav
+		div#app
+			div.content
+				div.container
+					div.page-title-wrap
+						h1.page-title Report ##{id}
+					div.marg-b-2
+						p สถานที่: M03
+						p วันที่แจ้ง: 30 กุมภาพันธ์ 2561
+					div.marg-b-2
+						p
+							strong รายละเอียด
+						p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel nulla voluptatem vero repudiandae voluptas in ea accusantium, officia error, iusto blanditiis! Quisquam pariatur aspernatur eveniet natus assumenda, expedita molestiae reprehenderit.
+					a.button.raised(href="#")
+						i.fas.fa-envelope-open
+						| อ่านแล้ว
