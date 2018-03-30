@@ -14,9 +14,9 @@ html
 						h1.page-title รายละเอียดคำร้อง
 						h2.page-subtitle คำร้อง ##{id}
 					table.styled
-						tr.status
-							td(width="30%") สถานะ
-							td(width="70%") รอการอนุมัติ
+						tr.status.pending
+							td สถานะ
+							td รอการอนุมัติ
 						each item in reqInfo
 							tr
 								td= item.name

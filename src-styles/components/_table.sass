@@ -1,7 +1,7 @@
 // Component: Table
 
 table.styled
-	border-spacing: 0;
+	border-spacing: 0
 	width: 100%
 	tr
 		background-color: #FFF
@@ -11,16 +11,36 @@ table.styled
 		padding: 0.7em 1em
 		border: none
 	tr.status
-		background-color: #FA811B
 		color: #FFF
+		&.pending
+			background-color: $color-secondary
+		&.approved
+			background-color: $color-green
+		&.rejected
+			background-color: $color-red
 @media screen and (max-width: 767px)
 	table.styled
-		border-spacing: 0;
 		tr:nth-child(even)
 			background-color: #FFF
 		tr.status
-			background-color: #FA811B
-			color: #FFF
+			&.pending
+				td:first-of-type
+					background-color: $color-secondary
+					color: #FFF
+				td:last-of-type
+					background-color: $color-secondary-normal
+			&.approved
+				td:first-of-type
+					background-color: $color-green
+					color: #FFF
+				td:last-of-type
+					background-color: $color-green-normal
+			&.rejected
+				td:first-of-type
+					background-color: $color-red
+					color: #FFF
+				td:last-of-type
+					background-color: $color-red-normal
 		td
 			display: block
 			&:first-of-type
