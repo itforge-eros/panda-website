@@ -4,10 +4,11 @@ table
 	width: 100%
 	&.styled
 		border-spacing: 0
+	tr
+		background-color: #FFF
 	td
 		padding: 0.7em 1em
 		border: none
-		background-color: #FFF
 		&.actions
 			text-align: right
 			a
@@ -29,15 +30,15 @@ table
 			background-color: #FFF
 			&:nth-child(odd)
 				background-color: #F2F2F2
+
 .w-10
 	width: 10%
 
 @media screen and (max-width: 767px)
 	table
 		&.striped
-			tr:nth-child(odd)
-				background-color: #FFF
 			td
+				background-color: #FFF
 				&:first-of-type
 					background-color: #F2F2F2
 					font-weight: bold
