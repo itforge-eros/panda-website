@@ -37,9 +37,7 @@ app.get("/", function(req, res) {
 	res.render("index", { session: session, user: user, faculty: faculty });
 });
 app.get("/login", function(req, res) {
-	session.currentUser = "Nathan";
-	session.authenUrl = "/logout";
-	res.redirect("/");
+	res.render("login", { session: session, user, user });
 });
 app.get("/logout", function(req, res) {
 	session.currentUser = "";
