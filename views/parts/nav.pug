@@ -24,7 +24,7 @@ nav
 				i.fas.fa-times-circle
 			else
 				i.fas.fa-sign-in-alt
-nav.mobile-nav
+nav.mobile-nav#mobile-nav
 	ul
 		li
 			a.icon-link(href="/")
@@ -43,3 +43,9 @@ nav.mobile-nav
 		li
 			a.icon-link(href="/my-request")
 				i.fas.fa-book
+
+script
+	| if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+	| 	var mobNav = document.getElementById("mobile-nav");
+	| 	mobNav.classList.add("ios");
+	| }

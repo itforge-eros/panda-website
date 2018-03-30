@@ -14,7 +14,7 @@ app.use("/public", express.static(__dirname + "/public"));
 let session = {
 	env: env,
 	currentUser: "",
-	authenUrl: "logout"
+	authenUrl: "/login"
 };
 let user = { isAdmin: true, isApprover: true };
 let faculty = [
