@@ -1,0 +1,29 @@
+html
+	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="initial-scale=1, width=device-width")
+		title Manage Request
+		include parts/stylesheet
+		include parts/scripts
+	body.manage-request
+		include parts/nav
+		div#app
+			div.content
+				div.container
+					div.page-title-wrap
+						h1.page-title รายละเอียดคำร้อง
+						h2.page-subtitle คำร้อง ##{id}
+					table.styled.marg-b-2
+						tr.status.pending
+							td สถานะ
+							td รอการอนุมัติ (1 จาก 2)
+						each item in reqInfo
+							tr
+								td= item.name
+								td= item.data
+					a.button.raised
+						i.fas.fa-check
+						|  อนุมัติ
+					a.button.raised.color-red
+						i.fas.fa-times
+						|  ปฏิเสธ

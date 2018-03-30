@@ -2,28 +2,29 @@ html
 	head
 		meta(charset="utf-8")
 		meta(name="viewport", content="initial-scale=1, width=device-width")
-		title Manage Request
+		title Request List
 		include parts/stylesheet
 		include parts/scripts
-	body.manage-request
+	body.request-list
 		include parts/nav
 		div#app
 			div.content
 				div.container
 					div.page-title-wrap
-						h1.page-title รายละเอียดคำร้อง
-						h2.page-subtitle คำร้อง ##{id}
-					table.styled.marg-b-2
-						tr.status
-							td สถานะ
-							td รอการอนุมัติ (1 ใน 2)
-						each item in reqInfo
-							tr
-								td= item.name
-								td= item.data
-					a.button.raised
-						i.fas.fa-check
-						|  อนุมัติ
-					a.button.raised.color-red
-						i.fas.fa-times
-						|  ปฏิเสธ
+						h1.page-title รายการคำร้อง
+					ul.tabs
+						li.selected
+							a(href="#") รอการอนุมัติ
+						li
+							a(href="#") อนุมัติแล้ว
+					div
+						each i in [1,2,3,4]
+							a.card.shadow.hoverable.request-card(href="/manage-request/"+i)
+								div.req-info
+									h1 M03, คณะเทคโนโลยีสารสนเทศ
+									p 30 กุมภาพันธ์ 2561 เวลา 10.00 - 12.00 น.
+									p.grayed รอการอนุมัติ
+									p.grayed ยืนคำร้องเมื่อ: 28 กุมภาพันธ์ 2561
+								div.req-status
+
+//- สอนผมด้วยนะครั บ VUE อยากลองทำเองก่อนตรง ที่สามารถสลับหน้าไปอนุมัติ ! ได้ !! 

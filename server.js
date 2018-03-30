@@ -82,21 +82,19 @@ app.get("/request/:id", function(req, res) {
 		reqInfo: requestInfo
 	});
 });
-
-app.get("/manage-request/:id", function(req, res) {
+app.get("/manage-request", function(req, res) {
 		res.render("manage-request", {
+		session: session,
+		user: user,
+		faculty: faculty
+	});
+});
+app.get("/manage-request/:id", function(req, res) {
+		res.render("manage-request-single", {
 		session: session,
 		user: user,
 		id: req.params.id,
 		reqInfo: requestInfo
-	});
-});
-
-app.get("/request-list", function(req, res) {
-		res.render("request-list", {
-		session: session,
-		user: user,
-		faculty: faculty
 	});
 });
 
