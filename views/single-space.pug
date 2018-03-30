@@ -10,12 +10,12 @@ html
 			var slots1 = [];
 			var slots2 = [];
 			var start_hr = 8;
-			for (var i = 1; i <= 12; i++) {
-				slots1.push({id: i, t: i%2 == 0 ? '.30' : start_hr});
+			for (var i = 1; i <= 6.5; i+=0.5) {
+				slots1.push({id: i+7, t: i%2 == 0 ? '.30' : start_hr});
 				if (i%2 != 0) hr++;
 			}
-			for (var i = 1; i <= 12; i++) {
-				slots2.push({id: i+12, t: i%2 == 0 ? '.30' : start_hr});
+			for (var i = 1; i <= 6.5; i+=0.5) {
+				slots2.push({id: i+13, t: i%2 == 0 ? '.30' : start_hr});
 				if (i%2 != 0) hr++;
 			}
 		div#app
