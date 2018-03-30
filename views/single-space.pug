@@ -76,6 +76,8 @@ html
 								p.text-center(v-show="chosenTimes.length == 0") กรุณาเลือกเวลาเพื่อจอง
 								p.text-center(v-show="chosenTimes.length != 0") ที่เลือกไว้: {{ chosenTimePeriod }}
 								div.text-center(v-show="chosenTimes.length != 0")
-									a.button.raised(href="fill-request") จอง
+									a.button.raised(href="fill-request")
+										i.fas.fa-pencil-alt
+										| จอง
 						div.card Hello
 	script(src="public/scripts/single-page.js")
