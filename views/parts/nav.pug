@@ -3,14 +3,14 @@ nav
 		a(href="/") KMITL OSRS
 	ul.menu
 		li
-			a.icon-link(href="#")
+			a.icon-link(href="/")
 				i.fas.fa-search
 		if user.isAdmin
 			li
-				a.icon-link(href="#")
+				a.icon-link(href="/manage-space")
 					i.fas.fa-building
 			li
-				a.icon-link(href="#")
+				a.icon-link(href="/manage-role")
 					i.fas.fa-users
 		if user.isApprover
 			li

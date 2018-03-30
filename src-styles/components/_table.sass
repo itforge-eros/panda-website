@@ -5,11 +5,19 @@ table.styled
 	width: 100%
 	tr
 		background-color: #FFF
-		&:nth-child(even)
+		&:nth-child(odd)
 			background-color: #F2F2F2
 	td
 		padding: 0.7em 1em
 		border: none
+		&.actions
+			text-align: right
+			a
+				margin-right: 0.8em
+				text-decoration: none
+				color: #000
+				&:last-of-type
+					margin-right: 0
 	tr.status
 		color: #FFF
 		&.pending
@@ -46,3 +54,5 @@ table.styled
 			&:first-of-type
 				background-color: #F2F2F2
 				font-weight: bold
+			&.actions
+				background-color: #FFF

@@ -97,6 +97,12 @@ app.get("/manage-request/:id", function(req, res) {
 		reqInfo: requestInfo
 	});
 });
+app.get("/manage-role", function(req, res) {
+		res.render("manage-role", {
+		session: session,
+		user: user
+	});
+});
 
 // Start the server
 app.listen(port, () =>
