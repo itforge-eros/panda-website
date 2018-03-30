@@ -1,0 +1,27 @@
+// Component: Modal
+
+div.modal
+	display: none
+	justify-content: center
+	align-items: center
+	position: fixed
+	top: 0
+	left: 0
+	z-index: 5
+	width: 100vw
+	height: 100vh
+	background-color: rgba(0,0,0,0.7)
+	.card
+		width: 95%
+		max-width: 400px
+		h1.modal-title
+			font-size: 1.2em
+			margin-top: 0
+		span.close
+			float: right
+			cursor: pointer
+	&.show
+		display: flex
+	&.ios
+		background-color: rgba(255,255,255,0.7)
+		backdrop-filter: blur(10px)

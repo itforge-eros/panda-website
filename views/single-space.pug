@@ -79,4 +79,23 @@ html
 										i.fas.fa-pencil-alt
 										| จอง
 						div.card Hello
+						div
+							button#report(onclick="showModal('modal')")
+								i.fas.fa-exclamation-triangle
+								| รายงานปัญหา
+			div.modal#modal
+				div.card
+					span.close(onclick="closeModal('modal')")
+						i.fas.fa-times-circle
+					h1.modal-title รายงานปัญหา
+					p M03
+					textarea.marg-b-1(name="report", rows="4")
+					button.raised ส่งรายงาน
 	script(src="public/scripts/single-page.js")
+	script
+		|function showModal(modal) {
+		|	document.getElementById(modal).classList.add("show")
+		|}
+		|function closeModal(modal) {
+		|	document.getElementById(modal).classList.remove("show")
+		|}
