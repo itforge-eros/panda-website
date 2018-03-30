@@ -2,10 +2,10 @@ html
 	head
 		meta(charset="utf-8")
 		meta(name="viewport", content="initial-scale=1, width=device-width")
-		title รายละเอียดคำร้อง
+		title Manage Request
 		include parts/stylesheet
 		include parts/scripts
-	body.single-request
+	body.manage-request
 		include parts/nav
 		div#app
 			div.content
@@ -16,9 +16,16 @@ html
 					table.styled
 						tr.status
 							td(width="30%") สถานะ
-							td(width="70%") รอการอนุมัติ
+							td(width="70%") รอการอนุมัติ (1 ใน 2)
 						each item in reqInfo
 							tr
 								td= item.name
 								td= item.data
-					
+					a.button.approve
+						span 
+							img(src = "../public/img/success.svg" width="10%" style="margin-right: 5px")
+							span Approve
+					a.button.reject
+						span 
+							img(src = "../public/img/success.svg" width="10%" style="margin-right: 5px")
+							span Reject
