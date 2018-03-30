@@ -1,0 +1,35 @@
+html
+	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="initial-scale=1, width=device-width")
+		title จัดการสถานที่
+		include parts/stylesheet
+		include parts/scripts
+	body.request-list
+		include parts/nav
+		div#app
+			div.content
+				div.container
+					div.page-title-wrap
+						h1.page-title จัดการสถานที่
+					ul.tabs
+						li.selected
+							a(href="#") สถานที่
+						li
+							a(href="#") รายงานปัญหา
+					div
+						a.button.marg-b-1(href="#")
+							i.fas.fa-plus-circle
+							| สร้างสถานที่ใหม่
+						form(action="")
+							label(for="space-name") พิมพ์ชื่อสถานที่และกด Enter
+							input(type="text", name="space-name")
+					table.styled.striped
+						each item in [1,2,3,4,5,6,7,8]
+							tr
+								td= "M0" + item
+								td.actions
+									a(href="/manage-space/" + item)
+										i.fas.fa-cog
+									a(href="#")
+										i.fas.fa-trash
