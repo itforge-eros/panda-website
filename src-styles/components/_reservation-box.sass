@@ -14,6 +14,7 @@
 			padding-left: 10px
 			padding-right: 10px
 			td
+				padding: 0
 				width: calc(100%/12)
 		.slots
 			display: flex
@@ -43,6 +44,12 @@
 				&.selected
 					background-color: $color-primary
 					box-shadow: $shadow-normal
+@media screen and (max-width: 767px)
+	.reservation-box
+		.slot-wrap
+			table.times
+				td
+					display: table-cell
 @media screen and (max-width: 579px)
 	.reservation-box
 		.slot-wrap-wrapper
@@ -50,7 +57,7 @@
 			white-space: nowrap
 		.slot-wrap
 			display: inline-block
-			.times
+			table.times
 				display: none
 			.slots
 				background-color: transparent
