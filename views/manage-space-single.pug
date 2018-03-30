@@ -1,0 +1,40 @@
+html
+	head
+		meta(charset="utf-8")
+		meta(name="viewport", content="initial-scale=1, width=device-width")
+		title จัดการสถานที่ M03
+		include parts/stylesheet
+		include parts/scripts
+	body.page-file-name
+		include parts/nav
+		div#app
+			div.content
+				div.container
+					div.page-title-wrap
+						h2.page-pretitle จัดการสถานที่
+						h1.page-title M03
+					div.marg-b-1
+						label(for="space-name") ชื่อสถานที่
+						input(type="text", name="space-name", required)
+					div.marg-b-1
+						label(for="space-seats") จำนวนที่นั่ง
+						input(type="number", name="space-seats", required)
+					div.marg-b-1
+						label คุณสมบัติ
+						table
+							each item in [1,2,3,4,5]
+								tr
+									td
+										label.control.checkbox
+											input(type="checkbox")
+											span.control-indicator
+											| โปรเจ็กเตอร์
+					div.marg-b-1
+						label บันทึกเพิ่มเติม
+						textarea(name="space-note", rows="4")
+					div.marg-b-1
+						label ภาพของห้อง
+						div(style="height: 250px; background-color: #F0F0F0")
+					button.raised
+						i.fas.fa-save
+						| บันทึก

@@ -121,6 +121,12 @@ app.get("/manage-space", function(req, res) {
 		user: user
 	});
 });
+app.get("/manage-space/:id", function(req, res) {
+		res.render("manage-space-single", {
+		session: session,
+		user: user
+	});
+});
 app.get("/manage-report", function(req, res) {
 		res.render("manage-report", {
 		session: session,
