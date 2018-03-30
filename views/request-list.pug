@@ -12,9 +12,11 @@ html
 				div.container
 					div.page-title-wrap
 						h1.page-title รายการคำร้อง
-					div.bar 
-						a รอการอนุมัติ
-						a.alternative อนุมัติแล้ว
+					ul.tabs
+						li.selected
+							a(href="#") รอการอนุมัติ
+						li
+							a(href="#") อนุมัติแล้ว
 					div
 						each i in [1,2,3,4]
 							a.card.shadow.hoverable.request-card(href="manage-request/"+i)
