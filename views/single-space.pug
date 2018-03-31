@@ -70,7 +70,7 @@ html
 													td= time
 										div.slots#slots-2
 											each slot in slots2
-												time-slot(id='slot-'+slot.id, :available="false", :position=slot.id)= slot.t
+												time-slot(id='slot-'+slot.id, :available="true", :position=slot.id)= slot.t
 								hr
 								p.text-center(v-show="chosenTimes.length == 0") กรุณาเลือกเวลาเพื่อจอง
 								p.text-center(v-show="chosenTimes.length != 0") ที่เลือกไว้: {{ chosenTimePeriod }}

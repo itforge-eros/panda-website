@@ -8,9 +8,13 @@ function converterOverToMins(endTime, startTime){
 }
 function convertToHumanity(time) {
 	if (time%1 !== 0){
-		return Math.floor(time) + ':' +((time) - Math.floor(time))*60;
+		return (Math.floor(time) + ':' +(((time).toFixed(2) - Math.floor(time).toFixed(2))*60).toFixed(0));
 	}else {
-		return Math.floor(time);
+		if((((time).toFixed(2) - Math.floor(time).toFixed(2))*60).toFixed(0) == 0){
+		return (Math.floor(time) + ':' +(((time).toFixed(2) - Math.floor(time).toFixed(2))*60).toFixed(0)) + '0';
+	}else{
+		return (Math.floor(time) + ':' +(((time).toFixed(2) - Math.floor(time).toFixed(2))*60).toFixed(0));
+		}	
 	}
 	
 	// this function use for converting the format .5 hour to humanity format
@@ -45,7 +49,7 @@ var app = new Vue({
 	computed: {
 		chosenTimePeriod: function () {
 			let startTime = Math.min.apply(null, this.chosenTimes);
-			let endTime = Math.max.apply(null, this.chosenTimes);
+			let endTime = Math.max.apply(null, this.chosenTimes)+0.5;
 			return convertToHumanity(startTime) + '-' + convertToHumanity(endTime) + ' น. (' + converterToHour(endTime, startTime) +' ชั่วโมง '+ converterOverToMins(endTime, startTime) + ' นาที)'
 		}
 	}
