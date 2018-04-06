@@ -3,7 +3,7 @@ const env = process.env.NODE_ENV || "dev";
 let session = {
 	env: env,
 	currentUser: "",
-	authenUrl: "/login"
+	authenUrl: "/authen/login"
 };
 let user = { isAdmin: true, isApprover: true };
 let faculty = [
