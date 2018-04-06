@@ -1,4 +1,4 @@
-![](https://github.com/itforge-eros/panda-docs/blob/master/markdown-banner.png?raw=true)
+![](https://i.imgur.com/uteHb6I.png)
 # Project Panda Website 🐼
 
 Welcome to the development documentation of **Project Panda** (or _The Panda Project_), aka _KMITL Online Space Reservation System_.
