@@ -30,12 +30,19 @@ const getSpace = id => {
 router.get("/:id", (req, res) => {
 	getSpace(req.params.id)
 		.then(returnedData => {
-			res.render("single-space", {
-				session: testData.session,
-				user: testData.user,
-				faculty: testData.faculty,
-				space: returnedData.data.space
-			});
+			if (returnedData.data.space != null) {
+				res.render("single-space", {
+					session: testData.session,
+					user: testData.user,
+					faculty: testData.faculty,
+					space: returnedData.data.space
+				});
+			} else {
+				res.redirect("/error");
+			}
+		})
+		.catch(() => {
+			res.redirect("/error");
 		});
 });
 

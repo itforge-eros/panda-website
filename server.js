@@ -35,21 +35,18 @@ app.get("/fill-request", (req, res) => {
 	res.render("fill-request", {
 		session: testData.session,
 		user: testData.user,
-		faculty: testData.faculty
 	});
 });
 app.get("/request-sent", (req, res) => {
 	res.render("request-sent", {
 		session: testData.session,
 		user: testData.ser,
-		faculty: testData.faculty
 	});
 });
 app.get("/my-request", (req, res) => {
 	res.render("my-request", {
 		session: testData.session,
 		user: testData.user,
-		faculty: testData.faculty
 	});
 });
 app.get("/request/:id", (req, res) => {
@@ -58,6 +55,12 @@ app.get("/request/:id", (req, res) => {
 		user: testData.user,
 		reqInfo: testData.requestInfo,
 		id: req.params.id
+	});
+});
+app.get("/error", (req, res) => {
+	res.render("error", {
+		session: testData.session,
+		user: testData.user,
 	});
 });
 
