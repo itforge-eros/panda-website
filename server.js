@@ -15,12 +15,14 @@ const testData = require("./models/testData");
 
 // Routes
 const authenRouter = require("./routes/authen");
+const manageRequestRouter = require("./routes/manageRequest");
 
 app.get("/", function(req, res) {
 	res.render("index", { session: testData.session, user: testData.user, faculty: testData.faculty });
 });
 
 app.use("/authen", authenRouter);
+app.use("/manage-request", manageRequestRouter);
 
 app.get("/single", function(req, res) {
 	res.render("single-space", {
@@ -52,21 +54,6 @@ app.get("/my-request", function(req, res) {
 });
 app.get("/request/:id", function(req, res) {
 	res.render("single-request", {
-		session: testData.session,
-		user: testData.user,
-		id: req.params.id,
-		reqInfo: testData.requestInfo
-	});
-});
-app.get("/manage-request", function(req, res) {
-		res.render("manage-request", {
-		session: testData.session,
-		user: testData.user,
-		faculty: testData.faculty
-	});
-});
-app.get("/manage-request/:id", function(req, res) {
-		res.render("manage-request-single", {
 		session: testData.session,
 		user: testData.user,
 		id: req.params.id,

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const testData = require("../models/testData");
 
-// GET authenication methods
+// GET authentication methods
 router.get('/', (req, res, next) => {
 	// if (isLoggedIn) goToIndex(); else goToLogin();
 	res.render('index', { session: testData.session, user: testData.user, faculty: testData.faculty });
