@@ -3,14 +3,14 @@
 
 Welcome to the development documentation of **Project Panda** (or _The Panda Project_), aka _KMITL Online Space Reservation System_.
 
-# <img src="https://png.icons8.com/ios/50/000000/project.png"> The Panda Project
+# <img src="https://png.icons8.com/ios/30/000000/project.png"> The Panda Project
 The Panda Project sources are hosted on GitHub.
 
 * Project Panda API : [itforge-eros/panda-api](https://github.com/itforge-eros/panda-api)
 * Project Panda Front End : [itforge-eros/panda-website](https://github.com/itforge-eros/panda-website)
 * Project Panda Documentation : [itforge-eros/panda-docs](https://github.com/itforge-eros/panda-docs)
 
-# <img src="https://png.icons8.com/ios/50/000000/launched-rocket.png"> Starting up the server
+# <img src="https://png.icons8.com/ios/30/000000/launched-rocket.png"> Starting up the server
 
 1. Run `npm i` in the project folder to install required dependencies.
 2. Run `node server.js` to start the Web server.
@@ -18,7 +18,7 @@ The Panda Project sources are hosted on GitHub.
 It will be hosted at `localhost`. The nodeJS will give you the localhost address and port.<br>
 Please see the open port for the localhost port
 
-# <img src="https://png.icons8.com/ios/50/000000/pull-request.png"> Contributing
+# <img src="https://png.icons8.com/ios/30/000000/pull-request.png"> Contributing
 We are happy to let you become the part of the project. <br>
 NOTE : Pull request approving process will start after 7th May 2018.
 
@@ -73,16 +73,16 @@ panda-website/
 * If changes don't show up, check if you have already run `gulp` (for front-end) and `node` (for back-end).
 * Use `nodemon` instead of `node` to automatically restart the server when the _server code_ changes.
 
-# <img src="https://png.icons8.com/ios/50/000000/groups.png"> Team Members
+# <img src="https://png.icons8.com/ios/30/000000/groups.png"> Team Members
 We are from Information Technology, King Mongkut Institute of Technology Ladkrabang
 
 ||First Name|Last Name|GitHub Username|Student ID|
 |:-:|--|------|---------------|---------|
-|![](https://avatars1.githubusercontent.com/u/20960087?s=200)|Kavin|Ruengprateepsang|[@kavinvin](https://github.com/kavinvin)|59070009|
-|![](https://avatars3.githubusercontent.com/u/13056824?s=200)|Kunanon|Srisuntiroj|[@sagelga](https://github.com/sagelga)|59070022|
-|![](https://avatars2.githubusercontent.com/u/22119886?s=200)|Thitipat|Worrarat|[@ynhof6](https://github.com/ynhof6)|59070043|
-|![](https://avatars0.githubusercontent.com/u/3814520?s=200)|Nathan|Yiangsupapaanontr|[@DobaKung](https://github.com/DobaKung)|59070087|
-|![](https://avatars1.githubusercontent.com/u/20330195?s=200)|Pornprom|Kiawjak|[@foofybuster](https://github.com/foofybuster)|59070113|
+|<img src="https://avatars1.githubusercontent.com/u/20960087" width="75px">|Kavin|Ruengprateepsang|[@kavinvin](https://github.com/kavinvin)|59070009|
+|<img src="https://avatars3.githubusercontent.com/u/13056824" width="75px">|Kunanon|Srisuntiroj|[@sagelga](https://github.com/sagelga)|59070022|
+|<img src="https://avatars2.githubusercontent.com/u/22119886" width="75px">|Thitipat|Worrarat|[@ynhof6](https://github.com/ynhof6)|59070043|
+|<img src="https://avatars0.githubusercontent.com/u/3814520" width="75px">|Nathan|Yiangsupapaanontr|[@DobaKung](https://github.com/DobaKung)|59070087|
+|<img src="https://avatars1.githubusercontent.com/u/20330195" width="75px">|Pornprom|Kiawjak|[@foofybuster](https://github.com/foofybuster)|59070113|
 
 This repository is part of these subject
 - Web Programming 06016215
