@@ -2,6 +2,7 @@ html
 	head
 		include parts/meta
 		title Search
+		link(rel="stylesheet" href="public/vendor/pikaday.css")
 		include parts/stylesheet
 		include parts/scripts
 	body.search-page
@@ -18,7 +19,7 @@ html
 								input(type="text", placeholder="M23 IT", name="s-quick", v-model="s_quick")
 							div.input-with-icon.inp-date
 								i.fas.fa-calendar-alt
-								input(type="text", placeholder="date", name="s-date", v-model="s_date")
+								input(type="text", placeholder="date", name="s-date", v-model="s_date", id="datepicker")
 						div.row.flex#search-advanced(v-if="showAdvanced")
 							div.input-with-icon.inp-flex
 								i.fas.fa-map-marker
@@ -65,4 +66,6 @@ html
 					img.i(src="public/img/icons/snow.svg")
 				span(v-if="amenities.includes('proj')", title="projector")
 					img.i(src="public/img/icons/projector.svg")
+	script(src="public/vendor/pikaday.js")
 	script(src="public/scripts/search-page.js")
+	script(src="public/vendor/activate-pikadate.js")

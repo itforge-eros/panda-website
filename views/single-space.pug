@@ -2,6 +2,7 @@ html
 	head
 		include parts/meta
 		title M03
+		link(rel="stylesheet" href="/public/vendor/pikaday.css")
 		include parts/stylesheet
 		include parts/scripts
 	body.single-space
@@ -52,7 +53,7 @@ html
 									i.fas.fa-chevron-circle-left
 									div.input-with-icon.inp-date
 										i.fas.fa-calendar-alt
-										input(type="text", placeholder="date", name="r-date", v-model="r_date")
+										input(type="text", placeholder="date", name="r-date", v-model="r_date", id="datepicker")
 									i.fas.fa-chevron-circle-right
 								div.slot-wrap-wrapper
 									div.slot-wrap
@@ -70,7 +71,7 @@ html
 													td= time
 										div.slots#slots-2
 											each slot in slots2
-												time-slot(id='slot-'+slot.id, :available="true", :position=slot.id)= slot.t
+												time-slot(id='slot-'+slot.id, :available="false", :position=slot.id)= slot.t
 								hr
 								p.text-center(v-show="chosenTimes.length == 0") กรุณาเลือกเวลาเพื่อจอง
 								p.text-center(v-show="chosenTimes.length != 0") ที่เลือกไว้: {{ chosenTimePeriod }}
@@ -91,7 +92,10 @@ html
 					p M03
 					textarea.marg-b-1(name="report", rows="4")
 					button.raised ส่งรายงาน
+
+	script(src="/public/vendor/pikaday.js")
 	script(src="/public/scripts/single-page.js")
+	script(src="/public/vendor/activate-pikadate.js")
 	script
 		| function showModal(modal) {
 		| 	document.getElementById(modal).classList.add("show")

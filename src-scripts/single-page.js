@@ -19,7 +19,7 @@ function convertToHumanity(time) {
 	
 	// this function use for converting the format .5 hour to humanity format
 }
-
+console.log("kuy");
 Vue.component('time-slot', {
 	props: {
 		available: Boolean,
@@ -43,7 +43,7 @@ Vue.component('time-slot', {
 var app = new Vue({
 	el: '#app',
 	data: {
-		r_date: '123',
+		r_date: new Date(),
 		chosenTimes: []
 	},
 	computed: {
