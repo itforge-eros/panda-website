@@ -1,7 +1,7 @@
 html
 	head
 		include parts/meta
-		title M03
+		title= space.name
 		include parts/stylesheet
 		include parts/scripts
 	body.single-space
@@ -22,7 +22,7 @@ html
 			div.content
 				div.container
 					div.page-title-wrap
-						h1.page-title M03
+						h1.page-title= space.name
 						h2.page-subtitle คณะเทคโนโลยีสารสนเทศ
 				div.container
 					div.row.flex.marg-b-1#row-1
@@ -78,7 +78,7 @@ html
 									a.button.raised(href="/fill-request")
 										i.fas.fa-pencil-alt
 										| จอง
-						div.card Hello
+						div.card= space.description
 						div
 							button#report(onclick="showModal('modal')")
 								i.fas.fa-exclamation-triangle
