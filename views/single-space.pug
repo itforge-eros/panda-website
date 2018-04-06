@@ -40,10 +40,10 @@ html
 									i.fas.fa-2x.fa-desktop
 									span คอมฯผู้สอน
 								span.amenity
-									img.i(src="public/img/icons/snow.svg")
+									img.i(src="/public/img/icons/snow.svg")
 									span แอร์
 								span.amenity
-									img.i(src="public/img/icons/projector.svg")
+									img.i(src="/public/img/icons/projector.svg")
 									span โปรเจ็กเตอร์
 					div.row#row-2
 						div.card.shadow
@@ -75,7 +75,7 @@ html
 								p.text-center(v-show="chosenTimes.length == 0") กรุณาเลือกเวลาเพื่อจอง
 								p.text-center(v-show="chosenTimes.length != 0") ที่เลือกไว้: {{ chosenTimePeriod }}
 								div.text-center(v-show="chosenTimes.length != 0")
-									a.button.raised(href="fill-request")
+									a.button.raised(href="/fill-request")
 										i.fas.fa-pencil-alt
 										| จอง
 						div.card Hello
@@ -91,14 +91,14 @@ html
 					p M03
 					textarea.marg-b-1(name="report", rows="4")
 					button.raised ส่งรายงาน
-	script(src="public/scripts/single-page.js")
+	script(src="/public/scripts/single-page.js")
 	script
-		|function showModal(modal) {
-		|	document.getElementById(modal).classList.add("show")
-		|}
-		|function closeModal(modal) {
-		|	document.getElementById(modal).classList.remove("show")
-		|}
+		| function showModal(modal) {
+		| 	document.getElementById(modal).classList.add("show")
+		| }
+		| function closeModal(modal) {
+		| 	document.getElementById(modal).classList.remove("show")
+		| }
 		| if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
 		| 	var modal = document.getElementById("modal");
 		| 	modal.classList.add("ios");
