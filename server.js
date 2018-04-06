@@ -20,53 +20,51 @@ const manageRoleRouter = require("./routes/manageRole");
 const manageSpaceRouter = require("./routes/manageSpace");
 const manageReportRouter = require("./routes/manageReport");
 
-app.get("/", function(req, res) {
-	res.render("index", { session: testData.session, user: testData.user, faculty: testData.faculty });
-});
-
 app.use("/authen", authenRouter);
 app.use("/manage-request", manageRequestRouter);
 app.use("/manage-role", manageRoleRouter);
 app.use("/manage-space", manageSpaceRouter);
 app.use("/manage-report", manageReportRouter);
 
-app.get("/single", function(req, res) {
+app.get("/", (req, res) => {
+	res.render("index", { session: testData.session, user: testData.user, faculty: testData.faculty });
+});
+app.get("/single", (req, res) => {
 	res.render("single-space", {
 		session: testData.session,
 		user: testData.user,
 		faculty: testData.faculty
 	});
 });
-app.get("/fill-request", function(req, res) {
+app.get("/fill-request", (req, res) => {
 	res.render("fill-request", {
 		session: testData.session,
 		user: testData.user,
 		faculty: testData.faculty
 	});
 });
-app.get("/request-sent", function(req, res) {
+app.get("/request-sent", (req, res) => {
 	res.render("request-sent", {
 		session: testData.session,
 		user: testData.ser,
 		faculty: testData.faculty
 	});
 });
-app.get("/my-request", function(req, res) {
+app.get("/my-request", (req, res) => {
 	res.render("my-request", {
 		session: testData.session,
 		user: testData.user,
 		faculty: testData.faculty
 	});
 });
-app.get("/request/:id", function(req, res) {
+app.get("/request/:id", (req, res) => {
 	res.render("single-request", {
 		session: testData.session,
 		user: testData.user,
-		id: req.params.id,
-		reqInfo: testData.requestInfo
+		reqInfo: testData.requestInfo,
+		id: req.params.id
 	});
 });
-
 
 // Start the server
 app.listen(port, () =>
