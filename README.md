@@ -15,17 +15,17 @@ The Panda Project sources are hosted on GitHub.
 1. Run `npm i` in the project folder to install required dependencies.
 2. Run `node server.js` to start the Web server.
 
-It will be hosted at `localhost`. The nodeJS will give you the localhost address and port.<br>
-Please see the open port for the localhost port
+The website can now be accessed at `localhost:3000`.
 
 # <img src="https://png.icons8.com/ios/30/000000/pull-request.png"> Contributing
-We are happy to let you become the part of the project. <br>
-NOTE : Pull request approving process will start after 7th May 2018.
+We are happy to let you become part of the project.
+
+> Note: Pull request approval starts on May 7, 2018.
 
 Steps to contribute to our project
 1. [Fork](https://help.github.com/articles/fork-a-repo/) our repository
 2. Edit the code on your forked repository
-3. Go to our repository and [create new pull request](https://help.github.com/articles/creating-a-pull-request/)
+3. Go to our repository and [create a new pull request](https://help.github.com/articles/creating-a-pull-request/)
 4. We will review your code, and eventually pull your code to our repository.
 5. You have made our system shinier everyday!
 
@@ -54,12 +54,15 @@ app.get("/any-url-to-catch", function(req, res) {
 
 ```
 panda-website/
+├── models/		<-- classes
 ├── node_modules/	<-- Node module resources
 ├── public/		<-- Publicly-accessible directory
+├── routes/		<-- route handlers
 ├── src-scripts/	<-- Source script files
-├── src-styles/	<-- Source style files
+├── src-styles/		<-- Source style files
 ├── views/		<-- Page files
 ├── .gitignore
+├── globalVars.js	<-- Global variables for JS files
 ├── LICENSE.txt
 ├── README.md
 ├── gulpfile.js
@@ -84,7 +87,7 @@ We are from Information Technology, King Mongkut Institute of Technology Ladkrab
 |<img src="https://avatars0.githubusercontent.com/u/3814520" width="75px">|Nathan|Yiangsupapaanontr|[@DobaKung](https://github.com/DobaKung)|59070087|
 |<img src="https://avatars1.githubusercontent.com/u/20330195" width="75px">|Pornprom|Kiawjak|[@foofybuster](https://github.com/foofybuster)|59070113|
 
-This repository is part of these subject
+This repository is part of these subjects
 - Web Programming 06016215
 - Information System and Analysis 06016216
 - Database System Concepts 06016217
