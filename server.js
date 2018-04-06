@@ -17,6 +17,7 @@ const testData = require("./models/testData");
 const authenRouter = require("./routes/authen");
 const manageRequestRouter = require("./routes/manageRequest");
 const manageRoleRouter = require("./routes/manageRole");
+const manageSpaceRouter = require("./routes/manageSpace");
 
 app.get("/", function(req, res) {
 	res.render("index", { session: testData.session, user: testData.user, faculty: testData.faculty });
@@ -25,6 +26,7 @@ app.get("/", function(req, res) {
 app.use("/authen", authenRouter);
 app.use("/manage-request", manageRequestRouter);
 app.use("/manage-role", manageRoleRouter);
+app.use("/manage-space", manageSpaceRouter);
 
 app.get("/single", function(req, res) {
 	res.render("single-space", {
@@ -63,18 +65,6 @@ app.get("/request/:id", function(req, res) {
 	});
 });
 
-app.get("/manage-space", function(req, res) {
-		res.render("manage-space", {
-		session: testData.session,
-		user: testData.user
-	});
-});
-app.get("/manage-space/:id", function(req, res) {
-		res.render("manage-space-single", {
-		session: testData.session,
-		user: testData.user
-	});
-});
 app.get("/manage-report", function(req, res) {
 		res.render("manage-report", {
 		session: testData.session,
