@@ -11,130 +11,108 @@ app.set("view engine", "pug");
 app.use("/public", express.static(__dirname + "/public"));
 
 // Data
-let session = {
-	env: env,
-	currentUser: "",
-	authenUrl: "/login"
-};
-let user = { isAdmin: true, isApprover: true };
-let faculty = [
-	{ name: "คณะเทคโนโลยีสารสนเทศ", slug: "fac-it" },
-	{ name: "คณะเทคโนโลยีการเกษตร", slug: "fac-agro" },
-	{ name: "คณะสถาปัตยกรรมศาสตร์", slug: "fac-arch" },
-	{ name: "คณะวิทยาศาสตร์", slug: "fac-sci" }
-];
-let requestInfo = [
-	{ name: "ผู้จอง", data: "นาย สมศรี ชาวไร่" },
-	{ name: "ยื่นคำร้องเมื่อ", data: "28 กุมภาพันธ์ 2561"},
-	{ name: "วันที่ต้องการจอง", data: "30 กุมภาพันธ์ 2561"},
-	{ name: "เวลาที่ต้องการจอง", data: "10.00 - 12.00"},
-	{ name: "จำนวนที่นั่ง", data: "50"},
-	{ name: "เหตุผล", data: "อย่าอยากรู้ให้มากได้ปะ"},
-];
+const testData = require("./models/testData");
 
 // Routes
+const authenRouter = require("./routes/authen");
+
 app.get("/", function(req, res) {
-	res.render("index", { session: session, user: user, faculty: faculty });
+	res.render("index", { session: testData.session, user: testData.user, faculty: testData.faculty });
 });
-app.get("/login", function(req, res) {
-	res.render("login", { session: session, user, user });
-});
-app.get("/logout", function(req, res) {
-	session.currentUser = "";
-	session.authenUrl = "/login";
-	res.redirect("/");
-});
+
+app.use("/authen", authenRouter);
+
 app.get("/single", function(req, res) {
 	res.render("single-space", {
-		session: session,
-		user: user,
-		faculty: faculty
+		session: testData.session,
+		user: testData.user,
+		faculty: testData.faculty
 	});
 });
 app.get("/fill-request", function(req, res) {
 	res.render("fill-request", {
-		session: session,
-		user: user,
-		faculty: faculty
+		session: testData.session,
+		user: testData.user,
+		faculty: testData.faculty
 	});
 });
 app.get("/request-sent", function(req, res) {
 	res.render("request-sent", {
-		session: session,
-		user: user,
-		faculty: faculty
+		session: testData.session,
+		user: testData.ser,
+		faculty: testData.faculty
 	});
 });
 app.get("/my-request", function(req, res) {
 	res.render("my-request", {
-		session: session,
-		user: user,
-		faculty: faculty
+		session: testData.session,
+		user: testData.user,
+		faculty: testData.faculty
 	});
 });
 app.get("/request/:id", function(req, res) {
 	res.render("single-request", {
-		session: session,
-		user: user,
+		session: testData.session,
+		user: testData.user,
 		id: req.params.id,
-		reqInfo: requestInfo
+		reqInfo: testData.requestInfo
 	});
 });
 app.get("/manage-request", function(req, res) {
 		res.render("manage-request", {
-		session: session,
-		user: user,
-		faculty: faculty
+		session: testData.session,
+		user: testData.user,
+		faculty: testData.faculty
 	});
 });
 app.get("/manage-request/:id", function(req, res) {
 		res.render("manage-request-single", {
-		session: session,
-		user: user,
+		session: testData.session,
+		user: testData.user,
 		id: req.params.id,
-		reqInfo: requestInfo
+		reqInfo: testData.requestInfo
 	});
 });
 app.get("/manage-role", function(req, res) {
 		res.render("manage-role", {
-		session: session,
-		user: user
+		session: testData.session,
+		user: testData.user
 	});
 });
 app.get("/manage-role/:id", function(req, res) {
 		res.render("manage-role-single", {
-		session: session,
-		user: user
+		session: testData.session,
+		user: testData.user
 	});
 });
 app.get("/manage-role/:id/users", function(req, res) {
 		res.render("manage-role-user", {
-		session: session,
-		user: user
+		session: testData.session,
+		user: testData.user
 	});
 });
 app.get("/manage-space", function(req, res) {
 		res.render("manage-space", {
-		session: session,
-		user: user
+		session: testData.session,
+		user: testData.user
 	});
 });
 app.get("/manage-space/:id", function(req, res) {
 		res.render("manage-space-single", {
-		session: session,
-		user: user
+		session: testData.session,
+		user: testData.user
 	});
 });
 app.get("/manage-report", function(req, res) {
 		res.render("manage-report", {
-		session: session,
-		user: user
+		session: testData.session,
+		user: testData.user
 	});
 });
 app.get("/manage-report/:id", function(req, res) {
 		res.render("manage-report-single", {
-		session: session,
-		user: user,
+		session: testData.session,
+		user: testData.user,
 		id: req.params.id
 	});
 });
