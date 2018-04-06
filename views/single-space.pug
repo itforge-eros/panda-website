@@ -63,7 +63,7 @@ html
 													td= time
 										div.slots#slots-1
 											each slot in slots1
-												time-slot(id='slot-'+slot.id, :available="true", :position=slot.id)= slot.t
+												time-slot(id='slot-'+slot.id,:available="true", :position=slot.id)= slot.t
 									div.slot-wrap
 										table.times.text-center
 											tr
@@ -83,7 +83,7 @@ html
 						div
 							button#report(onclick="showModal('modal')")
 								i.fas.fa-exclamation-triangle
-								| รายงานปัญหา
+								| รายงานปัญหา 
 			div.modal#modal
 				div.card
 					span.close(onclick="closeModal('modal')")

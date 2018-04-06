@@ -1,3 +1,4 @@
+
 function converterToHour(endTime, startTime){
 	return Math.floor(endTime - startTime); 
 	// this function use for finding duration of room reservation with hour that be floored
@@ -19,7 +20,7 @@ function convertToHumanity(time) {
 	
 	// this function use for converting the format .5 hour to humanity format
 }
-console.log("kuy");
+
 Vue.component('time-slot', {
 	props: {
 		available: Boolean,
@@ -36,10 +37,25 @@ Vue.component('time-slot', {
 				if (app.chosenTimes.includes(this.position))
 					app.chosenTimes.splice(app.chosenTimes.indexOf(this.position), 1);
 				else app.chosenTimes.push(this.position);
+				}
+				// sub function psudoDrag
+				min_time = Math.min.apply(null, app.chosenTimes);
+				max_time = Math.max.apply(null, app.chosenTimes);
+				for (var i = min_time; i <= (max_time - min_time)+min_time; i+=0.5) 
+					{
+						document.getElementById(id="slot-" + i).setAttribute("class", "slot selected");
+					}
+				console.log((app.chosenTimes).length);
+				if(app.chosenTimes.length == 3) 
+					{
+						(app.chosenTimes).length = 0;
+						for (var i = 0; i < document.getElementsByClassName("selected").length; i++) {
+							document.getElementsByClassName("selected")[0].setAttribute("class", "slot");
+						}
+					};
+				}
 			}
-		}
-	}
-});
+		});
 var app = new Vue({
 	el: '#app',
 	data: {
