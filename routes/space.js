@@ -38,11 +38,11 @@ router.get("/:id", (req, res) => {
 					space: returnedData.data.space
 				});
 			} else {
-				res.redirect("/");
+				res.redirect("/error");
 			}
 		})
 		.catch(() => {
-			res.redirect("/");
+			res.redirect("/error");
 		});
 });
 
