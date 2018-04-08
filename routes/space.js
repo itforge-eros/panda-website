@@ -6,12 +6,18 @@ const testData = require("../models/testData");
 const ApolloClient = require("apollo-client").ApolloClient;
 const InMemoryCache = require("apollo-cache-inmemory").InMemoryCache;
 const createHttpLink = require("apollo-link-http").createHttpLink;
+const setContext = require("apollo-link-context").setContext;
 const fetch = require("node-fetch");
 const gql = require("graphql-tag");
 
+let token = "";
+const authLink = setContext((_, { headers }) => {
+	return {headers: { authorization: token ? `bearer${token}` : "" }};
+});
 const apollo = new ApolloClient({
-	uri: globalVars.gqlURL,
-	link: createHttpLink({ uri: globalVars.gqlURL, fetch: fetch }),
+	link: authLink.concat(
+		createHttpLink({ uri: globalVars.gqlURL, fetch: fetch })
+	),
 	cache: new InMemoryCache()
 });
 
@@ -28,12 +34,14 @@ const getSpace = id => {
 };
 
 router.get("/:id", (req, res) => {
+	token = req.session.token;
 	getSpace(req.params.id)
 		.then(returnedData => {
 			if (returnedData.data.space != null) {
 				res.render("single-space", {
 					session: testData.session,
 					user: testData.user,
+					member: req.session.member,
 					faculty: testData.faculty,
 					space: returnedData.data.space
 				});
@@ -41,7 +49,8 @@ router.get("/:id", (req, res) => {
 				res.redirect("/error");
 			}
 		})
-		.catch(() => {
+		.catch((error) => {
+			console.log(error);
 			res.redirect("/error");
 		});
 });

@@ -47,7 +47,7 @@ html
 				img#search-house(src="public/img/search-house.svg")
 				div.container.steep#search-results(v-if="!firstSearch")
 					each i in [1,2,3,4]
-						result-card(slug="hello", name="M23", seats="50", :amenities="['pc', 'sound', 'aircon', 'proj']")
+						result-card(slug="a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", name="M23", seats="50", :amenities="['pc', 'sound', 'aircon', 'proj']")
 	script(type="text/x-template", id="result-card")
 		a.card.shadow.hoverable.search-result-card(v-bind:href="'space/' + slug")
 			h1 {{ name }}

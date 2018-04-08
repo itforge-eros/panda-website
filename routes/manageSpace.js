@@ -5,13 +5,15 @@ const testData = require("../models/testData");
 router.get("/", (req, res) => {
 		res.render("manage-space", {
 		session: testData.session,
-		user: testData.user
+		user: testData.user,
+		member: req.session.member
 	});
 });
 router.get("/:id", (req, res) => {
 		res.render("manage-space-single", {
 		session: testData.session,
-		user: testData.user
+		user: testData.user,
+		member: req.session.member
 	});
 });
 

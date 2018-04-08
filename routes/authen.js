@@ -4,6 +4,7 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const rp = require("request-promise");
+const session = require("express-session");
 const testData = require("../models/testData");
 
 const getMember = (usr, pwd) => {
@@ -21,29 +22,29 @@ const getMember = (usr, pwd) => {
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
+router.use(
+	session({
+		secret: "keyboard cat",
+		resave: false,
+		saveUninitialized: true
+	})
+);
+
 // GET authentication methods
 router.get("/", (req, res, next) => {
-	// if (isLoggedIn) goToIndex(); else goToLogin();
-	res.render("index", {
-		session: testData.session,
-		user: testData.user,
-		faculty: testData.faculty
-	});
+	res.redirect("/");
 });
 
 router.get("/login", (req, res, next) => {
-	res.render("login", { session: testData.session, user: testData.user });
+	res.render("login", { session: testData.session, user: testData.user, member: req.session.member });
 });
 
 router.post("/login", multer().array(), (req, res, next) => {
-	let member;
-	getMember(req.body.username, req.body.password)
-		.then(data => {
-			member = data;
-		})
-		.then(() => {
-			console.log(member);
-		});
+	getMember(req.body.username, req.body.password).then(data => {
+		req.session.token = data.data.token;
+		req.session.member = data.data.member;
+		res.redirect("/");
+	});
 });
 
 /*router.get("/logout", (req, res) => {
