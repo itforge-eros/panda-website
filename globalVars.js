@@ -1,5 +1,7 @@
-const apiURL = "http://api.panda.itforge.io/graphql";
+const gqlURL = "http://api.panda.itforge.io/graphql";
+const loginURL = "http://api.panda.itforge.io/login";
 
 module.exports = {
-	apiURL: apiURL
+	gqlURL: gqlURL,
+	loginURL: loginURL
 }
