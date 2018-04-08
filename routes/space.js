@@ -10,8 +10,8 @@ const fetch = require("node-fetch");
 const gql = require("graphql-tag");
 
 const apollo = new ApolloClient({
-	uri: globalVars.apiURL,
-	link: createHttpLink({ uri: globalVars.apiURL, fetch: fetch }),
+	uri: globalVars.gqlURL,
+	link: createHttpLink({ uri: globalVars.gqlURL, fetch: fetch }),
 	cache: new InMemoryCache()
 });
 
