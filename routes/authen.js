@@ -24,6 +24,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 router.use(
 	session({
+		name: "kmitl_osrs",
 		secret: "keyboard cat",
 		resave: false,
 		saveUninitialized: true

@@ -24,6 +24,7 @@ const spaceRouter = require("./routes/space");
 
 app.use(
 	session({
+		name: "kmitl_osrs",
 		secret: "keyboard cat",
 		resave: false,
 		saveUninitialized: true
