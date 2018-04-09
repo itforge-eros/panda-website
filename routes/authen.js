@@ -3,19 +3,33 @@ const express = require("express");
 const router = express.Router();
 const bodyParser = require("body-parser");
 const multer = require("multer");
-const rp = require("request-promise");
 const session = require("express-session");
 const testData = require("../models/testData");
 
+const ApolloClient = require("apollo-client").ApolloClient;
+const InMemoryCache = require("apollo-cache-inmemory").InMemoryCache;
+const createHttpLink = require("apollo-link-http").createHttpLink;
+const setContext = require("apollo-link-context").setContext;
+const fetch = require("node-fetch");
+const gql = require("graphql-tag");
+
+const apollo = new ApolloClient({
+	link: createHttpLink({ uri: globalVars.gqlURL, fetch: fetch }),
+	cache: new InMemoryCache()
+});
+
 const getMember = (usr, pwd) => {
-	return rp({
-		method: "POST",
-		uri: globalVars.loginURL,
-		json: true,
-		body: {
-			username: usr,
-			password: pwd
-		}
+	return apollo.query({
+		query: gql`
+			{
+				login(username: "${usr}", password: "${pwd}") {
+					member {
+						id, username, firstName, lastName, email
+					},
+					token
+				}
+			}
+		`
 	});
 };
 
@@ -49,8 +63,8 @@ router.post("/login", multer().array(), (req, res, next) => {
 		res.redirect("/authen/login");
 	} else {
 		getMember(req.body.username, req.body.password).then(data => {
-			req.session.token = data.data.token;
-			req.session.member = data.data.member;
+			req.session.token = data.data.login.token;
+			req.session.member = data.data.login.member;
 			res.redirect("/");
 		});
 	}
