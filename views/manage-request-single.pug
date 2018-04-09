@@ -20,9 +20,29 @@ html
 							tr
 								td= item.name
 								td= item.data
-					a.button.raised
+					a.button.raised(onclick="showModal('modal')")
 						i.fas.fa-check
 						| อนุมัติ
-					a.button.raised.color-red
+					a.button.raised.color-red(onclick="showModal('modal')")
 						i.fas.fa-times
 						| ปฏิเสธ
+			div.modal#modal
+				div.card
+					span.close(onclick="closeModal('modal')")
+						i.fas.fa-times-circle
+					h1.modal-title กรุณากรอกรหัสผ่าน
+					div.input-wrap
+						input.fluid(name="report", type="password")
+					button.raised ยืนยัน
+		script(src="/public/scripts/manage-request-single.js")
+		script
+			| function showModal(modal) {
+			| 	document.getElementById(modal).classList.add("show")
+			| }
+			| function closeModal(modal) {
+			| 	document.getElementById(modal).classList.remove("show")
+			| }
+			| if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+			| 	var modal = document.getElementsByClassName("modal");
+			| 	for (i = 0; i < modal.length; i++) modal[i].classList.add("ios");
+			| }

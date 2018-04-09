@@ -5,20 +5,25 @@ nav
 		li
 			a.icon-link(href="/")
 				i.fas.fa-search
+			span.tooltip ค้นหาสถานที่
 		if user.isAdmin
 			li
 				a.icon-link(href="/manage-space")
 					i.fas.fa-building
+				span.tooltip จัดการสถานที่
 			li
 				a.icon-link(href="/manage-role")
 					i.fas.fa-users
+				span.tooltip จัดการสิทธิ์
 		if user.isApprover
 			li
 				a.icon-link(href="/manage-request")
 					i.fas.fa-clipboard-check
+				span.tooltip จัดการคำร้อง
 		li
 			a.icon-link(href="/my-request")
 				i.fas.fa-book
+			span.tooltip คำร้องของฉัน
 		a.authen(href=(member ? "/authen/logout" : "/authen/login"))= (member ? member.firstName : "เข้าสู่ระบบ") + " "
 			if member
 				i.fas.fa-times-circle
