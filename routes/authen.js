@@ -10,7 +10,6 @@ const testData = require("../models/testData");
 const ApolloClient = require("apollo-client").ApolloClient;
 const InMemoryCache = require("apollo-cache-inmemory").InMemoryCache;
 const createHttpLink = require("apollo-link-http").createHttpLink;
-const setContext = require("apollo-link-context").setContext;
 const fetch = require("node-fetch");
 const gql = require("graphql-tag");
 
