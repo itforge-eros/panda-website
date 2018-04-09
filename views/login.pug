@@ -24,5 +24,8 @@ html
 							if isCredEmpty
 								div.input-wrap
 									span.err กรุณากรอกข้อมูลให้ครบ
+							if isCredInvalid
+								div.input-wrap
+									span.err ข้อมูลไม่ถูกต้อง
 							button.raised(type="button", @click="validate()") เข้าสู่ระบบ
 		script(src="/public/scripts/login.js")

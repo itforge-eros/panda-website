@@ -6,6 +6,7 @@ const multer = require("multer");
 const session = require("express-session");
 const testData = require("../models/testData");
 
+// required for apollo
 const ApolloClient = require("apollo-client").ApolloClient;
 const InMemoryCache = require("apollo-cache-inmemory").InMemoryCache;
 const createHttpLink = require("apollo-link-http").createHttpLink;
@@ -46,15 +47,23 @@ router.use(
 );
 
 let isCredEmpty = false;
+let isCredInvalid = false;
 
-// GET authentication methods
 router.get("/", (req, res, next) => {
 	res.redirect("/");
 });
 
 router.get("/login", (req, res, next) => {
-	res.render("login", { session: testData.session, user: testData.user, member: req.session.member, isCredEmpty: isCredEmpty });
-	isCredEmpty = false; // reset so that refreshing the page doesn't display error
+	res.render("login", {
+		session: testData.session,
+		user: testData.user,
+		member: req.session.member,
+		isCredEmpty: isCredEmpty,
+		isCredInvalid: isCredInvalid
+	});
+	// reset the flags so that the page hides the errors on refresh
+	isCredEmpty = false;
+	isCredInvalid = false;
 });
 
 router.post("/login", multer().array(), (req, res, next) => {
@@ -66,6 +75,11 @@ router.post("/login", multer().array(), (req, res, next) => {
 			req.session.token = data.data.login.token;
 			req.session.member = data.data.login.member;
 			res.redirect("/");
+		}).catch(err => {
+			// console.log(err.graphQLErrors[0].message);
+			console.log(err);
+			isCredInvalid = true;
+			res.redirect("/authen/login");
 		});
 	}
 });
