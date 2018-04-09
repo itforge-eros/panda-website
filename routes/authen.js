@@ -30,27 +30,35 @@ router.use(
 	})
 );
 
+let isCredEmpty = false;
+
 // GET authentication methods
 router.get("/", (req, res, next) => {
 	res.redirect("/");
 });
 
 router.get("/login", (req, res, next) => {
-	res.render("login", { session: testData.session, user: testData.user, member: req.session.member });
+	res.render("login", { session: testData.session, user: testData.user, member: req.session.member, isCredEmpty: isCredEmpty });
+	isCredEmpty = false; // reset so that refreshing the page doesn't display error
 });
 
 router.post("/login", multer().array(), (req, res, next) => {
-	getMember(req.body.username, req.body.password).then(data => {
-		req.session.token = data.data.token;
-		req.session.member = data.data.member;
-		res.redirect("/");
-	});
+	if (req.body.username == "" || req.body.password == "") {
+		isCredEmpty = true;
+		res.redirect("/authen/login");
+	} else {
+		getMember(req.body.username, req.body.password).then(data => {
+			req.session.token = data.data.token;
+			req.session.member = data.data.member;
+			res.redirect("/");
+		});
+	}
 });
 
-/*router.get("/logout", (req, res) => {
-	session.currentUser = "";
-	session.authenUrl = "/login";
+router.get("/logout", (req, res) => {
+	req.session.token = null;
+	req.session.member = null;
 	res.redirect("/");
-});*/
+});
 
 module.exports = router;

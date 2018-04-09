@@ -19,4 +19,7 @@ html
 							div.marg-b-1
 								label(for="password") รหัสผ่าน
 								input(type="password", name="password")
+							if isCredEmpty
+								div.input-wrap
+									span.err กรุณากรอกข้อมูลให้ครบ
 							button.raised เข้าสู่ระบบ

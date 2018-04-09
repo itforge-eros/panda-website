@@ -19,7 +19,7 @@ nav
 		li
 			a.icon-link(href="/my-request")
 				i.fas.fa-book
-		a.authen(href=session.authenUrl)= (member ? member.firstName : 'เข้าสู่ระบบ') + ' '
+		a.authen(href=(member ? "/authen/logout" : "/authen/login"))= (member ? member.firstName : "เข้าสู่ระบบ") + " "
 			if member
 				i.fas.fa-times-circle
 			else
