@@ -1,3 +1,4 @@
+const globalVars = require("./globalVars");
 const express = require("express");
 const app = express();
 const env = process.env.NODE_ENV || "dev";
@@ -22,14 +23,7 @@ const manageSpaceRouter = require("./routes/manageSpace");
 const manageReportRouter = require("./routes/manageReport");
 const spaceRouter = require("./routes/space");
 
-app.use(
-	session({
-		name: "kmitl_osrs",
-		secret: "keyboard cat",
-		resave: false,
-		saveUninitialized: true
-	})
-);
+app.use(session(globalVars.sessionOptions));
 
 app.use("/authen", authenRouter);
 app.use("/manage-request", manageRequestRouter);

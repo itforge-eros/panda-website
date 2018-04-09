@@ -37,14 +37,7 @@ const getMember = (usr, pwd) => {
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-router.use(
-	session({
-		name: "kmitl_osrs",
-		secret: "keyboard cat",
-		resave: false,
-		saveUninitialized: true
-	})
-);
+router.use(session(globalVars.sessionOptions));
 
 let isCredEmpty = false;
 let isCredInvalid = false;
