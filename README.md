@@ -3,21 +3,21 @@
 
 Welcome to the development documentation of **Project Panda** (or _The Panda Project_), aka _KMITL Online Space Reservation System_.
 
-# <img src="https://png.icons8.com/ios/30/000000/project.png"> The Panda Project
+# 🗂 The Panda Project
 The Panda Project sources are hosted on GitHub.
 
 * Project Panda API : [itforge-eros/panda-api](https://github.com/itforge-eros/panda-api)
 * Project Panda Front End : [itforge-eros/panda-website](https://github.com/itforge-eros/panda-website)
 * Project Panda Documentation : [itforge-eros/panda-docs](https://github.com/itforge-eros/panda-docs)
 
-# <img src="https://png.icons8.com/ios/30/000000/launched-rocket.png"> Starting up the server
+# 🚀 Starting up the server
 
 1. Run `npm i` in the project folder to install required dependencies.
 2. Run `node server.js` to start the Web server.
 
 The website can now be accessed at `localhost:3000`.
 
-# <img src="https://png.icons8.com/ios/30/000000/pull-request.png"> Contributing
+# 🛠 Contributing
 We are happy to let you become part of the project.
 
 > Note: Pull request approval starts on May 7, 2018.
@@ -76,7 +76,7 @@ panda-website/
 * If changes don't show up, check if you have already run `gulp` (for front-end) and `node` (for back-end).
 * Use `nodemon` instead of `node` to automatically restart the server when the _server code_ changes.
 
-# <img src="https://png.icons8.com/ios/30/000000/groups.png"> Team Members
+# 👨‍👩‍👧‍👦 Team Members
 We are from Information Technology, King Mongkut Institute of Technology Ladkrabang
 
 ||First Name|Last Name|GitHub Username|Student ID|
