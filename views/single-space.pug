@@ -92,14 +92,4 @@ html
 					textarea.marg-b-1(name="report", rows="4")
 					button.raised ส่งรายงาน
 	script(src="/public/scripts/single-page.js")
-	script
-		| function showModal(modal) {
-		| 	document.getElementById(modal).classList.add("show")
-		| }
-		| function closeModal(modal) {
-		| 	document.getElementById(modal).classList.remove("show")
-		| }
-		| if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
-		| 	var modal = document.getElementById("modal");
-		| 	modal.classList.add("ios");
-		| }
+	script(src="/public/scripts/modal.js")

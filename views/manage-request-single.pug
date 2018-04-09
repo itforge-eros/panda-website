@@ -35,14 +35,4 @@ html
 						input.fluid(name="report", type="password")
 					button.raised ยืนยัน
 		script(src="/public/scripts/manage-request-single.js")
-		script
-			| function showModal(modal) {
-			| 	document.getElementById(modal).classList.add("show")
-			| }
-			| function closeModal(modal) {
-			| 	document.getElementById(modal).classList.remove("show")
-			| }
-			| if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
-			| 	var modal = document.getElementsByClassName("modal");
-			| 	for (i = 0; i < modal.length; i++) modal[i].classList.add("ios");
-			| }
+		script(src="/public/scripts/modal.js")
