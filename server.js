@@ -5,6 +5,26 @@ const env = process.env.NODE_ENV || "dev";
 const port = env == "production" ? 80 : 3000;
 const session = require("express-session");
 
+const axios = require("axios");
+
+axios(globalVars.gqlURL, {
+	method: "POST",
+	data: {
+		query: `
+			query {
+				spaces {
+					id, name
+				}
+			}
+		`
+	}
+}).then(result => {
+	searchResults = result.data;
+	console.log(result.data);
+}).catch(err => {
+	console.log(err)
+});
+
 // Set view location
 app.set("views", "./views");
 // Set template engine
