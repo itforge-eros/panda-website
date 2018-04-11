@@ -59,17 +59,21 @@ router.get("/login", (req, res, next) => {
 });
 
 router.post("/login", multer().array(), (req, res, next) => {
+	console.log("logging in")
 	if (req.body.username == "" || req.body.password == "") {
 		isCredEmpty = true;
+		console.log("asdf")
 		res.redirect("/authen/login");
 	} else {
 		getMember(req.body.username, req.body.password).then(data => {
 			req.session.token = data.data.login.token;
+			console.log(req.session.token)
 			req.session.member = data.data.login.member;
 			res.redirect("/");
 		}).catch(err => {
 			// console.log(err.graphQLErrors[0].message);
 			console.log(err);
+			console.log("something");
 			isCredInvalid = true;
 			res.redirect("/authen/login");
 		});

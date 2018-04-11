@@ -1,3 +1,4 @@
+const apiURL = "http://api.panda.itforge.io/graphql";
 const trySamples = ["M03 IT", "Auditorium", "อาคารเรียนรวม"];
 
 Vue.component("result-card", {
@@ -15,7 +16,8 @@ var app = new Vue({
 		s_seats: "",
 		firstSearch: true,
 		showAdvanced: false,
-		trySamples: trySamples
+		trySamples: trySamples,
+		searchResults: []
 	},
 	methods: {
 		toggleAdvanced: function() {
@@ -30,6 +32,23 @@ var app = new Vue({
 				document.getElementById("labels").remove();
 				document.getElementById("search-house").remove();
 				this.firstSearch = false;
+				axios(apiURL, {
+					method: "POST",
+					data: {
+						query: `
+							query {
+								spaces {
+									id, name, capacity
+								}
+							}
+						`
+					}
+				}).then(result => {
+					this.searchResults = result.data.data.spaces;
+					console.log(result.data.data.spaces);
+				}).catch(err => {
+					console.log(err)
+				})
 			}
 		}
 	}
