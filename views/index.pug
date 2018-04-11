@@ -15,7 +15,7 @@ html
 						div.row.flex
 							div.input-with-icon.inp-flex
 								i.fas.fa-building
-								input(type="text", placeholder="M23 IT", name="s-quick", v-model="s_quick")
+								input(type="text", placeholder="M23 IT", name="s-quick", v-model="s_quick", :disabled="showAdvanced")
 							div.input-with-icon.inp-date
 								i.fas.fa-calendar-alt
 								input(type="text", placeholder="date", name="s-date", v-model="s_date")
