@@ -46,13 +46,6 @@ Vue.component('time-slot', {
 						document.getElementById(id="slot-" + i).setAttribute("class", "slot selected");
 					}
 				console.log((app.chosenTimes).length);
-				if(app.chosenTimes.length == 3) 
-					{
-						(app.chosenTimes).length = 0;
-						for (var i = 0; i < document.getElementsByClassName("selected").length; i++) {
-							document.getElementsByClassName("selected")[0].setAttribute("class", "slot");
-						}
-					};
 				}
 			}
 		});
