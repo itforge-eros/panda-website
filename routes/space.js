@@ -6,18 +6,11 @@ const testData = require("../models/testData");
 const ApolloClient = require("apollo-client").ApolloClient;
 const InMemoryCache = require("apollo-cache-inmemory").InMemoryCache;
 const createHttpLink = require("apollo-link-http").createHttpLink;
-const setContext = require("apollo-link-context").setContext;
 const fetch = require("node-fetch");
 const gql = require("graphql-tag");
 
-let token = "";
-const authLink = setContext((_, { headers }) => {
-	return {headers: { authorization: token ? `bearer${token}` : "" }};
-});
 const apollo = new ApolloClient({
-	link: authLink.concat(
-		createHttpLink({ uri: globalVars.gqlURL, fetch: fetch })
-	),
+	link: createHttpLink({ uri: globalVars.gqlURL, fetch: fetch }),
 	cache: new InMemoryCache()
 });
 
@@ -34,7 +27,6 @@ const getSpace = id => {
 };
 
 router.get("/:id", (req, res) => {
-	token = req.session.token;
 	getSpace(req.params.id)
 		.then(returnedData => {
 			if (returnedData.data.space != null) {
