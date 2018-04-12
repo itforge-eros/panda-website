@@ -15,6 +15,10 @@ nav
 				a.icon-link(href="/manage-role")
 					i.fas.fa-users
 				span.tooltip จัดการสิทธิ์
+			li
+				a.icon-link(href="/manage-material")
+					i.fas.fa-cube
+				span.tooltip จัดการอุปกรณ์ให้ยืม
 		if user.isApprover
 			li
 				a.icon-link(href="/manage-request")
@@ -41,6 +45,9 @@ nav.mobile-nav#mobile-nav
 			li
 				a.icon-link(href="/manage-role")
 					i.fas.fa-users
+			li
+				a.icon-link(href="/manage-material")
+					i.fas.fa-cube
 		if user.isApprover
 			li
 				a.icon-link(href="/manage-request")

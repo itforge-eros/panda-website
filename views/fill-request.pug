@@ -34,6 +34,16 @@ html
 							label(for="reason") เหตุผลในการจอง
 							textarea(name="reason", rows="4", required)
 							span.err กรุณากรอกข้อมูล
+						div.marg-b-1
+							label อุปกรณ์ที่ต้องการยืม
+							table
+								each item in [1,2,3]
+									tr
+										td
+											label.control.checkbox
+												input(type="checkbox", name="borrow-"+item)
+												span.control-indicator
+												| ไมโครฟง
 						button.raised
 							i.fas.fa-paper-plane
 							| ส่งข้อมูล
