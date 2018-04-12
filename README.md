@@ -1,4 +1,4 @@
-![](https://i.imgur.com/uteHb6I.png)
+![KMITL OSRS](https://zartre.com/files/KMITL-OSRS.png)
 # Project Panda Website 🐼
 
 Welcome to the development documentation of **Project Panda** (or _The Panda Project_), aka _KMITL Online Space Reservation System_.
