@@ -22,28 +22,30 @@ We are happy to let you become part of the project.
 
 > Note: Pull request approval starts on May 7, 2018.
 
-Steps to contribute to our project
-1. [Fork](https://help.github.com/articles/fork-a-repo/) our repository
-2. Edit the code on your forked repository
-3. Go to our repository and [create a new pull request](https://help.github.com/articles/creating-a-pull-request/)
-4. We will review your code, and eventually pull your code to our repository.
+Steps to contribute to the project
+1. [Fork](https://help.github.com/articles/fork-a-repo/) our repository. (not yet open)
+2. Work on your forked repository.
+3. Come back here to [create a new pull request](https://help.github.com/articles/creating-a-pull-request/).
+4. We will review your code, and eventually merge your code into our repository.
 5. You have made our system shinier everyday!
 
-> Always run `gulp` to compile Sass and JS files.
+## Editing Source Files
 
-### How to Create a New Page
+This project uses Gulp to automate Sass and JavaScript compilation. Always run `gulp` to compile Sass and JS files. Please refer to the project structure below to understand the files.
+
+## How to Create a New Page
 
 1. Create a new `.pug` file in the `views` directory. Eg. `single-space.pug`.
 2. Copy the page structure from `views/template.pug` to your new file and change `body`'s class name to match the file's name (eg. `body.single-space`).
 3. Add a new route to `server.js`. Example:
 
-```{javascript}
+```javascript
 app.get("/any-url-to-catch", function(req, res) {
 	res.render("single-space"); // the Pug file name
 });
 ```
 
-### How to Create a New Script File
+## How to Create a New Script File
 
 1. Create a new `.js` file in the `src-scripts` directory. Eg. `single-space.js`.
 2. Include the file in a Pug page by adding `script(src="public/scripts/single-space.js")` to the page.
