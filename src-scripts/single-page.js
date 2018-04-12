@@ -32,6 +32,17 @@ Vue.component('time-slot', {
 	},
 	methods: {
 		choose: function () {
+			var beSelected = document.getElementsByClassName("slot selected");
+			if ((app.chosenTimes).length > 1) {(app.chosenTimes).length = 0}
+			if ((app.chosenTimes).length == 0) {
+				while(beSelected.length >= 1)
+					{
+						for (var i = 0; i < (beSelected.length); i+=1) {
+						beSelected[i].setAttribute("class", "slot"); 
+						// console.log(beSelected[i]); 
+					}
+				}
+			}
 			if (this.isAvailable) {
 				this.isChosen = !this.isChosen;
 				if (app.chosenTimes.includes(this.position))
@@ -39,13 +50,15 @@ Vue.component('time-slot', {
 				else app.chosenTimes.push(this.position);
 				}
 				// sub function psudoDrag
-				min_time = Math.min.apply(null, app.chosenTimes);
-				max_time = Math.max.apply(null, app.chosenTimes);
-				for (var i = min_time; i <= (max_time - min_time)+min_time; i+=0.5) 
-					{
-						document.getElementById(id="slot-" + i).setAttribute("class", "slot selected");
-					}
-				console.log((app.chosenTimes).length);
+			min_time = Math.min.apply(null, app.chosenTimes);
+			max_time = Math.max.apply(null, app.chosenTimes);
+			for (var j = min_time; j <= (max_time - min_time)+min_time; j+=0.5) 
+				{
+					document.getElementById(id="slot-" + j).setAttribute("class", "slot selected");
+					console.log(document.getElementById(id="slot-" + j));
+					console.log(min_time, max_time)
+				}
+				// console.log((app.chosenTimes).length);
 				}
 			}
 		});
