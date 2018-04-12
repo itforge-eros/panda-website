@@ -22,7 +22,6 @@
     "apollo-fetcher": "0.0.1",
     "apollo-link-context": "^1.0.7",
     "apollo-link-http": "^1.5.3",
-    "axios": "^0.18.0",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "express-session": "^1.15.6",

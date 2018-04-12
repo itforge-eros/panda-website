@@ -32,24 +32,24 @@ var app = new Vue({
 				document.getElementById("labels").remove();
 				document.getElementById("search-house").remove();
 				this.firstSearch = false;
-				axios(apiURL, {
-					method: "POST",
-					data: {
-						query: `
-							query {
-								spaces {
-									id, name, capacity
-								}
-							}
-						`
-					}
-				}).then(result => {
-					this.searchResults = result.data.data.spaces;
-					console.log(result.data.data.spaces);
-				}).catch(err => {
-					console.log(err)
-				})
 			}
+			axios(apiURL, {
+				method: "POST",
+				data: {
+					query: `
+						query {
+							spaces {
+								id, name, capacity
+							}
+						}
+					`
+				}
+			}).then(result => {
+				this.searchResults = result.data.data.spaces;
+				console.log(result.data.data.spaces);
+			}).catch(err => {
+				console.log(err)
+			});
 		}
 	}
 });
