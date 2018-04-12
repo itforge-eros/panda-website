@@ -17,10 +17,10 @@ html
 						li
 							a(href="/manage-report") รายงานปัญหา
 					div
-						a.button.marg-b-1(href="#")
+						button.marg-b-1(onclick="toggleAdder()")
 							i.fas.fa-plus-circle
 							| สร้างสถานที่ใหม่
-						form(action="")
+						form#adder(action="", style="display:none")
 							label(for="space-name") พิมพ์ชื่อสถานที่และกด Enter
 							input(type="text", name="space-name")
 					table.styled.striped
@@ -32,3 +32,14 @@ html
 										i.fas.fa-cog
 									a(href="#")
 										i.fas.fa-trash
+		script
+			| var toggled = false;
+			| function toggleAdder() {
+			| 	if (toggled) {
+			| 		document.getElementById("adder").style.display = "none";
+			| 		toggled = false;
+			| 	} else {
+			| 		document.getElementById("adder").style.display = "block";
+			| 		toggled = true;
+			| 	}
+			| }

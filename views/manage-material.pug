@@ -13,10 +13,10 @@ html
 						h1.page-title จัดการอุปกรณ์ให้ยืม
 						h2.page-subtitle อุปกรณ์ของคณะที่ผู้จองห้องสามารถขอยืมได้
 					div
-						a.button.marg-b-1(href="#")
+						button.marg-b-1(onclick="toggleAdder()")
 							i.fas.fa-plus-circle
 							| เพิ่มอุปกรณ์ใหม่
-						form(action="")
+						form#adder(action="", style="display:none")
 							label(for="role-name") พิมพ์ชื่ออุปกรณ์และกด Enter
 							input(type="text", name="role-name")
 					table.styled.striped
@@ -26,3 +26,14 @@ html
 								td.actions
 									a(href="#")
 										i.fas.fa-trash
+		script
+			| var toggled = false;
+			| function toggleAdder() {
+			| 	if (toggled) {
+			| 		document.getElementById("adder").style.display = "none";
+			| 		toggled = false;
+			| 	} else {
+			| 		document.getElementById("adder").style.display = "block";
+			| 		toggled = true;
+			| 	}
+			| }

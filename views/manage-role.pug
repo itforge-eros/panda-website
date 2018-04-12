@@ -12,10 +12,10 @@ html
 					div.page-title-wrap
 						h1.page-title จัดการสิทธิ์
 					div
-						a.button.marg-b-1(href="#")
+						button.marg-b-1(onclick="toggleAdder()")
 							i.fas.fa-plus-circle
 							| สร้างสิทธิ์ใหม่
-						form(action="")
+						form#adder(action="", style="display:none")
 							label(for="role-name") พิมพ์ชื่อสิทธิ์และกด Enter
 							input(type="text", name="role-name")
 					table.styled.striped
@@ -29,3 +29,14 @@ html
 										i.fas.fa-cog
 									a(href="#")
 										i.fas.fa-trash
+		script
+			| var toggled = false;
+			| function toggleAdder() {
+			| 	if (toggled) {
+			| 		document.getElementById("adder").style.display = "none";
+			| 		toggled = false;
+			| 	} else {
+			| 		document.getElementById("adder").style.display = "block";
+			| 		toggled = true;
+			| 	}
+			| }
