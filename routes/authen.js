@@ -77,8 +77,7 @@ router.post("/login", multer().array(), (req, res, next) => {
 });
 
 router.get("/logout", (req, res) => {
-	req.session.token = null;
-	req.session.member = null;
+	req.session.destroy();
 	res.redirect("/");
 });
 
