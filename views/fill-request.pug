@@ -1,7 +1,7 @@
 html
 	head
 		include parts/meta
-		title Please fill the form
+		title Reserving #{space.name}
 		include parts/stylesheet
 		include parts/scripts
 	body
@@ -14,20 +14,20 @@ html
 					div(style="margin-bottom: 3em")
 						p
 							strong ผู้จอง: 
-							| นาย สมศรี ชาวไร่<br>
+							| #{member.firstName} #{member.lastName}<br>
 							| นักศึกษา คณะเทคโนโลยีสารสนเทศ
 						p
 							strong สถานที่: 
-							| M03, คณะเทคโนโลยีสารสนเทศ
+							| #{space.name}, คณะเทคโนโลยีสารสนเทศ
 						p
 							strong วันที่ต้องการจอง: 
-							| 30 กุมภาพันธ์ 2561
+							= reservation.r_date
 						p
 							strong เวลาที่ต้องการจอง: 
 							| 10.00 - 12.00 น.
 					form(action="request-sent")
 						div.input-wrap
-							label(for="seats") จำนวนที่นั่ง
+							label(for="seats") จำนวนผู้ใช้งาน
 							input(type="text", name="seats", required)
 							span.err กรุณากรอกข้อมูล
 						div.input-wrap

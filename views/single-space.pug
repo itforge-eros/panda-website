@@ -47,12 +47,14 @@ html
 									span โปรเจ็กเตอร์
 					div.row#row-2
 						div.card.shadow
-							div.reservation-box
+							form.reservation-box(action="reserve", method="POST")
+								div(style="display:none")
+									input(type="text", name="space", value=space.id)
 								div.date
 									i.fas.fa-chevron-circle-left
 									div.input-with-icon.inp-date
 										i.fas.fa-calendar-alt
-										input(type="text", placeholder="date", name="r-date", v-model="r_date")
+										input(type="text", placeholder="date", name="r_date", v-model="r_date")
 									i.fas.fa-chevron-circle-right
 								div.slot-wrap-wrapper
 									div.slot-wrap
@@ -75,7 +77,7 @@ html
 								p.text-center(v-show="chosenTimes.length == 0") กรุณาเลือกเวลาเพื่อจอง
 								p.text-center(v-show="chosenTimes.length != 0") ที่เลือกไว้: {{ chosenTimePeriod }}
 								div.text-center(v-show="chosenTimes.length != 0")
-									a.button.raised(href="/fill-request")
+									button.raised
 										i.fas.fa-pencil-alt
 										| จอง
 						div.card= space.description
