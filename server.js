@@ -21,6 +21,7 @@ const manageRequestRouter = require("./routes/manageRequest");
 const manageRoleRouter = require("./routes/manageRole");
 const manageSpaceRouter = require("./routes/manageSpace");
 const manageReportRouter = require("./routes/manageReport");
+const manageMaterialRouter = require("./routes/manageMaterial");
 const spaceRouter = require("./routes/space");
 
 app.use(session(globalVars.sessionOptions));
@@ -30,6 +31,7 @@ app.use("/manage-request", manageRequestRouter);
 app.use("/manage-role", manageRoleRouter);
 app.use("/manage-space", manageSpaceRouter);
 app.use("/manage-report", manageReportRouter);
+app.use("/manage-material", manageMaterialRouter);
 app.use("/space", spaceRouter);
 
 app.get("/", (req, res) => {
