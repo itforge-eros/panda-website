@@ -12,11 +12,20 @@ html
 					div.page-title-wrap.text-center
 						h1.page-title เข้าสู่ระบบ
 					div.card.shadow
-						form
-							div.marg-b-1
+						form#login(action="#", method="POST")
+							div.input-wrap.marg-b-1
 								label(for="username") เลขประจำตัว
-								input(type="text", name="username")
-							div.marg-b-1
+								input(type="text", name="username", required, v-model="usr")
+								span.err(v-show="showError && usr == ''") กรุณากรอกข้อมูล
+							div.input-wrap.marg-b-1
 								label(for="password") รหัสผ่าน
-								input(type="password", name="password")
-							button.raised เข้าสู่ระบบ
+								input(type="password", name="password", required, v-model="pwd")
+								span.err(v-show="showError && pwd == ''") กรุณากรอกข้อมูล
+							if isCredEmpty
+								div.input-wrap
+									span.err กรุณากรอกข้อมูลให้ครบ
+							if isCredInvalid
+								div.input-wrap
+									span.err ข้อมูลไม่ถูกต้อง
+							button.raised(type="button", @click="validate()") เข้าสู่ระบบ
+		script(src="/public/scripts/login.js")

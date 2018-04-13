@@ -1,7 +1,9 @@
+const globalVars = require("./globalVars");
 const express = require("express");
 const app = express();
 const env = process.env.NODE_ENV || "dev";
 const port = env == "production" ? 80 : 3000;
+const session = require("express-session");
 
 // Set view location
 app.set("views", "./views");
@@ -19,49 +21,66 @@ const manageRequestRouter = require("./routes/manageRequest");
 const manageRoleRouter = require("./routes/manageRole");
 const manageSpaceRouter = require("./routes/manageSpace");
 const manageReportRouter = require("./routes/manageReport");
+const manageMaterialRouter = require("./routes/manageMaterial");
 const spaceRouter = require("./routes/space");
+
+app.use(session(globalVars.sessionOptions));
 
 app.use("/authen", authenRouter);
 app.use("/manage-request", manageRequestRouter);
 app.use("/manage-role", manageRoleRouter);
 app.use("/manage-space", manageSpaceRouter);
 app.use("/manage-report", manageReportRouter);
+app.use("/manage-material", manageMaterialRouter);
 app.use("/space", spaceRouter);
 
 app.get("/", (req, res) => {
-	res.render("index", { session: testData.session, user: testData.user, faculty: testData.faculty });
+	res.render("index", {
+		session: testData.session,
+		user: testData.user,
+		member: req.session.member,
+		faculty: testData.faculty
+	});
 });
 app.get("/fill-request", (req, res) => {
 	res.render("fill-request", {
 		session: testData.session,
 		user: testData.user,
-		faculty: testData.faculty
+		member: req.session.member
 	});
 });
 app.get("/request-sent", (req, res) => {
 	res.render("request-sent", {
 		session: testData.session,
 		user: testData.ser,
-		faculty: testData.faculty
+		member: req.session.member
 	});
 });
 app.get("/my-request", (req, res) => {
 	res.render("my-request", {
 		session: testData.session,
 		user: testData.user,
-		faculty: testData.faculty
+		member: req.session.member
 	});
 });
 app.get("/request/:id", (req, res) => {
 	res.render("single-request", {
 		session: testData.session,
 		user: testData.user,
+		member: req.session.member,
 		reqInfo: testData.requestInfo,
 		id: req.params.id
+	});
+});
+app.get("/error", (req, res) => {
+	res.render("error", {
+		session: testData.session,
+		user: testData.user,
+		member: req.session.member
 	});
 });
 
 // Start the server
 app.listen(port, () =>
-	console.log("Listening on port 3000\nPress Ctrl+C to stop")
+	console.log(`Listening on port ${port}\nPress Ctrl+C to stop`)
 );

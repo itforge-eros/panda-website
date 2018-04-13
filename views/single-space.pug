@@ -1,7 +1,7 @@
 html
 	head
 		include parts/meta
-		title M03
+		title= space.name
 		link(rel="stylesheet" href="/public/vendor/pikaday.css")
 		include parts/stylesheet
 		include parts/scripts
@@ -23,7 +23,7 @@ html
 			div.content
 				div.container
 					div.page-title-wrap
-						h1.page-title M03
+						h1.page-title= space.name
 						h2.page-subtitle คณะเทคโนโลยีสารสนเทศ
 				div.container
 					div.row.flex.marg-b-1#row-1
@@ -48,7 +48,9 @@ html
 									span โปรเจ็กเตอร์
 					div.row#row-2
 						div.card.shadow
-							div.reservation-box
+							form.reservation-box(action="reserve", method="POST")
+								div(style="display:none")
+									input(type="text", name="space", value=space.id)
 								div.date
 									i.fas.fa-chevron-circle-left
 									div.input-with-icon.inp-date
@@ -76,10 +78,10 @@ html
 								p.text-center(v-show="chosenTimes.length == 0") กรุณาเลือกเวลาเพื่อจอง
 								p.text-center(v-show="chosenTimes.length != 0") ที่เลือกไว้: {{ chosenTimePeriod }}
 								div.text-center(v-show="chosenTimes.length != 0")
-									a.button.raised(href="/fill-request")
+									button.raised
 										i.fas.fa-pencil-alt
 										| จอง
-						div.card Hello
+						div.card= space.description
 						div
 							button#report(onclick="showModal('modal')")
 								i.fas.fa-exclamation-triangle
@@ -89,21 +91,12 @@ html
 					span.close(onclick="closeModal('modal')")
 						i.fas.fa-times-circle
 					h1.modal-title รายงานปัญหา
-					p M03
+					p= space.name
 					textarea.marg-b-1(name="report", rows="4")
 					button.raised ส่งรายงาน
 
 	script(src="/public/vendor/pikaday.js")
 	script(src="/public/scripts/single-page.js")
 	script(src="/public/vendor/activate-pikadate.js")
-	script
-		| function showModal(modal) {
-		| 	document.getElementById(modal).classList.add("show")
-		| }
-		| function closeModal(modal) {
-		| 	document.getElementById(modal).classList.remove("show")
-		| }
-		| if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
-		| 	var modal = document.getElementById("modal");
-		| 	modal.classList.add("ios");
-		| }
+	script(src="/public/scripts/modal.js")
+
