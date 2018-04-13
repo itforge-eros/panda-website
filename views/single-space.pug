@@ -2,6 +2,7 @@ html
 	head
 		include parts/meta
 		title= space.name
+		link(rel="stylesheet" href="/public/vendor/pikaday.css")
 		include parts/stylesheet
 		include parts/scripts
 	body.single-space
@@ -54,7 +55,7 @@ html
 									i.fas.fa-chevron-circle-left
 									div.input-with-icon.inp-date
 										i.fas.fa-calendar-alt
-										input(type="text", placeholder="date", name="r_date", v-model="r_date")
+										input(type="text", placeholder="date", name="r-date", v-model="r_date", id="datepicker")
 									i.fas.fa-chevron-circle-right
 								div.slot-wrap-wrapper
 									div.slot-wrap
@@ -64,7 +65,7 @@ html
 													td= time
 										div.slots#slots-1
 											each slot in slots1
-												time-slot(id='slot-'+slot.id, :available="true", :position=slot.id)= slot.t
+												time-slot(id='slot-'+slot.id,:available="true", :position=slot.id)= slot.t
 									div.slot-wrap
 										table.times.text-center
 											tr
@@ -72,7 +73,7 @@ html
 													td= time
 										div.slots#slots-2
 											each slot in slots2
-												time-slot(id='slot-'+slot.id, :available="true", :position=slot.id)= slot.t
+												time-slot(id='slot-'+slot.id, :available="false", :position=slot.id)= slot.t
 								hr
 								p.text-center(v-show="chosenTimes.length == 0") กรุณาเลือกเวลาเพื่อจอง
 								p.text-center(v-show="chosenTimes.length != 0") ที่เลือกไว้: {{ chosenTimePeriod }}
@@ -84,7 +85,7 @@ html
 						div
 							button#report(onclick="showModal('modal')")
 								i.fas.fa-exclamation-triangle
-								| รายงานปัญหา
+								| รายงานปัญหา 
 			div.modal#modal
 				div.card
 					span.close(onclick="closeModal('modal')")
@@ -93,5 +94,9 @@ html
 					p= space.name
 					textarea.marg-b-1(name="report", rows="4")
 					button.raised ส่งรายงาน
+
+	script(src="/public/vendor/pikaday.js")
 	script(src="/public/scripts/single-page.js")
+	script(src="/public/vendor/activate-pikadate.js")
 	script(src="/public/scripts/modal.js")
+

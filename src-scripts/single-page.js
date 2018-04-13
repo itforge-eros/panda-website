@@ -1,3 +1,4 @@
+
 function converterToHour(endTime, startTime){
 	return Math.floor(endTime - startTime); 
 	// this function use for finding duration of room reservation with hour that be floored
@@ -31,19 +32,49 @@ Vue.component('time-slot', {
 	},
 	methods: {
 		choose: function () {
+			var beSelected = document.getElementsByClassName("slot selected");
+			if ((app.chosenTimes).length > 1) {(app.chosenTimes).length = 0}
+			console.log((app.chosenTimes).length);
+			if ((app.chosenTimes).length == 0) {
+				while(beSelected.length >= 1)
+					{
+						for (var i = 0; i < (beSelected.length); i+=1) {
+							beSelected[i].setAttribute("class", "slot"); 
+							console.log("delete");
+					}
+				}
+			}
 			if (this.isAvailable) {
-				this.isChosen = !this.isChosen;
+				// this.isChosen = !this.isChosen; คอมเม้นไว้นะครับ
 				if (app.chosenTimes.includes(this.position))
 					app.chosenTimes.splice(app.chosenTimes.indexOf(this.position), 1);
 				else app.chosenTimes.push(this.position);
+				}
+				// sub function psudoDrag
+			min_time = Math.min.apply(null, app.chosenTimes);
+			max_time = Math.max.apply(null, app.chosenTimes);
+			if(min_time == max_time)
+				{	
+					console.log("equal Value");
+					document.getElementById(id="slot-" + min_time).removeAttribute("class");
+					document.getElementById(id="slot-" + min_time).setAttribute("class", "slot selected");
+				}
+				else{
+					for (var j = min_time; j <= (max_time); j+=0.5) 
+				{	
+					document.getElementById(id="slot-" + j).removeAttribute("class");
+					document.getElementById(id="slot-" + j).setAttribute("class", "slot selected");
+				}
+				}
+			
+				// console.log((app.chosenTimes).length);
+				}
 			}
-		}
-	}
-});
+		});
 var app = new Vue({
 	el: '#app',
 	data: {
-		r_date: '123',
+		r_date: new Date(),
 		chosenTimes: []
 	},
 	computed: {
