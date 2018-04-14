@@ -107,6 +107,7 @@ function setRawDate(date) {
 }
 
 const today = new Date();
+var picker_date;
 
 var picker = new Pikaday({
 	field: document.getElementById("datepicker"),
@@ -118,6 +119,7 @@ var picker = new Pikaday({
 	    weekdaysShort : ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
 	},
 	firstDay: 1,
+	format: "DD-MM-YYYY",
 	minDate: today,
 	maxDate: new Date(
 		today.getFullYear() + 1,
@@ -127,7 +129,7 @@ var picker = new Pikaday({
 	yearRange: [today.getFullYear(), today.getFullYear() + 1],
 	onClose: function() {
 		app.r_date = document.getElementById("datepicker").value;
-		app.r_date_raw = setRawDate(picker.getDate());
+		app.r_date_raw = setRawDate(picker_date);
 	},
 	toString(date) {
 		picker_date = date;
