@@ -1,3 +1,8 @@
+var monthsTH = ['ม.ค.','ก.พ.','มี.ค','เม.ย.','พ.ค.','มิ.ย','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+var weekdaysTH = ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
+var monthsEN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var weekdaysEN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
 function converterToHour(endTime, startTime) {
 	return Math.floor(endTime - startTime);
 	// this function use for finding duration of room reservation with hour that be floored
@@ -72,6 +77,7 @@ var app = new Vue({
 	el: '#app',
 	data: {
 		r_date: new Date(),
+		r_date_raw: "",
 		chosenTimes: [],
 		chosenSlots: []
 	},
@@ -90,13 +96,28 @@ var app = new Vue({
 	}
 });
 
+
+function setRawDate(date) {
+	// create a raw date for sending to the API (eg. 2018-04-14)
+	var m = date.getMonth() + 1;
+	var d = date.getDate();
+	return (
+		date.getFullYear() + "-" + (m < 10 ? "0" + m : m) + "-" + (d < 10 ? "0" + d : d)
+	);
+}
+
 const today = new Date();
-var picker_date; // date selected from Pikaday
 
 var picker = new Pikaday({
 	field: document.getElementById("datepicker"),
+	i18n: {
+		previousMonth : 'เดือนที่แล้ว',
+    	nextMonth     : 'เดือนหน้า',
+		months : ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'],
+		weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+	    weekdaysShort : ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
+	},
 	firstDay: 1,
-	format: "DD-MM-YYYY",
 	minDate: today,
 	maxDate: new Date(
 		today.getFullYear() + 1,
@@ -106,12 +127,22 @@ var picker = new Pikaday({
 	yearRange: [today.getFullYear(), today.getFullYear() + 1],
 	onClose: function() {
 		app.r_date = document.getElementById("datepicker").value;
+		app.r_date_raw = setRawDate(picker.getDate());
 	},
 	toString(date) {
 		picker_date = date;
 		const day = date.toString().split(" ")[2];
 		const month = date.toString().split(" ")[1];
 		const weekday = date.toString().split(" ")[0];
-		return `${weekday}\u0020${day}\u0020${month}`;
+		function monthsMapper(element) {
+			return element == `${month}`;
+		}
+		function weekdaysMapper(element) {
+			return element == `${weekday}`;
+		}
+		app.r_date = `${weekdaysTH[weekdaysEN.findIndex(weekdaysMapper)]}\u0020${day}\u0020${monthsTH[monthsEN.findIndex(monthsMapper)]}`;
+		return `${weekdaysTH[weekdaysEN.findIndex(weekdaysMapper)]}\u0020${day}\u0020${monthsTH[monthsEN.findIndex(monthsMapper)]}`;
 	}
 });
+
+app.r_date_raw = setRawDate(picker.getDate()); // initial to present
