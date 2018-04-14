@@ -44,10 +44,9 @@ var app = new Vue({
 						}
 					`
 				}
-			}).then(result => {
+			}).then(function (result) {
 				this.searchResults = result.data.data.spaces;
-				console.log(result.data.data.spaces);
-			}).catch(err => {
+			}).catch(function (err) {
 				console.log(err)
 			});
 		}
