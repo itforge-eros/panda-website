@@ -8,12 +8,12 @@ function converterOverToMins(endTime, startTime) {
 }
 function convertToHumanity(time) {
 	if (time%1 !== 0) {
-		return (Math.floor(time) + ':' +(((time).toFixed(2) - Math.floor(time).toFixed(2))*60).toFixed(0));
+		return (Math.floor(time) + ':' +((time.toFixed(2) - Math.floor(time).toFixed(2))*60).toFixed(0));
 	} else {
 		if((((time).toFixed(2) - Math.floor(time).toFixed(2))*60).toFixed(0) == 0) {
-			return (Math.floor(time) + ':' +(((time).toFixed(2) - Math.floor(time).toFixed(2))*60).toFixed(0)) + '0';
+			return (Math.floor(time) + ':' +((time.toFixed(2) - Math.floor(time).toFixed(2))*60).toFixed(0)) + '0';
 		} else {
-			return (Math.floor(time) + ':' +(((time).toFixed(2) - Math.floor(time).toFixed(2))*60).toFixed(0));
+			return (Math.floor(time) + ':' +((time.toFixed(2) - Math.floor(time).toFixed(2))*60).toFixed(0));
 		}
 	}
 	// this function use for converting the format .5 hour to humanity format
@@ -42,24 +42,28 @@ Vue.component('time-slot', {
 	methods: {
 		choose: function () {
 			var beSelected = document.getElementsByClassName("slot selected");
-			if ((app.chosenTimes).length > 1) { (app.chosenTimes).length = 0 }
-			if ((app.chosenTimes).length == 0) {
-				while(beSelected.length >= 1) {
-					for (var i = 0; i < (beSelected.length); i+=1) {
-						beSelected[i].setAttribute("class", "slot");
-						console.log("delete");
-					}
-				}
+			if (app.chosenTimes.length > 1) app.chosenTimes.length = 0;
+			if (app.chosenSlots.length > 1) app.chosenSlots.length = 0;
+			while(beSelected.length >= 1) {
+				for (var i = 0; i < (beSelected.length); i+=1)
+					beSelected[i].setAttribute("class", "slot");
 			}
 			if (this.isAvailable) {
-				// this.isChosen = !this.isChosen; คอมเม้นไว้นะครับ
-				if (app.chosenTimes.includes(this.position))
+				if (app.chosenTimes.includes(this.position)) {
 					app.chosenTimes.splice(app.chosenTimes.indexOf(this.position), 1);
-				else app.chosenTimes.push(this.position);
+				} else app.chosenTimes.push(this.position);
+				if (app.chosenSlots.includes(this.slotnum)) {
+					app.chosenSlots.splice(app.chosenSlots.indexOf(this.slotnum), 1);
+				} else app.chosenSlots.push(this.slotnum);
+			} else {
+				app.chosenTimes.length = 0;
+				app.chosenSlots.length = 0;
+				app.startSlot = 0;
+				app.endSlot = 0;
 			}
 			// sub function psudoDrag
 			findMin_Max();
-			setSelected();		
+			setSelected();
 		}
 	}
 });
@@ -68,14 +72,21 @@ var app = new Vue({
 	data: {
 		r_date: new Date(),
 		chosenTimes: [],
-		startSlot: 1,
-		endSlot: 1
+		chosenSlots: [],
+		startSlot: 0,
+		endSlot: 0
 	},
 	computed: {
 		chosenTimePeriod: function () {
 			let startTime = Math.min.apply(null, this.chosenTimes);
 			let endTime = Math.max.apply(null, this.chosenTimes)+0.5;
 			return convertToHumanity(startTime) + '-' + convertToHumanity(endTime) + ' น. (' + converterToHour(endTime, startTime) +' ชั่วโมง '+ converterOverToMins(endTime, startTime) + ' นาที)'
+		},
+		selectedStartSlot: function () {
+			this.startSlot = Math.min.apply(null, this.chosenSlots);
+		},
+		selectedEndSlot: function () {
+			this.endSlot = Math.max.apply(null, this.chosenSlots);
 		}
 	}
 });

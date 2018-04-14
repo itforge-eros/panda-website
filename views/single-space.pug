@@ -8,16 +8,16 @@ html
 	body.single-space
 		include parts/nav
 		-
-			var slots1 = [];
-			var slots2 = [];
-			var start_hr = 8;
-			var slot_num = 1;
-			for (var i = 1; i <= 6.5; i+=0.5) {
+			let slots1 = [];
+			let slots2 = [];
+			let start_hr = 8;
+			let slot_num = 1;
+			for (let i = 1; i <= 6.5; i+=0.5) {
 				slots1.push({id: i+7, t: i%2 == 0 ? '.30' : start_hr, slot_num: slot_num});
 				if (i%2 != 0) hr++;
 				slot_num++;
 			}
-			for (var i = 1; i <= 6.5; i+=0.5) {
+			for (let i = 1; i <= 6.5; i+=0.5) {
 				slots2.push({id: i+13, t: i%2 == 0 ? '.30' : start_hr, slot_num: slot_num});
 				if (i%2 != 0) hr++;
 				slot_num++;
@@ -60,7 +60,7 @@ html
 									i.fas.fa-chevron-circle-left
 									div.input-with-icon.inp-date
 										i.fas.fa-calendar-alt
-										input(type="text", placeholder="date", name="r-date", v-model="r_date", id="datepicker")
+										input(type="text", placeholder="date", name="r_date", v-model="r_date", id="datepicker")
 									i.fas.fa-chevron-circle-right
 								div.slot-wrap-wrapper
 									div.slot-wrap
