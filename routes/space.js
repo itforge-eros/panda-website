@@ -50,32 +50,37 @@ router.get("/:id", (req, res) => {
 				res.redirect("/error");
 			}
 		})
-		.catch((error) => {
+		.catch(error => {
 			console.log(error);
 			res.redirect("/error");
 		});
 });
 
 router.post("/reserve", multer().array(), (req, res) => {
-	let reservation = req.body;
-	getSpace(req.body.space)
-		.then(returnedSpace => {
-			if (returnedSpace.data.space != null) {
-				console.log(reservation);
-				res.render("fill-request", {
-					session: testData.session,
-					user: testData.user,
-					member: req.session.member,
-					reservation: reservation,
-					space: returnedSpace.data.space
-				});
-			} else {
+	if (req.session.member) {
+		let reservation = req.body;
+		getSpace(req.body.space)
+			.then(returnedSpace => {
+				if (returnedSpace.data.space != null) {
+					console.log(reservation);
+					res.render("fill-request", {
+						session: testData.session,
+						user: testData.user,
+						member: req.session.member,
+						reservation: reservation,
+						space: returnedSpace.data.space
+					});
+				} else {
+					res.redirect("/error");
+				}
+			})
+			.catch(error => {
+				console.log(error);
 				res.redirect("/error");
-			}
-		}).catch((error) => {
-			console.log(error);
-			res.redirect("/error");
-		});
+			});
+	} else {
+		res.redirect("/authen/login");
+	}
 });
 
 module.exports = router;
