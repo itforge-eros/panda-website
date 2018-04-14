@@ -52,10 +52,10 @@ html
 					div.row#row-2
 						div.card.shadow
 							form.reservation-box(action="reserve", method="POST")
-								div(style="display:none")
+								div(style="display:block")
 									input(type="text", name="space", value=space.id)
-									input(type="number", name="start", v-model="startSlot")
-									input(type="number", name="end", v-model="endSlot")
+									input(type="number", name="start", v-model="selectedStartSlot")
+									input(type="number", name="end", v-model="selectedEndSlot")
 								div.date
 									i.fas.fa-chevron-circle-left
 									div.input-with-icon.inp-date

@@ -72,9 +72,7 @@ var app = new Vue({
 	data: {
 		r_date: new Date(),
 		chosenTimes: [],
-		chosenSlots: [],
-		startSlot: 0,
-		endSlot: 0
+		chosenSlots: []
 	},
 	computed: {
 		chosenTimePeriod: function () {
@@ -83,10 +81,10 @@ var app = new Vue({
 			return convertToHumanity(startTime) + '-' + convertToHumanity(endTime) + ' น. (' + converterToHour(endTime, startTime) +' ชั่วโมง '+ converterOverToMins(endTime, startTime) + ' นาที)'
 		},
 		selectedStartSlot: function () {
-			this.startSlot = Math.min.apply(null, this.chosenSlots);
+			return Math.min.apply(null, this.chosenSlots);
 		},
 		selectedEndSlot: function () {
-			this.endSlot = Math.max.apply(null, this.chosenSlots);
+			return Math.max.apply(null, this.chosenSlots);
 		}
 	}
 });
