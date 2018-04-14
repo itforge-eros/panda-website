@@ -4,6 +4,7 @@ const app = express();
 const env = process.env.NODE_ENV || "dev";
 const port = env == "production" ? 80 : 3000;
 const session = require("express-session");
+const compression = require("compression");
 
 // Set view location
 app.set("views", "./views");
@@ -25,6 +26,7 @@ const manageMaterialRouter = require("./routes/manageMaterial");
 const spaceRouter = require("./routes/space");
 
 app.use(session(globalVars.sessionOptions));
+app.use(compression());
 
 app.use("/authen", authenRouter);
 app.use("/manage-request", manageRequestRouter);

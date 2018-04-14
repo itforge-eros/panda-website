@@ -69,7 +69,7 @@ router.post("/login", multer().array(), (req, res, next) => {
 			res.redirect("/");
 		}).catch(err => {
 			// console.log(err.graphQLErrors[0].message);
-			console.log(err);
+			if (globalVars.env != "production") console.log(err);
 			isCredInvalid = true;
 			res.redirect("/authen/login");
 		});
