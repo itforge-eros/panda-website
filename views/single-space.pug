@@ -27,7 +27,7 @@ html
 				div.container
 					div.page-title-wrap
 						h1.page-title= space.name
-						h2.page-subtitle คณะเทคโนโลยีสารสนเทศ
+						h2.page-subtitle= space.department.name
 				div.container
 					div.row.flex.marg-b-1#row-1
 						div.featured-img
@@ -86,7 +86,8 @@ html
 									button.raised
 										i.fas.fa-pencil-alt
 										| จอง
-						div.card= space.description
+						if space.description
+							div.card= space.description
 						div
 							button#report(onclick="showModal('modal')")
 								i.fas.fa-exclamation-triangle
