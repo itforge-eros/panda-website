@@ -14,7 +14,7 @@ var app = new Vue({
 	el: "#app",
 	data: {
 		s_quick: "",
-		s_date: "",
+		s_date: new Date(),
 		s_date_raw: "",
 		s_faculty: "",
 		s_room: "",
@@ -77,6 +77,13 @@ var picker_date; // date selected from Pikaday
 
 var picker = new Pikaday({
 	field: document.getElementById("datepicker"),
+	i18n: {
+    	previousMonth : 'Previous Month',
+    	nextMonth     : 'Next Month',
+    	months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    	weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+    	weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+	},
 	firstDay: 1,
 	format: "DD-MM-YYYY",
 	minDate: today,
@@ -86,15 +93,15 @@ var picker = new Pikaday({
 		today.getDate()
 	),
 	yearRange: [today.getFullYear(), today.getFullYear() + 1],
-	toString(date, format) {
-		picker_date = date;
-		const day = date.getDate();
-		const month = date.getMonth() + 1;
-		const year = date.getFullYear();
-		return `${day}/${month}/${year}`;
-	},
 	onClose: function() {
 		app.s_date = document.getElementById("datepicker").value;
 		app.s_date_raw = setRawDate(picker_date);
+	},
+	toString(date) {
+		picker_date = date;
+		const day = date.toString().split(" ")[2];
+		const month = date.toString().split(" ")[1];
+		const weekday = date.toString().split(" ")[0];
+		return `${weekday}\u0020${day}\u0020${month}`;
 	}
 });
