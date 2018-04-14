@@ -45,10 +45,8 @@ html
 							button.raised(@click="doSearch()")
 								i.fas.fa-search
 								| ค้นหา
-				img#search-house(src="public/img/search-house.svg")
+				img#search-house(src="/public/img/search-house.svg")
 				div.container.steep#search-results(v-if="!firstSearch")
-					each i in [1,2,3,4]
-						result-card(slug="a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11", name="M23", seats="50", :amenities="['pc', 'sound', 'aircon', 'proj']")
 					result-card(v-for="space in searchResults", :key="space.id", :slug="space.id", :name="space.name", :seats="space.capacity", :amenities="['pc', 'sound', 'aircon', 'proj']")
 		script(type="text/x-template", id="result-card")
 			a.card.shadow.hoverable.search-result-card(v-bind:href="'space/' + slug")
@@ -64,10 +62,10 @@ html
 					span(v-if="amenities.includes('pc')", title="teacher PC")
 						i.fas.fa-desktop
 					span(v-if="amenities.includes('aircon')", title="air conditioner")
-						img.i(src="public/img/icons/snow.svg")
+						img.i(src="/public/img/icons/snow.svg")
 					span(v-if="amenities.includes('proj')", title="projector")
-						img.i(src="public/img/icons/projector.svg")
-		script(src="public/vendor/pikaday.js")
-		script(src="public/scripts/search-page.js")
-		script(src="public/vendor/activate-pikadate.js")
+						img.i(src="/public/img/icons/projector.svg")
+		script(src="/public/vendor/pikaday.js")
+		script(src="/public/scripts/search-page.js")
+		script(src="/public/vendor/activate-pikadate.js")
 		script(src="/public/vendor/axios/axios.min.js")
