@@ -45,7 +45,6 @@ const getSpace = id => {
 };
 
 const createRequest = rq => {
-	console.log(rq);
 	return apollo_auth.mutate({
 		mutation: gql`
 			mutation($requestInput: RequestInput!) {
@@ -87,7 +86,7 @@ router.get("/:id", (req, res) => {
 			}
 		})
 		.catch(error => {
-			console.log(error);
+			if (globalVars.env != "production") console.log(error);
 			res.redirect("/error");
 		});
 });
@@ -109,7 +108,7 @@ router.post("/reserve", multer().array(), (req, res) => {
 				}
 			})
 			.catch(error => {
-				console.log(error);
+				if (globalVars.env != "production") console.log(error);
 				res.redirect("/error");
 			});
 	} else {
@@ -121,7 +120,7 @@ router.post("/reserve/submit", multer().array(), (req, res) => {
 	if (req.session.member) {
 		createRequest(req.body)
 			.then(rp => {
-				console.log(rp);
+				if (globalVars.env != "production") console.log(rp);
 				res.render("request-sent", {
 					session: testData.session,
 					user: testData.user,
@@ -129,7 +128,7 @@ router.post("/reserve/submit", multer().array(), (req, res) => {
 				});
 			})
 			.catch(err => {
-				console.log(err);
+				if (globalVars.env != "production") console.log(err);
 				res.redirect("/error");
 			});
 	} else {

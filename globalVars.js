@@ -6,9 +6,11 @@ const sessionOptions = {
 	resave: false,
 	saveUninitialized: true
 };
+const env = process.env.NODE_ENV || "dev";
 
 module.exports = {
 	gqlURL: gqlURL,
 	loginURL: loginURL,
-	sessionOptions: sessionOptions
+	sessionOptions: sessionOptions,
+	env: env
 };

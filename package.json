@@ -23,6 +23,7 @@
     "apollo-link-context": "^1.0.7",
     "apollo-link-http": "^1.5.3",
     "body-parser": "^1.18.2",
+    "compression": "^1.7.2",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "graphql": "^0.13.2",
