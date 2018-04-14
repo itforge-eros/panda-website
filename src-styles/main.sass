@@ -65,6 +65,21 @@ a.no-text-deco
 	text-decoration: none
 	color: inherit
 
+// Loading spinner (by Tobias Ahlin)
+.spinner
+	width: 40px
+	height: 40px
+	margin: 10px auto
+	background-color: #333
+	border-radius: 100%
+	animation: loader-pulse 1.0s infinite ease-in-out
+@keyframes loader-pulse
+	0%
+		transform: scale(0)
+	100%
+		transform: scale(1.0)
+		opacity: 0
+
 @media screen and (max-width: $container-width + 32)
 	.container:not(.steep)
 		padding-left: $gap-size-20
