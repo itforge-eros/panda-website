@@ -61,6 +61,7 @@ router.post("/reserve", multer().array(), (req, res) => {
 	getSpace(req.body.space)
 		.then(returnedSpace => {
 			if (returnedSpace.data.space != null) {
+				console.log(reservation);
 				res.render("fill-request", {
 					session: testData.session,
 					user: testData.user,

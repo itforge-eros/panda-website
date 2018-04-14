@@ -8,16 +8,19 @@ html
 	body.single-space
 		include parts/nav
 		-
-			var slots1 = [];
-			var slots2 = [];
-			var start_hr = 8;
-			for (var i = 1; i <= 6.5; i+=0.5) {
-				slots1.push({id: i+7, t: i%2 == 0 ? '.30' : start_hr});
+			let slots1 = [];
+			let slots2 = [];
+			let start_hr = 8;
+			let slot_num = 1;
+			for (let i = 1; i <= 6.5; i+=0.5) {
+				slots1.push({id: i+7, t: i%2 == 0 ? '.30' : start_hr, slot_num: slot_num});
 				if (i%2 != 0) hr++;
+				slot_num++;
 			}
-			for (var i = 1; i <= 6.5; i+=0.5) {
-				slots2.push({id: i+13, t: i%2 == 0 ? '.30' : start_hr});
+			for (let i = 1; i <= 6.5; i+=0.5) {
+				slots2.push({id: i+13, t: i%2 == 0 ? '.30' : start_hr, slot_num: slot_num});
 				if (i%2 != 0) hr++;
+				slot_num++;
 			}
 		div#app
 			div.content
@@ -49,13 +52,15 @@ html
 					div.row#row-2
 						div.card.shadow
 							form.reservation-box(action="reserve", method="POST")
-								div(style="display:none")
+								div(style="display:block")
 									input(type="text", name="space", value=space.id)
+									input(type="number", name="start", v-model="selectedStartSlot")
+									input(type="number", name="end", v-model="selectedEndSlot")
 								div.date
 									i.fas.fa-chevron-circle-left
 									div.input-with-icon.inp-date
 										i.fas.fa-calendar-alt
-										input(type="text", placeholder="date", name="r-date", v-model="r_date", id="datepicker")
+										input(type="text", placeholder="date", name="r_date", v-model="r_date", id="datepicker")
 									i.fas.fa-chevron-circle-right
 								div.slot-wrap-wrapper
 									div.slot-wrap
@@ -65,7 +70,7 @@ html
 													td= time
 										div.slots#slots-1
 											each slot in slots1
-												time-slot(id='slot-'+slot.id,:available="true", :position=slot.id)= slot.t
+												time-slot(id='slot-'+slot.id,:available="true", :position=slot.id, :slotnum=slot.slot_num)= slot.t
 									div.slot-wrap
 										table.times.text-center
 											tr
@@ -73,7 +78,7 @@ html
 													td= time
 										div.slots#slots-2
 											each slot in slots2
-												time-slot(id='slot-'+slot.id, :available="false", :position=slot.id)= slot.t
+												time-slot(id='slot-'+slot.id, :available="false", :position=slot.id, :slotnum=slot.slot_num)= slot.t
 								hr
 								p.text-center(v-show="chosenTimes.length == 0") กรุณาเลือกเวลาเพื่อจอง
 								p.text-center(v-show="chosenTimes.length != 0") ที่เลือกไว้: {{ chosenTimePeriod }}
