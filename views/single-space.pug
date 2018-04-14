@@ -52,7 +52,7 @@ html
 					div.row#row-2
 						div.card.shadow
 							form.reservation-box(action="reserve", method="POST")
-								div(style="display:block")
+								div(style="display:none")
 									input(type="text", name="space", value=space.id)
 									input(type="number", name="start", v-model="selectedStartSlot")
 									input(type="number", name="end", v-model="selectedEndSlot")
@@ -99,9 +99,6 @@ html
 					p= space.name
 					textarea.marg-b-1(name="report", rows="4")
 					button.raised ส่งรายงาน
-
-	script(src="/public/vendor/pikaday.js")
-	script(src="/public/scripts/single-page.js")
-	script(src="/public/vendor/activate-pikadate.js")
-	script(src="/public/scripts/modal.js")
-
+		script(src="/public/vendor/pikaday.js")
+		script(src="/public/scripts/single-page.js")
+		script(src="/public/scripts/modal.js")
