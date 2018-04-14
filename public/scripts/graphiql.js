@@ -49,14 +49,23 @@ $(function (global) {
         history.replaceState(null, null, newSearch);
     }
 
+    const withAuthorization = header => token => {
+        if (!token)
+            return header
+
+        return Object.assign(header, {
+            'authorization': `Bearer ${token}`
+        })
+    }
+
     // Defines a GraphQL fetcher using the fetch API.
-    const graphQLFetcher = url => graphQLParams => {
+    const graphQLFetcher = (url, token) => graphQLParams => {
         return fetch(url + '/graphql', {
             method: 'post',
-            headers: {
+            headers: withAuthorization({
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            },
+            })(token),
             body: JSON.stringify(graphQLParams),
             credentials: 'include'
         }).then(function (response) {
@@ -82,11 +91,11 @@ $(function (global) {
         $('html > head').append($('<style>.variable-editor {display: none !important}</style>'))
     }
 
-    global.renderGraphiql = function (elem, url) {
+    global.renderGraphiql = (url, authorizationToken) => (element) => {
         // Render <GraphiQL /> into the body.
         ReactDOM.render(
             React.createElement(GraphiQL, {
-                fetcher: graphQLFetcher(url),
+                fetcher: graphQLFetcher(url, authorizationToken),
                 query: parameters.query,
                 variables: parameters.variables,
                 response: parameters.response,
@@ -108,7 +117,7 @@ $(function (global) {
                 "# will appear in the pane to the right.\n\n" +
                 "query getSpaces {\n  spaces {\n    name\n    reservations {\n      dates\n    }\n  }\n}"
             }),
-            elem
+            element
         );
     }
 }(window))

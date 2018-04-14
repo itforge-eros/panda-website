@@ -82,7 +82,11 @@ app.get("/error", (req, res) => {
 	});
 });
 app.get("/graphiql", function(req, res) {
-	res.render("graphiql"); // the Pug file name
+	res.render("graphiql", {
+		session: req.session,
+		user: testData.user,
+		member: req.session.member
+	});
 });
 
 // Start the server
