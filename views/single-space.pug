@@ -2,7 +2,7 @@ html
 	head
 		include parts/meta
 		title= space.name
-		link(rel="stylesheet" href="/public/vendor/pikaday.css")
+		link(rel="stylesheet" href="/public/vendor/pikaday.min.css")
 		include parts/stylesheet
 		include parts/scripts
 	body.single-space
@@ -99,6 +99,6 @@ html
 					p= space.name
 					textarea.marg-b-1(name="report", rows="4")
 					button.raised ส่งรายงาน
-		script(src="/public/vendor/pikaday.js")
+		script(src="/public/vendor/pikaday.min.js")
 		script(src="/public/scripts/single-page.js")
 		script(src="/public/scripts/modal.js")
