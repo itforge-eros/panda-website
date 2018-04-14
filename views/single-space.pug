@@ -13,15 +13,18 @@ html
 			let start_hr = 8;
 			let slot_num = 1;
 			for (let i = 1; i <= 6.5; i+=0.5) {
-				slots1.push({id: i+7, t: i%2 == 0 ? '.30' : start_hr, slot_num: slot_num});
+				slots1.push({id: i+7, slot_num: slot_num});
 				if (i%2 != 0) start_hr++;
 				slot_num++;
 			}
 			for (let i = 1; i <= 6.5; i+=0.5) {
-				slots2.push({id: i+13, t: i%2 == 0 ? '.30' : start_hr, slot_num: slot_num});
+				slots2.push({id: i+13, slot_num: slot_num});
 				if (i%2 != 0) start_hr++;
 				slot_num++;
 			}
+			start_hr = 8; // reset
+			for (let i = 0; i < slots1.length; i++) slots1[i].t = i%2 == 0 ? start_hr++ : ".30";
+			for (let i = 0; i < slots2.length; i++) slots2[i].t = i%2 == 0 ? start_hr++ : ".30";
 		div#app
 			div.content
 				div.container
