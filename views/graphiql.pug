@@ -1,0 +1,28 @@
+html
+    head
+        include parts/meta
+        title GraphiQL
+        link(rel="stylesheet" href="//cdn.jsdelivr.net/npm/graphiql@0.11.5/graphiql.css")
+        script(src="//cdn.jsdelivr.net/fetch/0.9.0/fetch.min.js")
+        script(src="//cdn.jsdelivr.net/fetch/0.9.0/fetch.min.js")
+        script(src="//cdn.jsdelivr.net/react/15.5.4/react.min.js")
+        script(src="//cdn.jsdelivr.net/react/15.5.4/react-dom.min.js")
+        script(src="//cdn.jsdelivr.net/npm/graphiql@0.11.5/graphiql.min.js")
+        script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+        script(src="public/scripts/graphiql.js")
+        style
+            | body {
+            |     height: 100%;
+            |     margin: 0;
+            |     width: 100%;
+            |     overflow: hidden;
+            | }
+            | #graphiql {
+            |     height: 100vh;
+            | }
+    body
+        div(id="graphiql")
+            Loading
+        script
+            | const url = 'http://api.panda.itforge.io';
+            | renderGraphiql(document.getElementById('graphiql'), url);

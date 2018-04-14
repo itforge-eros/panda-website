@@ -81,6 +81,9 @@ app.get("/error", (req, res) => {
 		member: req.session.member
 	});
 });
+app.get("/graphiql", function(req, res) {
+	res.render("graphiql"); // the Pug file name
+});
 
 // Start the server
 app.listen(port, () =>
