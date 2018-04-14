@@ -13,7 +13,6 @@ html
 				times.push(i%2 == 0 ? start_hr + ".00" : start_hr + ".30");
 				if (i%2 != 0) start_hr++;
 			}
-			console.log(times);
 		div#app
 			div.content
 				div.container
@@ -33,13 +32,13 @@ html
 						p
 							strong เวลาที่ต้องการจอง: 
 							= times[(reservation.start)-1] + "-" + times[reservation.end]
-					form(action="request-sent")
+					form(action="reserve/submit", method="POST")
 						div.input-wrap
-							label(for="seats") จำนวนผู้ใช้งาน
+							label(for="seats") จำนวนผู้ใช้งาน (จำเป็น)
 							input(type="text", name="seats", required)
 							span.err กรุณากรอกข้อมูล
 						div.input-wrap
-							label(for="reason") เหตุผลในการจอง
+							label(for="reason") เหตุผลในการจอง (จำเป็น)
 							textarea(name="reason", rows="4", required)
 							span.err กรุณากรอกข้อมูล
 						div.marg-b-1
