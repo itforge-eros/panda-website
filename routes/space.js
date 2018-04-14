@@ -19,7 +19,13 @@ const authLink = setContext((_, { headers }) => {
 	return { headers: { authorization: token ? `bearer${token}` : "" } };
 });
 
+// Apollo with no auth token
 const apollo = new ApolloClient({
+	link: createHttpLink({ uri: globalVars.gqlURL, fetch: fetch }),
+	cache: new InMemoryCache()
+});
+// Apollo with an auth token
+const apollo_auth = new ApolloClient({
 	link: authLink.concat(
 		createHttpLink({ uri: globalVars.gqlURL, fetch: fetch })
 	),
@@ -40,7 +46,7 @@ const getSpace = id => {
 
 const createRequest = rq => {
 	console.log(rq);
-	return apollo.mutate({
+	return apollo_auth.mutate({
 		mutation: gql`
 			mutation($requestInput: RequestInput!) {
 				createRequest(input: $requestInput) {
