@@ -17,6 +17,7 @@ var app = new Vue({
 		s_date: "",
 		s_date_raw: "",
 		s_faculty: "",
+		s_type: "",
 		s_room: "",
 		s_seats: "",
 		firstSearch: true,
@@ -30,6 +31,9 @@ var app = new Vue({
 			this.showAdvanced
 				? (this.s_faculty = "")
 				: (this.s_faculty = "fac-it");
+			this.showAdvanced
+				? (this.s_type = "")
+				: (this.s_type = "1");
 			this.showAdvanced = !this.showAdvanced;
 		},
 		doSearch: function() {
