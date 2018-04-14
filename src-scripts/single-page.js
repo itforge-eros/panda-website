@@ -106,7 +106,6 @@ var picker = new Pikaday({
 	yearRange: [today.getFullYear(), today.getFullYear() + 1],
 	onClose: function() {
 		app.r_date = document.getElementById("datepicker").value;
-		app.r_date_raw = setRawDate(picker_date);
 	},
 	toString(date) {
 		picker_date = date;
