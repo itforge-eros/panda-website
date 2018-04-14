@@ -41,6 +41,8 @@ html
 							button(v-on:click="toggleAdvanced()")
 								i.fas.fa-xs.fa-sliders-h
 								|  {{ showAdvanced ? 'ซ่อน' : 'แสดง' }}ตัวเลือก
+						div(style="display:none")
+							input#raw_date(type="text", name="raw_date", v-model="s_date_raw")
 						div.row.text-center.marg-b-1
 							button.raised(@click="doSearch()")
 								i.fas.fa-search

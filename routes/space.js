@@ -9,11 +9,20 @@ const multer = require("multer");
 const ApolloClient = require("apollo-client").ApolloClient;
 const InMemoryCache = require("apollo-cache-inmemory").InMemoryCache;
 const createHttpLink = require("apollo-link-http").createHttpLink;
+const setContext = require("apollo-link-context").setContext;
 const fetch = require("node-fetch");
 const gql = require("graphql-tag");
 
+let token = "";
+
+const authLink = setContext((_, { headers }) => {
+	return { headers: { authorization: token ? `bearer${token}` : "" } };
+});
+
 const apollo = new ApolloClient({
-	link: createHttpLink({ uri: globalVars.gqlURL, fetch: fetch }),
+	link: authLink.concat(
+		createHttpLink({ uri: globalVars.gqlURL, fetch: fetch })
+	),
 	cache: new InMemoryCache()
 });
 
@@ -29,12 +38,34 @@ const getSpace = id => {
 	});
 };
 
-let reservation = {};
+const createRequest = rq => {
+	console.log(rq);
+	return apollo.mutate({
+		mutation: gql`
+			mutation($requestInput: RequestInput!) {
+				createRequest(input: $requestInput) {
+					id
+				}
+			}
+		`,
+		variables: {
+			"requestInput": {
+				"dates": ["2018-04-29"],
+				"period": {
+					"start": 3,
+					"end": 10
+				},
+				"spaceId": rq.space
+			}
+		}
+	});
+};
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 router.get("/:id", (req, res) => {
+	token = req.session.token;
 	getSpace(req.params.id)
 		.then(returnedData => {
 			if (returnedData.data.space != null) {
@@ -57,7 +88,6 @@ router.get("/:id", (req, res) => {
 
 router.post("/reserve", multer().array(), (req, res) => {
 	if (req.session.member) {
-		reservation = req.body;
 		getSpace(req.body.space)
 			.then(returnedSpace => {
 				if (returnedSpace.data.space != null) {
@@ -65,7 +95,7 @@ router.post("/reserve", multer().array(), (req, res) => {
 						session: testData.session,
 						user: testData.user,
 						member: req.session.member,
-						reservation: reservation,
+						reservation: req.body,
 						space: returnedSpace.data.space
 					});
 				} else {
@@ -83,14 +113,21 @@ router.post("/reserve", multer().array(), (req, res) => {
 
 router.post("/reserve/submit", multer().array(), (req, res) => {
 	if (req.session.member) {
-		// submit form
-		res.render("request-sent", {
-			session: testData.session,
-			user: testData.user,
-			member: req.session.member
-		});
+		createRequest(req.body)
+			.then(rp => {
+				console.log(rp);
+				res.render("request-sent", {
+					session: testData.session,
+					user: testData.user,
+					member: req.session.member
+				});
+			})
+			.catch(err => {
+				console.log(err);
+				res.redirect("/error");
+			});
 	} else {
-		res.redirect("/error")
+		res.redirect("/error");
 	}
 });
 
