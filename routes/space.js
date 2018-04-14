@@ -29,7 +29,7 @@ const getSpace = id => {
 	});
 };
 
-let currentSpace = {};
+let reservation = {};
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -38,7 +38,6 @@ router.get("/:id", (req, res) => {
 	getSpace(req.params.id)
 		.then(returnedData => {
 			if (returnedData.data.space != null) {
-				currentSpace = returnedData.data.space;
 				res.render("single-space", {
 					session: testData.session,
 					user: testData.user,
@@ -58,11 +57,10 @@ router.get("/:id", (req, res) => {
 
 router.post("/reserve", multer().array(), (req, res) => {
 	if (req.session.member) {
-		let reservation = req.body;
+		reservation = req.body;
 		getSpace(req.body.space)
 			.then(returnedSpace => {
 				if (returnedSpace.data.space != null) {
-					console.log(reservation);
 					res.render("fill-request", {
 						session: testData.session,
 						user: testData.user,
@@ -80,6 +78,19 @@ router.post("/reserve", multer().array(), (req, res) => {
 			});
 	} else {
 		res.redirect("/authen/login");
+	}
+});
+
+router.post("/reserve/submit", multer().array(), (req, res) => {
+	if (req.session.member) {
+		// submit form
+		res.render("request-sent", {
+			session: testData.session,
+			user: testData.user,
+			member: req.session.member
+		});
+	} else {
+		res.redirect("/error")
 	}
 });
 
