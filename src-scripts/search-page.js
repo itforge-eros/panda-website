@@ -6,6 +6,10 @@ Vue.component("result-card", {
 	template: "#result-card"
 });
 
+Vue.component("spinner", {
+	template: `<div class="spinner" style="margin-top: 4em"></div>`
+});
+
 var app = new Vue({
 	el: "#app",
 	data: {
@@ -17,7 +21,8 @@ var app = new Vue({
 		firstSearch: true,
 		showAdvanced: false,
 		trySamples: trySamples,
-		searchResults: []
+		searchResults: [],
+		loading: false
 	},
 	methods: {
 		toggleAdvanced: function() {
@@ -27,6 +32,7 @@ var app = new Vue({
 			this.showAdvanced = !this.showAdvanced;
 		},
 		doSearch: function() {
+			this.loading = true;
 			if (this.firstSearch) {
 				document.getElementById("page-title").remove();
 				document.getElementById("labels").remove();
@@ -45,7 +51,8 @@ var app = new Vue({
 					`
 				}
 			}).then(function (result) {
-				this.searchResults = result.data.data.spaces;
+				app.searchResults = result.data.data.spaces;
+				app.loading = false;
 			}).catch(function (err) {
 				console.log(err)
 			});
