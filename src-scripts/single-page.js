@@ -90,10 +90,12 @@ var app = new Vue({
 	}
 });
 
+const today = new Date();
+
 var picker = new Pikaday({
 	field: document.getElementById("datepicker"),
 	firstDay: 1,
-	minDate: new Date(),
-	maxDate: new Date(2020, 12, 31),
-	yearRange: [2000, 2020]
+	minDate: today,
+	maxDate: new Date(today.getFullYear() + 1, today.getMonth(), today.getDate()),
+	yearRange: [today.getFullYear(), today.getFullYear() + 1]
 });
