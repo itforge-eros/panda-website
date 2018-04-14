@@ -2,7 +2,7 @@ html
 	head
 		include parts/meta
 		title Search
-		link(rel="stylesheet" href="public/vendor/pikaday.css")
+		link(rel="stylesheet" href="public/vendor/pikaday/pikaday.min.css")
 		include parts/stylesheet
 		include parts/scripts
 	body.search-page
@@ -65,7 +65,6 @@ html
 						img.i(src="/public/img/icons/snow.svg")
 					span(v-if="amenities.includes('proj')", title="projector")
 						img.i(src="/public/img/icons/projector.svg")
-		script(src="/public/vendor/pikaday.js")
+		script(src="/public/vendor/pikaday/pikaday.min.js")
 		script(src="/public/scripts/search-page.js")
-		script(src="/public/vendor/activate-pikadate.js")
 		script(src="/public/vendor/axios/axios.min.js")
