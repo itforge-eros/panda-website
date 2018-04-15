@@ -85,9 +85,10 @@ app.get("/graphiql", function(req, res) {
 	res.render("graphiql", {
 		session: req.session,
 		user: testData.user,
-		member: req.session.member
+		host: globalVars.gqlHostname
 	});
 });
+console.log(globalVars.gqlHostname)
 
 // Start the server
 app.listen(port, () =>

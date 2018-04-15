@@ -29,5 +29,6 @@ html
 		div(id="graphiql") Loading...
 		script
 			| const token = '#{session.token}';
-			| const render = renderGraphiql('http://api.panda.itforge.io', token);
+			| const url = 'http://#{host}';
+			| const render = renderGraphiql(url, token);
 			| render(document.getElementById('graphiql'));
