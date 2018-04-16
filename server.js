@@ -85,7 +85,8 @@ app.get("/graphiql", function(req, res) {
 	res.render("graphiql", {
 		session: req.session,
 		user: testData.user,
-		host: globalVars.gqlHostname
+		host: globalVars.gqlHostname,
+                member: req.session.member
 	});
 });
 console.log(globalVars.gqlHostname)
