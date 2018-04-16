@@ -33,9 +33,6 @@ html
 									select(aria-label="Choose a space type", name="s-type", v-model="s_type")
 										option(value="1") ห้องเรียน
 										option(value="2") ห้องประชุม
-							//- div.input-with-icon.inp-25
-								i.fas.fa-hashtag
-								input(type="text", placeholder="room", name="s-room", v-model="s_room")
 							div.input-with-icon.inp-25
 								i.fas.fa-users
 								input(type="text", placeholder="ที่นั่ง", name="s-seats", v-model="s_seats")
@@ -57,12 +54,12 @@ html
 				div.container.steep#search-results(v-if="!firstSearch")
 					spinner(v-show="loading")
 					h3.text-center(v-show="!searchResults.length && !loading && !firstSearch", style="margin-top:4em") ไม่พบผลลัพธ์
-					result-card(v-for="space in searchResults", :key="space.id", :slug="space.id", :name="space.name", :seats="space.capacity", :amenities="['pc', 'sound', 'aircon', 'proj']")
+					result-card(v-for="space in searchResults", :key="space.id", :slug="space.id", :name="space.name", :dept="space.department.name", :seats="space.capacity", :amenities="['pc', 'sound', 'aircon', 'proj']")
 		script(type="text/x-template", id="result-card")
 			a.card.shadow.hoverable.search-result-card(v-bind:href="'space/' + slug")
 				h1 {{ name }}
 				//- div.result-time 2 hrs max available
-				p คณะเทคโนโลยีสารสนเทศ
+				p {{ dept }}
 				div.amenities
 					span
 						i.fas.fa-users

@@ -7,7 +7,7 @@ const apiURL = "http://api.panda.itforge.io/graphql";
 const trySamples = ["M03 IT", "Auditorium", "อาคารเรียนรวม"];
 
 Vue.component("result-card", {
-	props: ["slug", "name", "seats", "amenities"],
+	props: ["slug", "name", "dept", "seats", "amenities"],
 	template: "#result-card"
 });
 
@@ -23,7 +23,6 @@ var app = new Vue({
 		s_date_raw: "",
 		s_faculty: "",
 		s_type: "",
-		s_room: "",
 		s_seats: "",
 		firstSearch: true,
 		showAdvanced: false,
@@ -42,6 +41,7 @@ var app = new Vue({
 			this.showAdvanced = !this.showAdvanced;
 		},
 		doSearch: function() {
+			this.searchResults.length = 0;
 			this.loading = true;
 			if (this.firstSearch) {
 				document.getElementById("page-title").remove();
@@ -54,20 +54,21 @@ var app = new Vue({
 				data: {
 					query: `
 						query {
-							spaces {
-								id, name, capacity
+							searchSpaces(name: "${app.s_quick}") {
+								id name capacity
+								department {name}
 							}
 						}
 					`
 				}
 			})
 				.then(function(result) {
-					app.searchResults = result.data.data.spaces;
+					app.searchResults = result.data.data.searchSpaces;
 					app.loading = false;
-					// if (!app.searchResults.length && !app.loading && !firstSearch) ;
 				})
 				.catch(function(err) {
 					console.log(err);
+					app.loading = false;
 				});
 		}
 	}
@@ -87,11 +88,11 @@ const today = new Date();
 var picker = new Pikaday({
 	field: document.getElementById("datepicker"),
 	i18n: {
-		previousMonth : 'เดือนที่แล้ว',
-    	nextMonth     : 'เดือนหน้า',
-		months : ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'],
-		weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-	    weekdaysShort : ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
+		previousMonth: 'เดือนที่แล้ว',
+		nextMonth: 'เดือนหน้า',
+		months: ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'],
+		weekdays: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+		weekdaysShort: ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.']
 	},
 	firstDay: 1,
 	format: "DD-MM-YYYY",
@@ -107,7 +108,6 @@ var picker = new Pikaday({
 		app.s_date_raw = setRawDate(picker.getDate());
 	},
 	toString(date) {
-		picker_date = date;
 		const day = date.toString().split(" ")[2];
 		const month = date.toString().split(" ")[1];
 		const weekday = date.toString().split(" ")[0];
