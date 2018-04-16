@@ -9,7 +9,7 @@ html
 		script(src="//cdn.jsdelivr.net/react/15.5.4/react-dom.min.js")
 		script(src="//cdn.jsdelivr.net/npm/graphiql@0.11.5/graphiql.min.js")
 		script(src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js")
-		script(src="public/scripts/graphiql.js")
+		script(src="/public/scripts/graphiql.js")
 		include parts/scripts
 		include parts/stylesheet
 		style
@@ -17,13 +17,11 @@ html
 			| 	height: 100%;
 			| 	margin: 0;
 			| 	width: 100%;
-			| 	overflow: hidden;
-			| }
+			| 	overflow: hidden; }
 			| #graphiql {
 			| 	height: 100%;
 			| 	padding-top: 65px;
-			| 	line-height: 18px;
-			| }
+			| 	line-height: 18px; }
 	body
 		include parts/nav
 		div(id="graphiql") Loading...

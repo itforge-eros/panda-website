@@ -56,6 +56,7 @@ html
 				img#search-house(src="/public/img/search-house.svg")
 				div.container.steep#search-results(v-if="!firstSearch")
 					spinner(v-show="loading")
+					h3.text-center(v-show="!searchResults.length && !loading && !firstSearch", style="margin-top:4em") ไม่พบผลลัพธ์
 					result-card(v-for="space in searchResults", :key="space.id", :slug="space.id", :name="space.name", :seats="space.capacity", :amenities="['pc', 'sound', 'aircon', 'proj']")
 		script(type="text/x-template", id="result-card")
 			a.card.shadow.hoverable.search-result-card(v-bind:href="'space/' + slug")

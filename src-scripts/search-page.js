@@ -64,6 +64,7 @@ var app = new Vue({
 				.then(function(result) {
 					app.searchResults = result.data.data.spaces;
 					app.loading = false;
+					// if (!app.searchResults.length && !app.loading && !firstSearch) ;
 				})
 				.catch(function(err) {
 					console.log(err);
