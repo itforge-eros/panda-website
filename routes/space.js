@@ -32,11 +32,11 @@ const apollo_auth = new ApolloClient({
 	cache: new InMemoryCache()
 });
 
-const getSpace = id => {
+const getSpace = (dept, spaceName) => {
 	return apollo.query({
 		query: gql`
 			{
-				space(id: "${id}") {
+				space(department: "${dept}", name: "${spaceName}") {
 					id, name, description, capacity, isAvailable, department {name}
 				}
 			}
@@ -47,7 +47,7 @@ const getSpace = id => {
 const createRequest = rq => {
 	return apollo_auth.mutate({
 		mutation: gql`
-			mutation($requestInput: RequestInput!) {
+			mutation($requestInput: CreateRequestInput!) {
 				createRequest(input: $requestInput) {
 					id
 				}
@@ -55,7 +55,7 @@ const createRequest = rq => {
 		`,
 		variables: {
 			"requestInput": {
-				"dates": ["2018-04-29"],
+				"dates": [rq.r_date_raw],
 				"period": {
 					"start": 3,
 					"end": 10
@@ -69,9 +69,9 @@ const createRequest = rq => {
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-router.get("/:id", (req, res) => {
+router.get("/:dept/:name", (req, res) => {
 	token = req.session.token;
-	getSpace(req.params.id)
+	getSpace(req.params.dept, req.params.name)
 		.then(returnedData => {
 			if (returnedData.data.space != null) {
 				res.render("single-space", {
@@ -91,9 +91,9 @@ router.get("/:id", (req, res) => {
 		});
 });
 
-router.post("/reserve", multer().array(), (req, res) => {
+router.post("/:dept/:name/reserve", multer().array(), (req, res) => {
 	if (req.session.member) {
-		getSpace(req.body.space)
+		getSpace(req.params.dept, req.params.name)
 			.then(returnedSpace => {
 				if (returnedSpace.data.space != null) {
 					res.render("fill-request", {
@@ -116,7 +116,7 @@ router.post("/reserve", multer().array(), (req, res) => {
 	}
 });
 
-router.post("/reserve/submit", multer().array(), (req, res) => {
+router.post(/\/.*\/reserve\/submit/, multer().array(), (req, res) => {
 	if (req.session.member) {
 		createRequest(req.body)
 			.then(rp => {

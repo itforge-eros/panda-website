@@ -2,7 +2,7 @@ const globalVars = require("./globalVars");
 const express = require("express");
 const app = express();
 const env = process.env.NODE_ENV || "dev";
-const port = env == "production" ? 80 : 3000;
+const port = env == "production" ? 3001 : 3000;
 const session = require("express-session");
 const compression = require("compression");
 

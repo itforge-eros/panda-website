@@ -25,21 +25,22 @@ html
 							| นักศึกษา คณะเทคโนโลยีสารสนเทศ
 						p
 							strong สถานที่: 
-							| #{space.name}, คณะเทคโนโลยีสารสนเทศ
+							| #{space.name}, #{space.department.name}
 						p
 							strong วันที่ต้องการจอง: 
-							= reservation.r_date
+							= reservation.r_date + ' ' + reservation.r_date_raw.slice(0, 4)
 						p
 							strong เวลาที่ต้องการจอง: 
 							= times[(reservation.start)-1] + "-" + times[reservation.end]
-					form(action="reserve/submit", method="POST")
+					form(action="submit/", method="POST")
 						div(style="display:none")
 							input(type="text", name="space", value=space.id)
+							input(type="text", name="r_date_raw", value=reservation.r_date_raw)
 							input(type="number", name="start", value=reservation.start)
 							input(type="number", name="end", value=reservation.end)
 						div.input-wrap
 							label(for="seats") จำนวนผู้ใช้งาน (จำเป็น)
-							input(type="text", name="seats", required)
+							input(type="number", name="seats", required)
 							span.err กรุณากรอกข้อมูล
 						div.input-wrap
 							label(for="reason") เหตุผลในการจอง (จำเป็น)
