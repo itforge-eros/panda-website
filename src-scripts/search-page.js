@@ -56,7 +56,7 @@ var app = new Vue({
 						query {
 							searchSpaces(name: "${app.s_quick}") {
 								id name capacity
-								department {name}
+								department {name fullThaiName}
 							}
 						}
 					`
