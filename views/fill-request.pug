@@ -28,7 +28,7 @@ html
 							| #{space.name}, #{space.department.name}
 						p
 							strong วันที่ต้องการจอง: 
-							= reservation.r_date_raw
+							= reservation.r_date + ' ' + reservation.r_date_raw.slice(0, 4)
 						p
 							strong เวลาที่ต้องการจอง: 
 							= times[(reservation.start)-1] + "-" + times[reservation.end]

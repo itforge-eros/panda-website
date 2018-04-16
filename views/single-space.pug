@@ -57,6 +57,7 @@ html
 							form.reservation-box(action="reserve", method="POST")
 								div(style="display:none")
 									input(type="text", name="space", value=space.id)
+									input(type="text", name="r_date_raw", v-model="r_date_raw")
 									input(type="number", name="start", v-model="selectedStartSlot")
 									input(type="number", name="end", v-model="selectedEndSlot")
 								div.date
