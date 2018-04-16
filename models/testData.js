@@ -25,5 +25,6 @@ module.exports = {
 	session: session,
 	user: user,
 	faculty: faculty,
-	requestInfo: requestInfo
+	requestInfo: requestInfo,
+	env: env
 }
