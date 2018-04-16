@@ -32,11 +32,11 @@ const apollo_auth = new ApolloClient({
 	cache: new InMemoryCache()
 });
 
-const getSpace = id => {
+const getSpace = (dept, spaceName) => {
 	return apollo.query({
 		query: gql`
 			{
-				space(id: "${id}") {
+				space(department: "${dept}", name: "${spaceName}") {
 					id, name, description, capacity, isAvailable, department {name}
 				}
 			}
@@ -69,9 +69,9 @@ const createRequest = rq => {
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-router.get("/:id", (req, res) => {
+router.get("/:dept/:name", (req, res) => {
 	token = req.session.token;
-	getSpace(req.params.id)
+	getSpace(req.params.dept, req.params.name)
 		.then(returnedData => {
 			if (returnedData.data.space != null) {
 				res.render("single-space", {
@@ -91,9 +91,9 @@ router.get("/:id", (req, res) => {
 		});
 });
 
-router.post("/reserve", multer().array(), (req, res) => {
+router.post("/:dept/:name/reserve", multer().array(), (req, res) => {
 	if (req.session.member) {
-		getSpace(req.body.space)
+		getSpace(req.params.dept, req.params.name)
 			.then(returnedSpace => {
 				if (returnedSpace.data.space != null) {
 					res.render("fill-request", {

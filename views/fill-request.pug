@@ -25,10 +25,10 @@ html
 							| นักศึกษา คณะเทคโนโลยีสารสนเทศ
 						p
 							strong สถานที่: 
-							| #{space.name}, คณะเทคโนโลยีสารสนเทศ
+							| #{space.name}, #{space.department.name}
 						p
 							strong วันที่ต้องการจอง: 
-							= reservation.r_date
+							= reservation.r_date_raw
 						p
 							strong เวลาที่ต้องการจอง: 
 							= times[(reservation.start)-1] + "-" + times[reservation.end]
