@@ -1,0 +1,12 @@
+{
+	"apps": [
+	{
+
+		"name": "panda-website",
+		"script": "./server.js",
+		"env": {
+			"NODE_ENV": "production"
+		}
+	}
+	]
+}
