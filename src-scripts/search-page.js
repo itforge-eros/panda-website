@@ -7,7 +7,7 @@ const apiURL = "http://api.panda.itforge.io/graphql";
 const trySamples = ["M03 IT", "Auditorium", "อาคารเรียนรวม"];
 
 Vue.component("result-card", {
-	props: ["slug", "name", "seats", "amenities"],
+	props: ["slug", "name", "dept", "seats", "amenities"],
 	template: "#result-card"
 });
 
@@ -42,6 +42,7 @@ var app = new Vue({
 			this.showAdvanced = !this.showAdvanced;
 		},
 		doSearch: function() {
+			this.searchResults.length = 0;
 			this.loading = true;
 			if (this.firstSearch) {
 				document.getElementById("page-title").remove();
@@ -55,7 +56,8 @@ var app = new Vue({
 					query: `
 						query {
 							spaces {
-								id, name, capacity
+								id name capacity
+								department {name}
 							}
 						}
 					`
