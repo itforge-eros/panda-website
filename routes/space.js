@@ -116,7 +116,7 @@ router.post("/:dept/:name/reserve", multer().array(), (req, res) => {
 	}
 });
 
-router.post("/reserve/submit", multer().array(), (req, res) => {
+router.post(/\/.*\/reserve\/submit/, multer().array(), (req, res) => {
 	if (req.session.member) {
 		createRequest(req.body)
 			.then(rp => {

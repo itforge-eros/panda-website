@@ -54,7 +54,7 @@ html
 									span โปรเจ็กเตอร์
 					div.row#row-2
 						div.card.shadow
-							form.reservation-box(action="reserve", method="POST")
+							form.reservation-box(action="reserve/", method="POST")
 								div(style="display:none")
 									input(type="text", name="space", value=space.id)
 									input(type="text", name="r_date_raw", v-model="r_date_raw")
