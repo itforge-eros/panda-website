@@ -47,7 +47,7 @@ const getSpace = (dept, spaceName) => {
 const createRequest = rq => {
 	return apollo_auth.mutate({
 		mutation: gql`
-			mutation($requestInput: RequestInput!) {
+			mutation($requestInput: CreateRequestInput!) {
 				createRequest(input: $requestInput) {
 					id
 				}
@@ -55,7 +55,7 @@ const createRequest = rq => {
 		`,
 		variables: {
 			"requestInput": {
-				"dates": ["2018-04-29"],
+				"dates": [rq.r_date_raw],
 				"period": {
 					"start": 3,
 					"end": 10
