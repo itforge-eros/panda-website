@@ -66,4 +66,5 @@ app.get("/graphiql", function(req, res) {
 app.listen(port, () => {
 	console.log("Server started\nListening on port " + port);
 	console.log("Using API: " + globalVars.gqlHostname);
+	console.log("ENV: " + env);
 });
