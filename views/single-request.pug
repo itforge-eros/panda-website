@@ -14,7 +14,6 @@ html
 				if (i%2 != 0) start_hr++;
 			}
 			const months = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]
-			const createdAt = new Date(reqInfo.createdAt * 1000);
 		div#app
 			div.content
 				div.container
@@ -33,10 +32,10 @@ html
 							td= reqInfo.space.fullName + ", " + reqInfo.space.department.fullThaiName
 						tr
 							td ยื่นคำร้องเมื่อ
-							td= createdAt.getDate() + " " + months[createdAt.getMonth()] + " " + createdAt.getFullYear()
+							td= reqInfo.createdAt_th
 						tr
 							td วันที่ต้องการจอง
-							td= reqInfo.dates
+							td= reqInfo.dates_th
 						tr
 							td เวลาที่ต้องการจอง
 							td= times[reqInfo.period.start - 1] + " - " + times[reqInfo.period.end]
