@@ -56,14 +56,12 @@ router.get("/:id", (req, res) => {
 	if (req.session.member) {
 		getRequest(req.params.id)
 			.then(returnedReq => {
-				if (globalVars.env != "production") console.log(returnedReq.data.request);
-				// rq.createdAt = dhp.thaiDateOf(dhp.epochToDate(reqInfo.createdAt));
 				let updatedData = {
 					createdAt_th: dhp.thaiDateOf(dhp.epochToDate(returnedReq.data.request.createdAt)),
 					dates_th: returnedReq.data.request.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d)))
 				}
 				const rq = Object.assign({}, updatedData, returnedReq.data.request);
-				console.log(rq);
+				if (globalVars.env != "production") console.log(rq);
 				res.render("single-request", {
 					session: testData.session,
 					user: testData.user,
