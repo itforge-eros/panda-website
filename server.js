@@ -24,6 +24,7 @@ const manageSpaceRouter = require("./routes/manageSpace");
 const manageReportRouter = require("./routes/manageReport");
 const manageMaterialRouter = require("./routes/manageMaterial");
 const spaceRouter = require("./routes/space");
+const myRequestRouter = require("./routes/myRequest");
 
 app.use(session(globalVars.sessionOptions));
 app.use(compression());
@@ -35,6 +36,7 @@ app.use("/manage-space", manageSpaceRouter);
 app.use("/manage-report", manageReportRouter);
 app.use("/manage-material", manageMaterialRouter);
 app.use("/space", spaceRouter);
+app.use("/my-request", myRequestRouter);
 
 app.get("/", (req, res) => {
 	res.render("index", {
@@ -42,22 +44,6 @@ app.get("/", (req, res) => {
 		user: testData.user,
 		member: req.session.member,
 		faculty: testData.faculty
-	});
-});
-app.get("/my-request", (req, res) => {
-	res.render("my-request", {
-		session: testData.session,
-		user: testData.user,
-		member: req.session.member
-	});
-});
-app.get("/request/:id", (req, res) => {
-	res.render("single-request", {
-		session: testData.session,
-		user: testData.user,
-		member: req.session.member,
-		reqInfo: testData.requestInfo,
-		id: req.params.id
 	});
 });
 app.get("/error", (req, res) => {
@@ -75,9 +61,9 @@ app.get("/graphiql", function(req, res) {
                 member: req.session.member
 	});
 });
-console.log(globalVars.gqlHostname)
 
 // Start the server
-app.listen(port, () =>
-	console.log(`Listening on port ${port}\nPress Ctrl+C to stop`)
-);
+app.listen(port, () => {
+	console.log("Server started\nListening on port " + port);
+	console.log("Using API: " + globalVars.gqlHostname);
+});
