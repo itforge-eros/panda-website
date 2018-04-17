@@ -11,11 +11,11 @@ html
 				div.container
 					div.page-title-wrap
 						h2.page-pretitle จัดการสถานที่
-						h1.page-title M03
+						h1.page-title {{ spaceName || "สถานที่ใหม่" }}
 					form(action="save", method="POST")
 						div.marg-b-1
 							label(for="space-name") ชื่อสถานที่
-							input(type="text", name="space-name", required)
+							input(type="text", name="space-name", required, v-model="spaceName")
 						div.marg-b-1
 							label(for="space-seats") จำนวนที่นั่ง
 							input(type="number", name="space-seats", required)
@@ -38,3 +38,4 @@ html
 						button.raised
 							i.fas.fa-save
 							| บันทึก
+		script(src="/public/scripts/manage-space-single.js")
