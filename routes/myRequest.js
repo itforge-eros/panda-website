@@ -2,6 +2,7 @@ const globalVars = require("../globalVars");
 const express = require("express");
 const router = express.Router();
 const testData = require("../models/testData");
+const dhp = require("../helpers/date");
 
 const ApolloClient = require("apollo-client").ApolloClient;
 const InMemoryCache = require("apollo-cache-inmemory").InMemoryCache;
@@ -55,12 +56,17 @@ router.get("/:id", (req, res) => {
 	if (req.session.member) {
 		getRequest(req.params.id)
 			.then(returnedReq => {
-				console.log(returnedReq.data.request);
+				let updatedData = {
+					createdAt_th: dhp.thaiDateOf(dhp.epochToDate(returnedReq.data.request.createdAt)),
+					dates_th: returnedReq.data.request.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d)))
+				}
+				const rq = Object.assign({}, updatedData, returnedReq.data.request);
+				if (globalVars.env != "production") console.log(rq);
 				res.render("single-request", {
 					session: testData.session,
 					user: testData.user,
 					member: req.session.member,
-					reqInfo: returnedReq.data.request,
+					reqInfo: rq,
 					id: req.params.id
 				});
 			}).catch(err => {
