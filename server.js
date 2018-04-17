@@ -44,20 +44,6 @@ app.get("/", (req, res) => {
 		faculty: testData.faculty
 	});
 });
-app.get("/fill-request", (req, res) => {
-	res.render("fill-request", {
-		session: testData.session,
-		user: testData.user,
-		member: req.session.member
-	});
-});
-app.get("/request-sent", (req, res) => {
-	res.render("request-sent", {
-		session: testData.session,
-		user: testData.ser,
-		member: req.session.member
-	});
-});
 app.get("/my-request", (req, res) => {
 	res.render("my-request", {
 		session: testData.session,
