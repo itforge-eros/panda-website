@@ -21,13 +21,13 @@ html
 					div.marg-b-1
 						label คุณสมบัติ
 						table
-							each item in [1,2,3,4,5]
+							each item in amenities
 								tr
 									td
 										label.control.checkbox
-											input(type="checkbox")
+											input(type="checkbox", name="amenities", value=item.id)
 											span.control-indicator
-											| โปรเจ็กเตอร์
+											= item.name
 					div.marg-b-1
 						label บันทึกเพิ่มเติม
 						textarea(name="space-note", rows="4")
