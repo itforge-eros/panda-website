@@ -12,7 +12,14 @@ html
 		div#app
 			div.content
 				div.container
-					div.notice.warning กรุณาตรวจสอบข้อมูล
+					if status == "success"
+						div.notice.success
+							i.fas.fa-check-circle
+							|  บันทึกข้อมูลเรียบร้อย
+					else if status == "error"
+						div.notice.warning
+							i.fas.fa-exclamation-circle
+							|  ยังไม่ได้บันทึกข้อมูล กรุณาตรวจสอบข้อมูลอีกครั้ง
 					div.page-title-wrap
 						h2.page-pretitle จัดการสถานที่
 						h1.page-title {{ spaceName || "สถานที่ใหม่" }}
@@ -58,8 +65,9 @@ html
 												span.control-indicator
 												= item.name
 						div.marg-b-1
-							label บันทึกเพิ่มเติม
-							textarea(name="space-note", rows="4")
+							label คำอธิบาย
+							textarea(name="description", rows="4")
+								= orgData.description ? orgData.description : ""
 						div.marg-b-1
 							label ภาพของห้อง
 							div(style="height: 250px; background-color: #F0F0F0")

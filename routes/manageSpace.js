@@ -14,6 +14,7 @@ const fetch = require("node-fetch");
 const gql = require("graphql-tag");
 
 let token = "";
+let createSpaceStatus = "";
 
 const authLink = setContext((_, { headers }) => {
 	return { headers: { authorization: token ? `bearer${token}` : "" } };
@@ -34,12 +35,24 @@ const amenities = [
 	{ id: "INSTRUCTOR_PC", name: "คอมฯ ผู้สอน" }
 ];
 
+const getSpace = (dept, spaceName) => {
+	return apollo_auth.query({
+		query: gql`
+			{
+				space(department: "${dept}", name: "${spaceName}") {
+					id, name, fullName, description, capacity, isAvailable, department {name fullThaiName}
+				}
+			}
+		`
+	});
+};
+
 const createSpace = sp => {
 	return apollo_auth.mutate({
 		mutation: gql`
 			mutation($spaceInput: CreateSpaceInput!) {
 				createSpace(input: $spaceInput) {
-					id
+					name department { name }
 				}
 			}
 		`,
@@ -71,36 +84,45 @@ router.get("/", (req, res) => {
 	});
 });
 router.get("/new", (req, res) => {
-	let orgData = {capacity: 20, fullName: "M03", type: "lecture_room", name: "it-auditorium"};
 	if (req.session.member) {
 		res.render("manage-space-single", {
 			session: testData.session,
 			user: testData.user,
 			member: req.session.member,
 			amenities: amenities,
-			orgData: orgData
+			orgData: {},
+			status: createSpaceStatus
 		});
-		console.log(orgData.capacity);
+		createSpaceStatus = "";
 	} else {
 		res.redirect("/authen/login/");
 	}
 });
-router.get("/:id", (req, res) => {
-	res.render("manage-space-single", {
-		session: testData.session,
-		user: testData.user,
-		member: req.session.member,
-		amenities: amenities
-	});
+router.get("/:dept/:name", (req, res) => {
+	getSpace(req.params.dept, req.params.name)
+		.then(data => {
+			res.render("manage-space-single", {
+				session: testData.session,
+				user: testData.user,
+				member: req.session.member,
+				amenities: amenities,
+				orgData: data.data.space,
+				status: createSpaceStatus
+			});
+			createSpaceStatus = "";
+		})
+		.catch(err => console.log(err))
 });
 router.post(/\/.*\/save/, multer().array(), (req, res) => {
 	if (req.session.member) {
 		createSpace(req.body)
-			.then(space => {
-				res.redirect("/manage-space/");
+			.then(data => {
+				createSpaceStatus = "success";
+				res.redirect("/manage-space/" + data.data.createSpace.department.name + "/" + data.data.createSpace.name + "/");
 			})
 			.catch(err => {
 				if (globalVars.env != "production") console.log(err);
+				createSpaceStatus = "error";
 			});
 	} else {
 		res.redirect("/authen/login/")
