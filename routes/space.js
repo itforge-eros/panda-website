@@ -37,7 +37,7 @@ const getSpace = (dept, spaceName) => {
 		query: gql`
 			{
 				space(department: "${dept}", name: "${spaceName}") {
-					id, name, description, capacity, isAvailable, department {name fullThaiName}
+					id, name, fullName, description, capacity, isAvailable, department {name fullThaiName}
 				}
 			}
 		`

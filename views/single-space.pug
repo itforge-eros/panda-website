@@ -1,7 +1,7 @@
 html
 	head
 		include parts/meta
-		title= space.name + " - KMITL OSRS"
+		title= space.fullName + " - KMITL OSRS"
 		link(rel="stylesheet" href="/public/vendor/pikaday/pikaday.min.css")
 		include parts/stylesheet
 		include parts/scripts
@@ -29,7 +29,7 @@ html
 			div.content
 				div.container
 					div.page-title-wrap
-						h1.page-title= space.name
+						h1.page-title= space.fullName
 						h2.page-subtitle= space.department.fullThaiName
 				div.container
 					div.row.flex.marg-b-1#row-1
@@ -39,7 +39,7 @@ html
 							div.card
 								span.amenity
 									i.fas.fa-2x.fa-users
-									span 90 ที่นั่ง
+									span #{space.capacity} ที่นั่ง
 								span.amenity
 									i.fas.fa-2x.fa-volume-up
 									span ระบบเสียง

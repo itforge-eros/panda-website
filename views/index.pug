@@ -35,7 +35,7 @@ html
 										option(value="2") ห้องประชุม
 							div.input-with-icon.inp-25
 								i.fas.fa-users
-								input(type="text", placeholder="ที่นั่ง", name="s-seats", v-model="s_seats")
+								input(type="text", placeholder="ที่นั่ง", name="s-capacity", v-model="s_capacity")
 						div.row.text-center.marg-b-1#labels(v-show="!showAdvanced")
 							div.marg-b-1 ลองคลิกตัวอย่างเหล่านี้ <i class="fas fa-hand-point-down"></i>
 							ul.label-list
@@ -54,7 +54,7 @@ html
 				div.container.steep#search-results(v-if="!firstSearch")
 					spinner(v-show="loading")
 					h3.text-center(v-show="!searchResults.length && !loading && !firstSearch", style="margin-top:4em") ไม่พบผลลัพธ์
-					result-card(v-for="space in searchResults", :key="space.id", :slug="space.name", :name="space.name", :dept="space.department.fullThaiName", :dept-slug="space.department.name", :seats="space.capacity", :amenities="['pc', 'sound', 'aircon', 'proj']")
+					result-card(v-for="space in searchResults", :key="space.id", :slug="space.name", :name="space.fullName", :dept="space.department.fullThaiName", :dept-slug="space.department.name", :capacity="space.capacity", :amenities="['pc', 'sound', 'aircon', 'proj']")
 		script(type="text/x-template", id="result-card")
 			a.card.shadow.hoverable.search-result-card(v-bind:href="'space/' + deptSlug + '/' + slug + '/'")
 				h1 {{ name }}
@@ -63,7 +63,7 @@ html
 				div.amenities
 					span
 						i.fas.fa-users
-						|  {{ seats }}
+						|  {{ capacity }}
 					span(v-if="amenities.includes('sound')", title="sound system")
 						i.fas.fa-volume-up
 					span(v-if="amenities.includes('pc')", title="teacher PC")

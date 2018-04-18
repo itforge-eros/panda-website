@@ -34,6 +34,8 @@ input, .select select, textarea
 
 textarea
 	width: 100%
+	max-width: 100%
+	min-width: 100%
 
 label
 	display: block
@@ -45,3 +47,7 @@ label
 		display: block
 		margin-top: 0.5em
 		color: $color-red
+
+@media screen and (max-width: 414px)
+	input
+		width: 100%

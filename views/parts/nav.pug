@@ -28,7 +28,7 @@ nav
 			a.icon-link(href="/my-request/")
 				i.fas.fa-book
 			span.tooltip คำร้องของฉัน
-		a.authen(href=(member ? "/authen/logout" : "/authen/login"))= (member ? member.firstName : "เข้าสู่ระบบ") + " "
+		a.authen(href=(member ? "/authen/logout/" : "/authen/login/"))= (member ? member.firstName : "เข้าสู่ระบบ") + " "
 			if member
 				i.fas.fa-times-circle
 			else
