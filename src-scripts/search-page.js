@@ -7,7 +7,7 @@ const apiURL = "https://api.space.itforge.io/graphql";
 const trySamples = ["M03 IT", "Auditorium", "อาคารเรียนรวม"];
 
 Vue.component("result-card", {
-	props: ["slug", "name", "dept", "deptSlug", "seats", "amenities"],
+	props: ["slug", "name", "dept", "deptSlug", "capacity", "amenities"],
 	template: "#result-card"
 });
 
@@ -23,7 +23,7 @@ var app = new Vue({
 		s_date_raw: "",
 		s_faculty: "",
 		s_type: "",
-		s_seats: "",
+		s_capacity: "",
 		firstSearch: true,
 		showAdvanced: false,
 		trySamples: trySamples,
@@ -55,7 +55,7 @@ var app = new Vue({
 					query: `
 						query {
 							searchSpaces(name: "${app.s_quick}") {
-								id name capacity
+								id name fullName capacity
 								department {name fullThaiName}
 							}
 						}
