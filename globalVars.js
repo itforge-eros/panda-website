@@ -1,4 +1,4 @@
-const apiHostname = "https://api.space.itforge.io"
+const apiHostname = "https://api.space.itforge.io";
 const gqlURL = `${apiHostname}/graphql`;
 const loginURL = `${apiHostname}/login`;
 const sessionOptions = {

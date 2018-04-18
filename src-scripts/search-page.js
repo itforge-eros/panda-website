@@ -3,7 +3,7 @@ var weekdaysTH = ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
 var monthsEN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 var weekdaysEN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
-const apiURL = "http://api.space.itforge.io/graphql";
+const apiURL = "https://api.space.itforge.io/graphql";
 const trySamples = ["M03 IT", "Auditorium", "อาคารเรียนรวม"];
 
 Vue.component("result-card", {

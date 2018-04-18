@@ -4,6 +4,8 @@ html
 		title จัดการสถานที่ M03 - KMITL OSRS
 		include parts/stylesheet
 		include parts/scripts
+		style
+			| span#spaceURI {color: #00A0FF}
 	body.manage-space-single
 		include parts/nav
 		div#app
@@ -13,12 +15,26 @@ html
 						h2.page-pretitle จัดการสถานที่
 						h1.page-title {{ spaceName || "สถานที่ใหม่" }}
 					form(action="save", method="POST")
+						div.row
+							div.col-50.marg-b-1
+								label(for="space-name") ชื่อสถานที่
+								input.fluid(type="text", name="space-name", required, v-model="spaceName")
+							div.col-50.marg-b-1
+								label(for="space-seats") จำนวนที่นั่ง
+								input.fluid(type="number", name="space-seats", required)
+						div.row
+							div.col-50.marg-b-1
+								label(for="slug") ประเภทสถานที่
+								div.select
+									select(aria-label="Choose a faculty", name="s-faculty")
+										each t in [{x: "ห้องเรียน", v: "lecture_room"}, {x: "ห้องประชุม", v: "meeting_room"}]
+											option(value=t.v)= t.x
+						div(style="margin-bottom:0.5em")
+							label(for="slug") ชื่อสำหรับใช้ใน URL (ภาษาอังกฤษเท่านั้น)
+							input(type="text", name="slug", required, v-model="spaceURI")
 						div.marg-b-1
-							label(for="space-name") ชื่อสถานที่
-							input(type="text", name="space-name", required, v-model="spaceName")
-						div.marg-b-1
-							label(for="space-seats") จำนวนที่นั่ง
-							input(type="number", name="space-seats", required)
+							code https://space.itforge.io/space/it/
+								span#spaceURI {{ computedSpaceURI }}
 						div.marg-b-1
 							label คุณสมบัติ
 							table
