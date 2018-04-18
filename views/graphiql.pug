@@ -27,6 +27,6 @@ html
 		div(id="graphiql") Loading...
 		script
 			| const token = '#{session.token}';
-			| const url = 'http://#{host}';
+			| const url = '#{host}';
 			| const render = renderGraphiql(url, token);
 			| render(document.getElementById('graphiql'));

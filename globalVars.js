@@ -1,6 +1,6 @@
-const gqlHostname = "api.space.itforge.io"
-const gqlURL = `http://${gqlHostname}/graphql`;
-const loginURL = "http://api.space.itforge.io/login";
+const apiHostname = "https://api.space.itforge.io"
+const gqlURL = `${apiHostname}/graphql`;
+const loginURL = `${apiHostname}/login`;
 const sessionOptions = {
 	name: "kmitl_osrs",
 	secret: "keyboard cat",
@@ -11,7 +11,7 @@ const env = process.env.NODE_ENV || "dev";
 
 module.exports = {
 	gqlURL: gqlURL,
-	gqlHostname: gqlHostname,
+	apiHostname: apiHostname,
 	loginURL: loginURL,
 	sessionOptions: sessionOptions,
 	env: env
