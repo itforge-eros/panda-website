@@ -22,6 +22,13 @@ html
 							div.col-50.marg-b-1
 								label(for="space-seats") จำนวนที่นั่ง
 								input.fluid(type="number", name="space-seats", required)
+						div.row
+							div.col-50.marg-b-1
+								label(for="slug") ประเภทสถานที่
+								div.select
+									select(aria-label="Choose a faculty", name="s-faculty")
+										each t in [{x: "ห้องเรียน", v: "lecture_room"}, {x: "ห้องประชุม", v: "meeting_room"}]
+											option(value=t.v)= t.x
 						div(style="margin-bottom:0.5em")
 							label(for="slug") ชื่อสำหรับใช้ใน URL (ภาษาอังกฤษเท่านั้น)
 							input(type="text", name="slug", required, v-model="spaceURI")
