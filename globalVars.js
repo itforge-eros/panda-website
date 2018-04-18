@@ -1,6 +1,6 @@
 const gqlHostname = "api.space.itforge.io"
-const gqlURL = `http://${gqlHostname}/graphql`;
-const loginURL = "http://api.space.itforge.io/login";
+const gqlURL = `https://${gqlHostname}/graphql`;
+const loginURL = `https://${gqlHostname}/login`;
 const sessionOptions = {
 	name: "kmitl_osrs",
 	secret: "keyboard cat",
