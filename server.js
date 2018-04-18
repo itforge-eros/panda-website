@@ -57,7 +57,7 @@ app.get("/graphiql", function(req, res) {
 	res.render("graphiql", {
 		session: req.session,
 		user: testData.user,
-		host: globalVars.gqlHostname,
+		host: globalVars.apiHostname,
                 member: req.session.member
 	});
 });
@@ -65,6 +65,6 @@ app.get("/graphiql", function(req, res) {
 // Start the server
 app.listen(port, () => {
 	console.log("Server started\nListening on port " + port);
-	console.log("Using API: " + globalVars.gqlHostname);
+	console.log("Using API: " + globalVars.apiHostname);
 	console.log("ENV: " + env);
 });
