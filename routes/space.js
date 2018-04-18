@@ -57,8 +57,8 @@ const createRequest = rq => {
 			"requestInput": {
 				"dates": [rq.r_date_raw],
 				"period": {
-					"start": 3,
-					"end": 10
+					"start": parseInt(rq.start),
+					"end": parseInt(rq.end)
 				},
 				"spaceId": rq.space
 			}
