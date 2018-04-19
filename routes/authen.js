@@ -18,13 +18,13 @@ const apollo = new ApolloClient({
 	cache: new InMemoryCache()
 });
 
-const getMember = (usr, pwd) => {
+const sendLogin = (usr, pwd) => {
 	return apollo.query({
 		query: gql`
 			{
 				login(username: "${usr}", password: "${pwd}") {
 					member {
-						id, username, firstName, lastName, email
+						id, username, firstName, lastName, email, roles { departments }
 					},
 					token
 				}
@@ -63,7 +63,7 @@ router.post("/login", multer().array(), (req, res, next) => {
 		isCredEmpty = true;
 		res.redirect("/authen/login");
 	} else {
-		getMember(req.body.username, req.body.password).then(data => {
+		sendLogin(req.body.username, req.body.password).then(data => {
 			req.session.token = data.data.login.token;
 			req.session.member = data.data.login.member;
 			res.redirect("/");
