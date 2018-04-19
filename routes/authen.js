@@ -87,7 +87,8 @@ router.get("/login", (req, res, next) => {
 		user: testData.user,
 		member: req.session.member,
 		isCredEmpty: isCredEmpty,
-		isCredInvalid: isCredInvalid
+		isCredInvalid: isCredInvalid,
+		currentDept: req.session.currentDept
 	});
 	// reset the flags so that the page hides the errors on refresh
 	isCredEmpty = false;
@@ -105,7 +106,9 @@ router.post("/login", multer().array(), (req, res, next) => {
 				req.session.member = data.data.login.member;
 				token = req.session.token;
 				getMe().then(meData => {
+					req.session.currentDept = "";
 					req.session.member = Object.assign({}, req.session.member, meData.data.me);
+					// console.log(req.session.member);
 					if (req.session.member.roles.length > 1)
 						res.redirect("/choose-dept/")
 					else

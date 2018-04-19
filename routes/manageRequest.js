@@ -7,6 +7,7 @@ router.get("/", (req, res) => {
 		session: testData.session,
 		user: testData.user,
 		member: req.session.member,
+		currentDept: req.session.currentDept,
 		faculty: testData.faculty
 	});
 });
@@ -15,6 +16,7 @@ router.get("/:id", (req, res) => {
 		session: testData.session,
 		user: testData.user,
 		member: req.session.member,
+		currentDept: req.session.currentDept,
 		id: req.params.id,
 		reqInfo: testData.requestInfo
 	});

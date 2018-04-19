@@ -43,6 +43,7 @@ app.get("/", (req, res) => {
 		session: testData.session,
 		user: testData.user,
 		member: req.session.member,
+		currentDept: req.session.currentDept,
 		faculty: testData.faculty
 	});
 });
@@ -50,7 +51,8 @@ app.get("/error", (req, res) => {
 	res.render("error", {
 		session: testData.session,
 		user: testData.user,
-		member: req.session.member
+		member: req.session.member,
+		currentDept: req.session.currentDept
 	});
 });
 app.get("/graphiql", (req, res) => {
@@ -58,15 +60,21 @@ app.get("/graphiql", (req, res) => {
 		session: req.session,
 		user: testData.user,
 		host: globalVars.apiHostname,
-		member: req.session.member
+		member: req.session.member,
+		currentDept: req.session.currentDept
 	});
 });
 app.get("/choose-dept", (req, res) => {
 	res.render("choose-dept", {
 		session: req.session,
 		user: testData.user,
-		member: req.session.member
+		member: req.session.member,
+		currentDept: req.session.currentDept
 	});
+});
+app.get("/choose-dept/:dept", (req, res) => {
+	req.session.currentDept = req.params.dept;
+	res.redirect("/");
 })
 
 // Start the server

@@ -13,6 +13,6 @@ html
 						h1.page-title เลือกคณะเพื่อเข้าสู่ระบบ
 				div.container.steep
 					each i in member.roles
-						a.card.shadow.hoverable.marg-b-1
+						a.card.shadow.hoverable.marg-b-1(href=i.department.name)
 							h1.card-title= i.department.fullThaiName
 							p= i.department.description

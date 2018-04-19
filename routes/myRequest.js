@@ -66,6 +66,7 @@ router.get("/:id", (req, res) => {
 					session: testData.session,
 					user: testData.user,
 					member: req.session.member,
+					currentDept: req.session.currentDept,
 					reqInfo: rq,
 					id: req.params.id
 				});

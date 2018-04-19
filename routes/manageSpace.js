@@ -80,7 +80,8 @@ router.get("/", (req, res) => {
 	res.render("manage-space", {
 		session: testData.session,
 		user: testData.user,
-		member: req.session.member
+		member: req.session.member,
+		currentDept: req.session.currentDept
 	});
 });
 router.get("/new", (req, res) => {
@@ -89,6 +90,7 @@ router.get("/new", (req, res) => {
 			session: testData.session,
 			user: testData.user,
 			member: req.session.member,
+			currentDept: req.session.currentDept,
 			amenities: amenities,
 			orgData: {},
 			status: createSpaceStatus
@@ -105,6 +107,7 @@ router.get("/:dept/:name", (req, res) => {
 				session: testData.session,
 				user: testData.user,
 				member: req.session.member,
+				currentDept: req.session.currentDept,
 				amenities: amenities,
 				orgData: data.data.space,
 				status: createSpaceStatus
