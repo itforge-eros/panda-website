@@ -45,12 +45,36 @@ const getRequest = id => {
 	});
 };
 
+const getMyRequests = () => {
+	return apollo_auth.query({
+		query: gql`
+			{
+				me {
+					id dates period {start end} status createdAt
+					space {fullName department {fullThaiName}}
+				}
+			}
+		`
+	})
+}
+
 router.get("/", (req, res) => {
-	res.render("my-request", {
-		session: testData.session,
-		user: testData.user,
-		member: req.session.member
-	});
+	getMyRequests().then(myRequests => {
+		let updatedData = {
+			createdAt_th: dhp.thaiDateOf(dhp.epochToDate(myRequests.data.requests.createdAt)),
+			dates_th: myRequests.data.requests.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d)))
+		}
+		const rq = Object.assign({}, updatedData, myRequests.data.requests);
+		res.render("my-request", {
+			session: testData.session,
+			user: testData.user,
+			member: req.session.member,
+			currentDept: req.session.currentDept,
+			myRequests: myRequests.data.me.requests
+		});
+	}).catch(err => {
+		if (globalVars.env != "production") console.log(err);
+	})
 });
 router.get("/:id", (req, res) => {
 	if (req.session.member) {
