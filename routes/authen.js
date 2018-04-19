@@ -56,8 +56,9 @@ const getMe = () => {
 			{
 				me {
 					roles {
+						name
 						department {
-							name fullThaiName description
+							id name fullThaiName description
 						}
 						permissions {
 							accesses
@@ -106,13 +107,16 @@ router.post("/login", multer().array(), (req, res, next) => {
 				req.session.member = data.data.login.member;
 				token = req.session.token;
 				getMe().then(meData => {
-					req.session.currentDept = "";
 					req.session.member = Object.assign({}, req.session.member, meData.data.me);
 					// console.log(req.session.member);
-					if (req.session.member.roles.length > 1)
+					if (req.session.member.roles.length > 1) {
 						res.redirect("/choose-dept/")
-					else
+					} else if (req.session.member.roles.length == 1) {
+						req.session.currentDept = req.session.member.roles[0].department;
 						res.redirect("/");
+					} else {
+						res.redirect("/");
+					}
 				}).catch(err => {
 					if (globalVars.env != "production") console.log(err);
 				})

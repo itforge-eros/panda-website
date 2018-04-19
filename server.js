@@ -72,8 +72,8 @@ app.get("/choose-dept", (req, res) => {
 		currentDept: req.session.currentDept
 	});
 });
-app.get("/choose-dept/:dept", (req, res) => {
-	req.session.currentDept = req.params.dept;
+app.get("/choose-dept/:dept/:id", (req, res) => {
+	req.session.currentDept = {name: req.params.dept, id: req.params.id};
 	res.redirect("/");
 })
 

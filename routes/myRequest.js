@@ -13,8 +13,6 @@ const gql = require("graphql-tag");
 
 let token = "";
 
-router.use((req, res, next) => {token = req.session.token; next()});
-
 const authLink = setContext((_, { headers }) => {
 	return { headers: { authorization: token ? `bearer${token}` : "" } };
 });
@@ -50,31 +48,45 @@ const getMyRequests = () => {
 		query: gql`
 			{
 				me {
-					id dates period {start end} status createdAt
-					space {fullName department {fullThaiName}}
+					requests {
+						id dates period {start end} status createdAt
+						space {fullName department {fullThaiName}}
+					}
 				}
 			}
 		`
 	})
 }
 
+router.use((req, res, next) => {
+	token = req.session.token;
+	next()
+});
+
 router.get("/", (req, res) => {
-	getMyRequests().then(myRequests => {
-		let updatedData = {
-			createdAt_th: dhp.thaiDateOf(dhp.epochToDate(myRequests.data.requests.createdAt)),
-			dates_th: myRequests.data.requests.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d)))
-		}
-		const rq = Object.assign({}, updatedData, myRequests.data.requests);
-		res.render("my-request", {
-			session: testData.session,
-			user: testData.user,
-			member: req.session.member,
-			currentDept: req.session.currentDept,
-			myRequests: myRequests.data.me.requests
-		});
-	}).catch(err => {
-		if (globalVars.env != "production") console.log(err);
-	})
+	// token = req.session.token;
+	if (req.session.member) {
+		getMyRequests()
+			.then(myRequests => {
+				let updatedData = {
+					createdAt_th: dhp.thaiDateOf(dhp.epochToDate(myRequests.data.requests.createdAt)),
+					dates_th: myRequests.data.requests.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d)))
+				}
+				const rq = Object.assign({}, updatedData, myRequests.data.requests);
+				res.render("my-request", {
+					session: testData.session,
+					user: testData.user,
+					member: req.session.member,
+					currentDept: req.session.currentDept,
+					myRequests: myRequests.data.me.requests
+				});
+			})
+			.catch(err => {
+				if (globalVars.env != "production") console.log(err);
+			});
+	} else {
+		res.redirect("/authen/login");
+	}
 });
 router.get("/:id", (req, res) => {
 	if (req.session.member) {

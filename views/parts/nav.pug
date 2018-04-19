@@ -4,13 +4,13 @@ nav
 	if member && member.roles != "undefined"
 		if member.roles.length > 0
 			div.dropdown
-				span #{currentDept ? "กำลังจัดการ" : "เลือกคณะ"} <strong>#{currentDept}</strong> 
+				span #{currentDept ? "กำลังจัดการ" : "เลือกคณะ"} <strong>#{currentDept.name}</strong> 
 					i.fas.fa-caret-down
 				div.dropdown-content
 					ul
 						each r in member.roles
 							li
-								a(href="choose-dept/" + r.department.name) <strong>#{r.department.name}</strong> - Administrator
+								a(href="choose-dept/" + r.department.name + "/" + r.department.id) <strong>#{r.department.name}</strong> - #{r.name}
 	ul.menu
 		li
 			a.icon-link(href="/")
