@@ -78,6 +78,7 @@ router.get("/:dept/:name", (req, res) => {
 					session: testData.session,
 					user: testData.user,
 					member: req.session.member,
+					currentDept: req.session.currentDept,
 					faculty: testData.faculty,
 					space: returnedData.data.space
 				});
@@ -100,6 +101,7 @@ router.post("/:dept/:name/reserve", multer().array(), (req, res) => {
 						session: testData.session,
 						user: testData.user,
 						member: req.session.member,
+						currentDept: req.session.currentDept,
 						reservation: req.body,
 						space: returnedSpace.data.space
 					});
@@ -124,7 +126,8 @@ router.post(/\/.*\/reserve\/submit/, multer().array(), (req, res) => {
 				res.render("request-sent", {
 					session: testData.session,
 					user: testData.user,
-					member: req.session.member
+					member: req.session.member,
+					currentDept: req.session.currentDept
 				});
 			})
 			.catch(err => {

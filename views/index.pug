@@ -57,7 +57,7 @@ html
 					result-card(v-for="space in searchResults", :key="space.id", :slug="space.name", :name="space.fullName", :dept="space.department.fullThaiName", :dept-slug="space.department.name", :capacity="space.capacity", :amenities="['pc', 'sound', 'aircon', 'proj']")
 		script(type="text/x-template", id="result-card")
 			a.card.shadow.hoverable.search-result-card(v-bind:href="'space/' + deptSlug + '/' + slug + '/'")
-				h1 {{ name }}
+				h1.card-title {{ name }}
 				//- div.result-time 2 hrs max available
 				p {{ dept }}
 				div.amenities

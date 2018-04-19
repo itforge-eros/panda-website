@@ -6,7 +6,8 @@ router.get("/", (req, res) => {
 	res.render("manage-material", {
 		session: testData.session,
 		user: testData.user,
-		member: req.session.member
+		member: req.session.member,
+		currentDept: req.session.currentDept
 	});
 });
 
