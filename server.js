@@ -53,14 +53,21 @@ app.get("/error", (req, res) => {
 		member: req.session.member
 	});
 });
-app.get("/graphiql", function(req, res) {
+app.get("/graphiql", (req, res) => {
 	res.render("graphiql", {
 		session: req.session,
 		user: testData.user,
 		host: globalVars.apiHostname,
-                member: req.session.member
+		member: req.session.member
 	});
 });
+app.get("/choose-dept", (req, res) => {
+	res.render("choose-dept", {
+		session: req.session,
+		user: testData.user,
+		member: req.session.member
+	});
+})
 
 // Start the server
 app.listen(port, () => {

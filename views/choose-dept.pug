@@ -1,0 +1,18 @@
+html
+	head
+		include parts/meta
+		title เลือกคณะที่ต้องการจัดการ - KMITL OSRS
+		include parts/stylesheet
+		include parts/scripts
+	body.choose-dept
+		include parts/nav
+		div#app
+			div.content
+				div.container.steep
+					div.page-title-wrap
+						h1.page-title เลือกคณะเพื่อเข้าสู่ระบบ
+				div.container.steep
+					each i in [1,2,3]
+						a.card.shadow.hoverable.marg-b-1
+							h1.card-title Faculty of Information Technology
+							p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis quae possimus fugit sit beatae,
