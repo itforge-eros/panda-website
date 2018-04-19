@@ -65,20 +65,29 @@ router.use((req, res, next) => {
 
 router.get("/", (req, res) => {
 	// token = req.session.token;
+	console.log("Entered");
 	if (req.session.member) {
 		getMyRequests()
 			.then(myRequests => {
-				let updatedData = {
-					createdAt_th: dhp.thaiDateOf(dhp.epochToDate(myRequests.data.requests.createdAt)),
-					dates_th: myRequests.data.requests.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d)))
+				console.log("Got the data");
+				console.log(myRequests.data.me.requests);
+				const updatedRequests = [];
+				
+				for (var i = 0; i < myRequests.data.me.requests.length; i++) {
+					let tmp = Object.assign({}, myRequests.data.me.requests[i]);
+					tmp.createdAt_th = dhp.thaiDateOf(dhp.epochToDate(tmp.createdAt));
+					tmp.dates_th = tmp.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d)));
+					updatedRequests.push(tmp)
 				}
-				const rq = Object.assign({}, updatedData, myRequests.data.requests);
+
+				console.log(updatedRequests);
+				const rq = []
 				res.render("my-request", {
 					session: testData.session,
 					user: testData.user,
 					member: req.session.member,
 					currentDept: req.session.currentDept,
-					myRequests: myRequests.data.me.requests
+					myRequests: updatedRequests
 				});
 			})
 			.catch(err => {
