@@ -156,6 +156,18 @@ ghp.getRoleMembers = (apollo_auth, roleId) => {
 		`
 	})
 }
+ghp.getCanApprove = (apollo_auth, currentDepartment) => {
+	return apollo_auth.query({
+		query: gql`
+			{
+				me 	{
+				accesses(department: "${currentDepartment}")
+				}
+			}
+		`
+	})
+}
+
 ghp.createSpace = (apollo_auth, sp) => {
 	return apollo_auth.mutate({
 		mutation: gql`
