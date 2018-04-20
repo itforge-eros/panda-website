@@ -1,14 +1,24 @@
-const gqlURL = "http://api.panda.itforge.io/graphql";
-const loginURL = "http://api.panda.itforge.io/login";
+const session = require("express-session");
+const MemoryStore = require("memorystore")(session);
+
+const apiHostname = "https://api.space.itforge.io";
+const gqlURL = `${apiHostname}/graphql`;
+const loginURL = `${apiHostname}/login`;
 const sessionOptions = {
 	name: "kmitl_osrs",
 	secret: "keyboard cat",
 	resave: false,
-	saveUninitialized: true
+	saveUninitialized: true,
+	store: new MemoryStore({
+		checkPeriod: 86400000
+	})
 };
+const env = process.env.NODE_ENV || "dev";
 
 module.exports = {
 	gqlURL: gqlURL,
+	apiHostname: apiHostname,
 	loginURL: loginURL,
-	sessionOptions: sessionOptions
+	sessionOptions: sessionOptions,
+	env: env
 };

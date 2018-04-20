@@ -1,7 +1,7 @@
 html
 	head
 		include parts/meta
-		title จัดการผุ้ใช้ในสิทธิ์ Student
+		title จัดการผุ้ใช้ในสิทธิ์ Student - KMITL OSRS
 		include parts/stylesheet
 		include parts/scripts
 	body.manage-role-user
@@ -9,21 +9,42 @@ html
 		div#app
 			div.content
 				div.container
+					if status == "success"
+						div.notice.success
+							i.fas.fa-check-circle
+							|  เพิ่มผู้ใช้เรียบร้อย
+					else if status != ""
+						div.notice.warning
+							i.fas.fa-exclamation-circle
+							= " " + status
 					div.page-title-wrap
 						h2.page-pretitle จัดการผู้ใช้ในสิทธิ์
-						h1.page-title Student
+						h1.page-title= role.name
 					div
-						a.button.marg-b-1(href="#")
+						button.marg-b-1(onclick="toggleAdder()")
 							i.fas.fa-plus-circle
 							| เพิ่มผู้ใช้เข้าสิทธิ์นี้
-						form(action="")
-							label(for="role-name") พิมพ์รหัสประจำตัวคั่นด้วยลูกน้ำและกด Enter
-							input(type="text", name="role-name", style="width:100%")
+						form#adder(action="addmember", method="POST", style="display:none")
+							label(for="member") พิมพ์รหัสประจำตัวและกด Enter
+							input(type="text", name="member", style="width:100%")
 					table.styled.striped
-						each item in [1,2,3,4,5,6,7,8]
+						if role.members.length == 0
+							h3 ยังไม่มีผู้ใช้
+						each m in role.members
 							tr
-								td.w-10 12345678
-								td Kumanop Ob-Ob-Ob
+								td.w-10= m.username
+								td= m.firstName + " " + m.lastName
 								td.actions
 									a(href="#")
 										i.fas.fa-trash
+		script
+			| var toggled = false;
+			| function toggleAdder() {
+			| 	if (toggled) {
+			| 		document.getElementById("adder").style.display = "none";
+			| 		toggled = false;
+			| 	} else {
+			| 		document.getElementById("adder").style.display = "block";
+			| 		toggled = true;
+			| 	}
+			| }

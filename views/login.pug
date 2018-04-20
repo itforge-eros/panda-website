@@ -1,7 +1,7 @@
 html
 	head
 		include parts/meta
-		title เข้าสู่ระบบ
+		title เข้าสู่ระบบ - KMITL OSRS
 		include parts/stylesheet
 		include parts/scripts
 	body.login
@@ -12,7 +12,7 @@ html
 					div.page-title-wrap.text-center
 						h1.page-title เข้าสู่ระบบ
 					div.card.shadow
-						form#login(action="login", method="POST")
+						form#login(action="/authen/login", method="POST")
 							div.input-wrap.marg-b-1
 								label(for="username") เลขประจำตัว
 								input(type="text", name="username", required, v-model="usr")

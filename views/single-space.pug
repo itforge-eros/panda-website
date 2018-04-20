@@ -1,7 +1,7 @@
 html
 	head
 		include parts/meta
-		title= space.name
+		title= space.fullName + " - KMITL OSRS"
 		link(rel="stylesheet" href="/public/vendor/pikaday/pikaday.min.css")
 		include parts/stylesheet
 		include parts/scripts
@@ -13,21 +13,24 @@ html
 			let start_hr = 8;
 			let slot_num = 1;
 			for (let i = 1; i <= 6.5; i+=0.5) {
-				slots1.push({id: i+7, t: i%2 == 0 ? '.30' : start_hr, slot_num: slot_num});
-				if (i%2 != 0) hr++;
+				slots1.push({id: i+7, slot_num: slot_num});
+				if (i%2 != 0) start_hr++;
 				slot_num++;
 			}
 			for (let i = 1; i <= 6.5; i+=0.5) {
-				slots2.push({id: i+13, t: i%2 == 0 ? '.30' : start_hr, slot_num: slot_num});
-				if (i%2 != 0) hr++;
+				slots2.push({id: i+13, slot_num: slot_num});
+				if (i%2 != 0) start_hr++;
 				slot_num++;
 			}
+			start_hr = 8; // reset
+			for (let i = 0; i < slots1.length; i++) slots1[i].t = i%2 == 0 ? start_hr++ : ".30";
+			for (let i = 0; i < slots2.length; i++) slots2[i].t = i%2 == 0 ? start_hr++ : ".30";
 		div#app
 			div.content
 				div.container
 					div.page-title-wrap
-						h1.page-title= space.name
-						h2.page-subtitle= space.department.name
+						h1.page-title= space.fullName
+						h2.page-subtitle= space.department.fullThaiName
 				div.container
 					div.row.flex.marg-b-1#row-1
 						div.featured-img
@@ -36,7 +39,7 @@ html
 							div.card
 								span.amenity
 									i.fas.fa-2x.fa-users
-									span 90 ที่นั่ง
+									span #{space.capacity} ที่นั่ง
 								span.amenity
 									i.fas.fa-2x.fa-volume-up
 									span ระบบเสียง
@@ -51,9 +54,10 @@ html
 									span โปรเจ็กเตอร์
 					div.row#row-2
 						div.card.shadow
-							form.reservation-box(action="reserve", method="POST")
+							form.reservation-box(action="reserve/", method="POST")
 								div(style="display:none")
 									input(type="text", name="space", value=space.id)
+									input(type="text", name="r_date_raw", v-model="r_date_raw")
 									input(type="number", name="start", v-model="selectedStartSlot")
 									input(type="number", name="end", v-model="selectedEndSlot")
 									input(type="text", name="r_date_raw", v-model="r_date_raw")

@@ -1,31 +1,46 @@
 html
 	head
 		include parts/meta
-		title จัดสิทธิ์ Student
+		title จัดสิทธิ์ Student - KMITL OSRS
 		include parts/stylesheet
 		include parts/scripts
 	body.manage-role-single
 		include parts/nav
+		-
+			const myPermissions = role.permissions.map(p => p.name)
+			const checkedPermissions = permissions.filter(p => myPermissions.includes(p.name)).map(q => q.name)
 		div#app
 			div.content
 				div.container
+					if status == "success"
+						div.notice.success
+							i.fas.fa-check-circle
+							|  บันทึกข้อมูลเรียบร้อย
+					else if status != ""
+						div.notice.warning
+							i.fas.fa-exclamation-circle
+							|  ยังไม่ได้บันทึกข้อมูล กรุณาตรวจสอบข้อมูลอีกครั้ง (#{status})
 					div.page-title-wrap
 						h2.page-pretitle จัดการสิทธิ์
-						h1.page-title Student
-					form(action="")
+						h1.page-title {{ name || "สิทธิ์ใหม่" }}
+					form(action="save", method="POST")
 						div.marg-b-1
 							label(for="role-name") ชื่อสิทธิ์
-							input(type="text", name="role-name", style="width:100%")
+							input(type="text", name="name", v-model="name")
 						div.marg-b-1
 							label อำนาจ
 							table
-								each item in [1,2,3,4,5,6,7,8]
+								each p in permissions
 									tr
 										td
 											label.control.checkbox
-												input(type="checkbox")
+												input(type="checkbox", name="permissions", value=p.name, checked=checkedPermissions.includes(p.name))
 												span.control-indicator
-												| สร้างสถานที่
+												= p.name
+											p.marg-t-0= p.description
 						button.raised
 							i.fas.fa-save
 							| บันทึก
+		script(src="/public/scripts/manage-role-single.js")
+		script
+			| app.name = "#{role.name}"

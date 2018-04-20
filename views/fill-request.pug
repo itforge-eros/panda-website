@@ -1,7 +1,7 @@
 html
 	head
 		include parts/meta
-		title Reserving #{space.name}
+		title กำลังจอง #{space.name} - KMITL OSRS
 		include parts/stylesheet
 		include parts/scripts
 	body
@@ -25,36 +25,33 @@ html
 							| นักศึกษา คณะเทคโนโลยีสารสนเทศ
 						p
 							strong สถานที่: 
-							| #{space.name}, คณะเทคโนโลยีสารสนเทศ
+							| #{space.fullName}, #{space.department.fullThaiName}
 						p
 							strong วันที่ต้องการจอง: 
-							= reservation.r_date
+							= reservation.r_date + ' ' + reservation.r_date_raw.slice(0, 4)
 						p
 							strong เวลาที่ต้องการจอง: 
 							= times[(reservation.start)-1] + "-" + times[reservation.end]
-					form(action="reserve/submit", method="POST")
+					form(action="submit/", method="POST")
 						div(style="display:none")
 							input(type="text", name="space", value=space.id)
+							input(type="text", name="r_date_raw", value=reservation.r_date_raw)
 							input(type="number", name="start", value=reservation.start)
 							input(type="number", name="end", value=reservation.end)
 						div.input-wrap
-							label(for="seats") จำนวนผู้ใช้งาน (จำเป็น)
-							input(type="text", name="seats", required)
-							span.err กรุณากรอกข้อมูล
-						div.input-wrap
 							label(for="reason") เหตุผลในการจอง (จำเป็น)
 							textarea(name="reason", rows="4", required)
-							span.err กรุณากรอกข้อมูล
+							//- span.err กรุณากรอกข้อมูล
 						div.marg-b-1
 							label อุปกรณ์ที่ต้องการยืม
 							table
-								each item in [1,2,3]
+								each item in materials
 									tr
 										td
 											label.control.checkbox
-												input(type="checkbox", name="borrow-"+item)
+												input(type="checkbox", name="borrow", value=item.id)
 												span.control-indicator
-												| ไมโครฟง
+												= item.name.th
 						button.raised
 							i.fas.fa-paper-plane
 							| ส่งข้อมูล

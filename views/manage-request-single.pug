@@ -1,7 +1,7 @@
 html
 	head
 		include parts/meta
-		title Manage Request
+		title คำร้อง ##{id} - KMITL OSRS
 		include parts/stylesheet
 		include parts/scripts
 	body.manage-request-single
@@ -30,7 +30,7 @@ html
 				div.card
 					span.close(onclick="closeModal('modal')")
 						i.fas.fa-times-circle
-					h1.modal-title กรุณากรอกรหัสผ่าน
+					h1.modal-title กรุณากรอกรหัสผ่านเพื่อยืนยัน
 					div.input-wrap
 						input.fluid(name="report", type="password")
 					button.raised ยืนยัน

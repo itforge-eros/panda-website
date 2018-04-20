@@ -67,6 +67,32 @@ nav
 				color: #FFF
 		&:hover
 			color: $color-primary
+	.dropdown
+		display: inline-block
+		position: relative
+		margin-left: $gap-size-20
+		font-family: $font-styled
+		color: $color-primary
+		&:hover
+			.dropdown-content
+				display: block
+		.dropdown-content
+			display: none
+			position: absolute
+			background-color: #fff
+			color: #000
+			width: auto
+			box-shadow: $shadow-normal
+			padding: 0.2em 1em
+			top: 1.24em
+			z-index: 1
+			ul
+				list-style-type: none
+				padding-left: 0
+				li
+					margin-bottom: 0.8em
+					&:last-of-type
+						margin-bottom: 0
 
 nav.mobile-nav
 	display: none

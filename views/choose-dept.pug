@@ -1,0 +1,18 @@
+html
+	head
+		include parts/meta
+		title เลือกคณะที่ต้องการจัดการ - KMITL OSRS
+		include parts/stylesheet
+		include parts/scripts
+	body.choose-dept
+		include parts/nav
+		div#app
+			div.content
+				div.container.steep
+					div.page-title-wrap
+						h1.page-title เลือกคณะเพื่อเข้าสู่ระบบ
+				div.container.steep
+					each i in member.roles
+						a.card.shadow.hoverable.marg-b-1(href=i.department.name + "/" + i.department.id)
+							h1.card-title= i.department.fullThaiName
+							p= i.department.description

@@ -1,23 +1,47 @@
 html
 	head
 		include parts/meta
-		title รายละเอียดคำร้อง
+		title รายละเอียดคำร้อง - KMITL OSRS
 		include parts/stylesheet
 		include parts/scripts
 	body.single-request
 		include parts/nav
+		-
+			const times = [];
+			let start_hr = 8;
+			for (let i = 0; i <= 24; i++) {
+				times.push(i%2 == 0 ? start_hr + ".00" : start_hr + ".30");
+				if (i%2 != 0) start_hr++;
+			}
+			const months = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]
 		div#app
 			div.content
 				div.container
 					div.page-title-wrap
 						h1.page-title รายละเอียดคำร้อง
-						h2.page-subtitle คำร้อง ##{id}
+						h2.page-subtitle คำร้อง ##{reqInfo.id}
 					table.styled.striped
 						tr.status.pending
 							td สถานะ
-							td รอการอนุมัติ
-						each item in reqInfo
-							tr
-								td= item.name
-								td= item.data
-					
+							td= reqInfo.status
+						tr
+							td ผู้จอง
+							td= reqInfo.client.firstName + " " + reqInfo.client.lastName
+						tr
+							td สถานที่
+							td= reqInfo.space.fullName + ", " + reqInfo.space.department.fullThaiName
+						tr
+							td ยื่นคำร้องเมื่อ
+							td= reqInfo.createdAt_th
+						tr
+							td วันที่ต้องการจอง
+							td= reqInfo.dates_th
+						tr
+							td เวลาที่ต้องการจอง
+							td= times[reqInfo.period.start - 1] + " - " + times[reqInfo.period.end]
+						tr
+							td จำนวนที่นั่ง
+							td content here
+						tr
+							td เหตุผล
+							td content here

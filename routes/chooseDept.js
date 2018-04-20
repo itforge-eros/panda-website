@@ -3,9 +3,6 @@ const express = require("express");
 const router = express.Router();
 const testData = require("../models/testData");
 const ghp = require("../helpers/gql");
-const session = require("express-session");
-const multer = require("multer");
-const bodyParser = require("body-parser");
 
 // required for apollo
 const ApolloClient = require("apollo-client").ApolloClient;
@@ -19,9 +16,6 @@ const gql = require("graphql-tag");
 let token = "";
 
 router.use((req, res, next) => {token = req.session.token; next()});
-router.use(session(globalVars.sessionOptions));
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: true }));
 
 const authLink = setContext((_, { headers }) => {
 	return { headers: { authorization: token ? `bearer${token}` : "" } };
@@ -36,21 +30,24 @@ const apollo_auth = new ApolloClient({
 });
 
 router.get("/", (req, res) => {
-	ghp.getMaterials(apollo_auth, req.session.currentDept.name)
-		.then(m => {
-			res.render("manage-material", {
-				session: testData.session,
-				user: testData.user,
-				member: req.session.member,
-				currentDept: req.session.currentDept,
-				materials: m.data.department.materials
-			});
-		}).catch(err => console.log(err));
+	res.render("choose-dept", {
+		session: req.session,
+		user: testData.user,
+		member: req.session.member,
+		currentDept: req.session.currentDept
+	});
 });
-router.post("/new", multer().array(), (req, res) => {
-	ghp.createMaterial(apollo_auth, req.session.currentDept.id, req.body.nameTh)
-		.then(() => res.redirect("/manage-material/"))
-		.catch(err => console.log(err));
-})
+router.get("/:dept/:id", (req, res) => {
+	req.session.currentDept = {name: req.params.dept, id: req.params.id};
+	ghp.getAccesses(apollo_auth, req.session.currentDept.id)
+		.then(ac => {
+			req.session.currentAccesses = ac.data.accesses;
+			res.redirect("/")
+			console.log(req.session.currentAccesses);
+		}).catch(err => {
+			console.log(err);
+			res.redirect("/error");
+		});
+});
 
-module.exports = router;
+module.exports = router

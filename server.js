@@ -2,8 +2,9 @@ const globalVars = require("./globalVars");
 const express = require("express");
 const app = express();
 const env = process.env.NODE_ENV || "dev";
-const port = env == "production" ? 80 : 3000;
+const port = env == "production" ? 3001 : 3000;
 const session = require("express-session");
+const compression = require("compression");
 
 // Set view location
 app.set("views", "./views");
@@ -23,8 +24,11 @@ const manageSpaceRouter = require("./routes/manageSpace");
 const manageReportRouter = require("./routes/manageReport");
 const manageMaterialRouter = require("./routes/manageMaterial");
 const spaceRouter = require("./routes/space");
+const myRequestRouter = require("./routes/myRequest");
+const chooseDeptRouter = require("./routes/chooseDept");
 
 app.use(session(globalVars.sessionOptions));
+app.use(compression());
 
 app.use("/authen", authenRouter);
 app.use("/manage-request", manageRequestRouter);
@@ -33,54 +37,39 @@ app.use("/manage-space", manageSpaceRouter);
 app.use("/manage-report", manageReportRouter);
 app.use("/manage-material", manageMaterialRouter);
 app.use("/space", spaceRouter);
+app.use("/my-request", myRequestRouter);
+app.use("/choose-dept", chooseDeptRouter);
 
 app.get("/", (req, res) => {
 	res.render("index", {
 		session: testData.session,
 		user: testData.user,
 		member: req.session.member,
+		currentDept: req.session.currentDept,
 		faculty: testData.faculty
-	});
-});
-app.get("/fill-request", (req, res) => {
-	res.render("fill-request", {
-		session: testData.session,
-		user: testData.user,
-		member: req.session.member
-	});
-});
-app.get("/request-sent", (req, res) => {
-	res.render("request-sent", {
-		session: testData.session,
-		user: testData.ser,
-		member: req.session.member
-	});
-});
-app.get("/my-request", (req, res) => {
-	res.render("my-request", {
-		session: testData.session,
-		user: testData.user,
-		member: req.session.member
-	});
-});
-app.get("/request/:id", (req, res) => {
-	res.render("single-request", {
-		session: testData.session,
-		user: testData.user,
-		member: req.session.member,
-		reqInfo: testData.requestInfo,
-		id: req.params.id
 	});
 });
 app.get("/error", (req, res) => {
 	res.render("error", {
 		session: testData.session,
 		user: testData.user,
-		member: req.session.member
+		member: req.session.member,
+		currentDept: req.session.currentDept
+	});
+});
+app.get("/graphiql", (req, res) => {
+	res.render("graphiql", {
+		session: req.session,
+		user: testData.user,
+		host: globalVars.apiHostname,
+		member: req.session.member,
+		currentDept: req.session.currentDept
 	});
 });
 
 // Start the server
-app.listen(port, () =>
-	console.log(`Listening on port ${port}\nPress Ctrl+C to stop`)
-);
+app.listen(port, () => {
+	console.log("Server started\nListening on port " + port);
+	console.log("Using API: " + globalVars.apiHostname);
+	console.log("ENV: " + env);
+});
