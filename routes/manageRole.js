@@ -61,6 +61,7 @@ router.get("/new", (req, res) => {
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					orgData: orgData,
+					role: {},
 					permissions: permissions.data.permissions,
 					status: createRoleStatus
 				});
@@ -91,16 +92,25 @@ router.post(/\/.*\/save/, multer().array(), (req, res) => {
 	}
 });
 router.get("/:id", (req, res) => {
-	res.render("manage-role-single", {
-		session: testData.session,
-		user: testData.user,
-		member: req.session.member,
-		currentDept: req.session.currentDept,
-		orgData: data.data.space,
-		status: createRoleStatus
-	});
-	orgData = {};
-	createRoleStatus = "";
+	ghp.getRole(apollo_auth, req.params.id)
+		.then(role => {
+			ghp.getPermissions(apollo_auth)
+				.then(permissions => {
+					res.render("manage-role-single", {
+						session: testData.session,
+						user: testData.user,
+						member: req.session.member,
+						currentDept: req.session.currentDept,
+						status: createRoleStatus,
+						permissions: permissions.data.permissions,
+						role: role.data.role
+					});
+					orgData = {};
+					createRoleStatus = "";
+				})
+				.catch(err => res.redirect("/error/"))
+		})
+		.catch(err => res.redirect("/error/"));
 });
 router.get("/:id/users", (req, res) => {
 	res.render("manage-role-user", {
