@@ -81,7 +81,15 @@ router.post("/login", multer().array(), (req, res, next) => {
 					if (req.session.member.roles.length > 1) {
 						// user manages > 1 department, set default to the first one
 						req.session.currentDept = req.session.member.roles[0].department;
-						res.redirect("/choose-dept/")
+						// get current user's access of the current department
+						ghp.getAccesses(apollo_auth, req.session.currentDept.id)
+							.then(ac => {
+								req.session.currentAccesses = ac.data.accesses;
+								res.redirect("/choose-dept/")
+							}).catch(err => {
+								console.log(err);
+								res.redirect("/error");
+							});
 					} else if (req.session.member.roles.length == 1) {
 						req.session.currentDept = req.session.member.roles[0].department;
 						// get current user's access of the current department
