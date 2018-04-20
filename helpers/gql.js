@@ -170,5 +170,24 @@ ghp.createRequest = (apollo_auth, rq) => {
 		}
 	});
 };
+ghp.createRole = (apollo_auth) => {
+	return apollo_auth.mutate({
+		mutation: gql`
+			{
+				mutation($roleInput: CreateRoleInput!) {
+					createRole(roleInput: $roleInput) {}
+				}
+			}
+		`,
+		variables: {
+			"roleInput": {
+				"departmentId": a,
+				"name": b,
+				"description": c,
+				"permissions": d
+			}
+		}
+	});
+};
 
 module.exports = ghp;
