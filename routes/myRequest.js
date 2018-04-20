@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const testData = require("../models/testData");
 const dhp = require("../helpers/date");
+const ghp = require("../helpers/gql");
 
 const ApolloClient = require("apollo-client").ApolloClient;
 const InMemoryCache = require("apollo-cache-inmemory").InMemoryCache;
@@ -30,43 +31,9 @@ const apollo_auth = new ApolloClient({
 	defaultOptions: {query: {fetchPolicy: "no-cache"}}
 });
 
-const getRequest = id => {
-	return apollo_auth.query({
-		query: gql`
-			{
-				request(id: "${id}") {
-					id
-					client { firstName lastName }
-					body
-					dates
-					period { start end }
-					status
-					createdAt
-					space { fullName department { fullThaiName } }
-				}
-			}
-		`
-	});
-};
-
-const getMyRequests = () => {
-	return apollo_auth.query({
-		query: gql`
-			{
-				me {
-					requests {
-						id dates period {start end} status createdAt
-						space {fullName department {fullThaiName}}
-					}
-				}
-			}
-		`
-	})
-}
-
 router.get("/", (req, res) => {
 	if (req.session.member) {
-		getMyRequests()
+		ghp.getMyRequests(apollo_auth)
 			.then(myRequests => {
 				const updatedRequests = [];
 				for (var i = 0; i < myRequests.data.me.requests.length; i++) {
@@ -92,7 +59,7 @@ router.get("/", (req, res) => {
 });
 router.get("/:id", (req, res) => {
 	if (req.session.member) {
-		getRequest(req.params.id)
+		ghp.getRequest(apollo_auth, req.params.id)
 			.then(returnedReq => {
 				let updatedData = {
 					createdAt_th: dhp.thaiDateOf(dhp.epochToDate(returnedReq.data.request.createdAt)),

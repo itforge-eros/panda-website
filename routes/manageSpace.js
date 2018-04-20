@@ -2,6 +2,7 @@ const globalVars = require("../globalVars");
 const express = require("express");
 const router = express.Router();
 const testData = require("../models/testData");
+const ghp = require("../helpers/gql");
 
 const bodyParser = require("body-parser");
 const multer = require("multer");
@@ -37,41 +38,6 @@ const amenities = [
 	{ id: "INSTRUCTOR_PC", name: "คอมฯ ผู้สอน" }
 ];
 
-const getSpace = (dept, spaceName) => {
-	return apollo_auth.query({
-		query: gql`
-			{
-				space(department: "${dept}", name: "${spaceName}") {
-					id, name, fullName, description, capacity, isAvailable, department {name fullThaiName}
-				}
-			}
-		`
-	});
-};
-
-const createSpace = sp => {
-	return apollo_auth.mutate({
-		mutation: gql`
-			mutation($spaceInput: CreateSpaceInput!) {
-				createSpace(input: $spaceInput) {
-					name department { name }
-				}
-			}
-		`,
-		variables: {
-			"spaceInput": {
-				"name": sp.name.toLowerCase().replace(/ /g, "-"),
-				"fullName": sp.fullName,
-				"description": sp.description,
-				"capacity": parseInt(sp.capacity),
-				"category": sp.category,
-				"isAvailable": sp.isAvailable == "true" ? true : false,
-				"departmentId": sp.deptId
-			}
-		}
-	});
-};
-
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use((req, res, next) => {
@@ -105,7 +71,7 @@ router.get("/new", (req, res) => {
 	}
 });
 router.get("/:dept/:name", (req, res) => {
-	getSpace(req.params.dept, req.params.name)
+	ghp.getSpace(apollo_auth, req.params.dept, req.params.name)
 		.then(data => {
 			res.render("manage-space-single", {
 				session: testData.session,
@@ -124,7 +90,7 @@ router.get("/:dept/:name", (req, res) => {
 router.post(/\/.*\/save/, multer().array(), (req, res) => {
 	if (req.session.member) {
 		req.body.deptId = req.session.currentDept.id;
-		createSpace(req.body)
+		ghp.createSpace(apollo_auth, req.body)
 			.then(data => {
 				createSpaceStatus = "success";
 				res.redirect("/manage-space/" + data.data.createSpace.department.name + "/" + data.data.createSpace.name + "/");

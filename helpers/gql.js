@@ -48,5 +48,71 @@ ghp.getMe = apollo_auth => {
 		`
 	});
 };
+ghp.getSpace = (apollo_auth, dept, spaceName) => {
+	return apollo_auth.query({
+		query: gql`
+			{
+				space(department: "${dept}", name: "${spaceName}") {
+					id, name, fullName, description, capacity, isAvailable, department {name fullThaiName}
+				}
+			}
+		`
+	});
+};
+
+ghp.createSpace = (apollo_auth, sp) => {
+	return apollo_auth.mutate({
+		mutation: gql`
+			mutation($spaceInput: CreateSpaceInput!) {
+				createSpace(input: $spaceInput) {
+					name department { name }
+				}
+			}
+		`,
+		variables: {
+			"spaceInput": {
+				"name": sp.name.toLowerCase().replace(/ /g, "-"),
+				"fullName": sp.fullName,
+				"description": sp.description,
+				"capacity": parseInt(sp.capacity),
+				"category": sp.category,
+				"isAvailable": sp.isAvailable == "true" ? true : false,
+				"departmentId": sp.deptId
+			}
+		}
+	});
+};
+ghp.getRequest = (apollo_auth, id) => {
+	return apollo_auth.query({
+		query: gql`
+			{
+				request(id: "${id}") {
+					id
+					client { firstName lastName }
+					body
+					dates
+					period { start end }
+					status
+					createdAt
+					space { fullName department { fullThaiName } }
+				}
+			}
+		`
+	});
+};
+ghp.getMyRequests = apollo_auth => {
+	return apollo_auth.query({
+		query: gql`
+			{
+				me {
+					requests {
+						id dates period {start end} status createdAt
+						space {fullName department {fullThaiName}}
+					}
+				}
+			}
+		`
+	})
+};
 
 module.exports = ghp;
