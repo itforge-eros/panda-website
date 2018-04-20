@@ -68,35 +68,43 @@ router.post("/login", multer().array(), (req, res, next) => {
 		isCredEmpty = true;
 		res.redirect("/authen/login/");
 	} else {
-		// console.log(req.body.username + " " + req.body.password);
+		// send login request
 		ghp.sendLogin(apollo, req.body.username, req.body.password)
 			.then(data => {
 				req.session.token = data.data.login.token;
 				req.session.member = data.data.login.member;
 				token = req.session.token;
+				// get current user's info
 				ghp.getMe(apollo_auth).then(meData => {
 					req.session.member = Object.assign({}, req.session.member, meData.data.me);
+					// check how many departments the user manages
 					if (req.session.member.roles.length > 1) {
-						res.session.currentDept = {};
+						// user manages > 1 department, set default to the first one
+						req.session.currentDept = req.session.member.roles[0].department;
 						res.redirect("/choose-dept/")
 					} else if (req.session.member.roles.length == 1) {
 						req.session.currentDept = req.session.member.roles[0].department;
+						// get current user's access of the current department
 						ghp.getAccesses(apollo_auth, req.session.currentDept.id)
 							.then(ac => {
 								req.session.currentAccesses = ac.data.accesses;
 								res.redirect("/");
-								console.log(req.session.currentAccesses);
-							}).catch(err => console.log(err));
+							}).catch(err => {
+								console.log(err);
+								res.redirect("/error");
+							});
 					} else {
 						req.session.currentDept = {};
 						res.redirect("/");
 					}
 				}).catch(err => {
+					// catch getMe() error
 					if (globalVars.env != "production") console.log(err);
+					res.redirect("/error")
 				});
 			})
 			.catch(err => {
-				// console.log(err.graphQLErrors[0].message);
+				// catch sendLogin() error
 				if (globalVars.env != "production") console.log(err);
 				isCredInvalid = true;
 				res.redirect("/authen/login/");
