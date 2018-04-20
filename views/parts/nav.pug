@@ -10,7 +10,7 @@ nav
 					ul
 						each r in member.roles
 							li
-								a(href="choose-dept/" + r.department.name + "/" + r.department.id) <strong>#{r.department.name}</strong> - #{r.name}
+								a(href="/choose-dept/" + r.department.name + "/" + r.department.id) <strong>#{r.department.name}</strong> - #{r.name}
 	ul.menu
 		li
 			a.icon-link(href="/")
