@@ -16,6 +16,18 @@ ghp.sendLogin = (apollo, usr, pwd) => {
 		`
 	});
 };
+ghp.getSpace = (apollo, dept, spaceName) => {
+	// can accept auth
+	return apollo.query({
+		query: gql`
+			{
+				space(department: "${dept}", name: "${spaceName}") {
+					id, name, fullName, description, capacity, isAvailable, department {name fullThaiName}
+				}
+			}
+		`
+	});
+};
 
 // require auth
 ghp.getAccesses = (apollo_auth, deptId) => {
@@ -43,17 +55,6 @@ ghp.getMe = apollo_auth => {
 							accesses
 						}
 					}
-				}
-			}
-		`
-	});
-};
-ghp.getSpace = (apollo_auth, dept, spaceName) => {
-	return apollo_auth.query({
-		query: gql`
-			{
-				space(department: "${dept}", name: "${spaceName}") {
-					id, name, fullName, description, capacity, isAvailable, department {name fullThaiName}
 				}
 			}
 		`

@@ -2,6 +2,7 @@ const globalVars = require("../globalVars");
 const express = require("express");
 const router = express.Router();
 const testData = require("../models/testData");
+const ghp = require("../helpers/gql");
 
 const bodyParser = require("body-parser");
 const multer = require("multer");
@@ -33,24 +34,12 @@ const apollo_auth = new ApolloClient({
 	defaultOptions: {query: {fetchPolicy: "no-cache"}}
 });
 
-const getSpace = (dept, spaceName) => {
-	return apollo.query({
-		query: gql`
-			{
-				space(department: "${dept}", name: "${spaceName}") {
-					id, name, fullName, description, capacity, isAvailable, department {name fullThaiName}
-				}
-			}
-		`
-	});
-};
-
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 router.get("/:dept/:name", (req, res) => {
 	token = req.session.token;
-	getSpace(req.params.dept, req.params.name)
+	ghp.getSpace(apollo, req.params.dept, req.params.name)
 		.then(returnedData => {
 			if (returnedData.data.space != null) {
 				res.render("single-space", {
@@ -73,7 +62,7 @@ router.get("/:dept/:name", (req, res) => {
 
 router.post("/:dept/:name/reserve", multer().array(), (req, res) => {
 	if (req.session.member) {
-		getSpace(req.params.dept, req.params.name)
+		ghp.getSpace(apollo_auth, req.params.dept, req.params.name)
 			.then(returnedSpace => {
 				if (returnedSpace.data.space != null) {
 					res.render("fill-request", {
@@ -99,7 +88,7 @@ router.post("/:dept/:name/reserve", multer().array(), (req, res) => {
 
 router.post(/\/.*\/reserve\/submit/, multer().array(), (req, res) => {
 	if (req.session.member) {
-		createRequest(req.body)
+		ghp.createRequest(apollo_auth, req.body)
 			.then(rp => {
 				if (globalVars.env != "production") console.log(rp);
 				res.render("request-sent", {
