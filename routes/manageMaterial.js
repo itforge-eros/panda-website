@@ -36,12 +36,16 @@ const apollo_auth = new ApolloClient({
 });
 
 router.get("/", (req, res) => {
-	res.render("manage-material", {
-		session: testData.session,
-		user: testData.user,
-		member: req.session.member,
-		currentDept: req.session.currentDept
-	});
+	ghp.getMaterials(apollo_auth, req.session.currentDept.name)
+		.then(m => {
+			res.render("manage-material", {
+				session: testData.session,
+				user: testData.user,
+				member: req.session.member,
+				currentDept: req.session.currentDept,
+				materials: m.data.department.materials
+			});
+		}).catch(err => console.log(err));
 });
 router.post("/new", multer().array(), (req, res) => {
 	ghp.createMaterial(apollo_auth, req.session.currentDept.id, req.body.nameTh)
