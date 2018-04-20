@@ -59,7 +59,7 @@ const createSpace = sp => {
 		`,
 		variables: {
 			"spaceInput": {
-				"name": sp.name,
+				"name": sp.name.toLowerCase().replace(/ /g, "-"),
 				"fullName": sp.fullName,
 				"description": sp.description,
 				"capacity": parseInt(sp.capacity),
@@ -128,7 +128,7 @@ router.post(/\/.*\/save/, multer().array(), (req, res) => {
 			})
 			.catch(err => {
 				if (globalVars.env != "production") console.log(err);
-				createSpaceStatus = "error";
+				createSpaceStatus = err.graphQLErrors[0].message;
 			});
 	} else {
 		res.redirect("/authen/login/")

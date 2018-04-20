@@ -102,6 +102,7 @@ router.post("/login", multer().array(), (req, res, next) => {
 		isCredEmpty = true;
 		res.redirect("/authen/login/");
 	} else {
+		// console.log(req.body.username + " " + req.body.password);
 		sendLogin(req.body.username, req.body.password)
 			.then(data => {
 				req.session.token = data.data.login.token;

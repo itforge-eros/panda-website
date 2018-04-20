@@ -16,10 +16,10 @@ html
 						div.notice.success
 							i.fas.fa-check-circle
 							|  บันทึกข้อมูลเรียบร้อย
-					else if status == "error"
+					else if status != ""
 						div.notice.warning
 							i.fas.fa-exclamation-circle
-							|  ยังไม่ได้บันทึกข้อมูล กรุณาตรวจสอบข้อมูลอีกครั้ง
+							|  ยังไม่ได้บันทึกข้อมูล กรุณาตรวจสอบข้อมูลอีกครั้ง (#{status})
 					div.page-title-wrap
 						h2.page-pretitle จัดการสถานที่
 						h1.page-title {{ spaceName || "สถานที่ใหม่" }}
