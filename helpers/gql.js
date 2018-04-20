@@ -111,7 +111,7 @@ ghp.createSpace = (apollo_auth, sp) => {
 				"departmentId": sp.deptId
 			}
 		}
-	});
+	})
 };
 ghp.createMaterial = (apollo_auth, deptId, name) => {
 	return apollo_auth.mutate({
