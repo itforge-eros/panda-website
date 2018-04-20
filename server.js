@@ -25,6 +25,7 @@ const manageReportRouter = require("./routes/manageReport");
 const manageMaterialRouter = require("./routes/manageMaterial");
 const spaceRouter = require("./routes/space");
 const myRequestRouter = require("./routes/myRequest");
+const chooseDeptRouter = require("./routes/chooseDept");
 
 app.use(session(globalVars.sessionOptions));
 app.use(compression());
@@ -37,6 +38,7 @@ app.use("/manage-report", manageReportRouter);
 app.use("/manage-material", manageMaterialRouter);
 app.use("/space", spaceRouter);
 app.use("/my-request", myRequestRouter);
+app.use("/choose-dept", chooseDeptRouter);
 
 app.get("/", (req, res) => {
 	res.render("index", {
@@ -64,18 +66,6 @@ app.get("/graphiql", (req, res) => {
 		currentDept: req.session.currentDept
 	});
 });
-app.get("/choose-dept", (req, res) => {
-	res.render("choose-dept", {
-		session: req.session,
-		user: testData.user,
-		member: req.session.member,
-		currentDept: req.session.currentDept
-	});
-});
-app.get("/choose-dept/:dept/:id", (req, res) => {
-	req.session.currentDept = {name: req.params.dept, id: req.params.id};
-	res.redirect("/");
-})
 
 // Start the server
 app.listen(port, () => {
