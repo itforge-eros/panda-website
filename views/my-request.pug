@@ -6,18 +6,27 @@ html
 		include parts/scripts
 	body.my-request
 		include parts/nav
+		-
+			let times = [];
+			let start_hr = 8;
+			for (let i = 0; i <= 24; i++) {
+				times.push(i%2 == 0 ? start_hr + ".00" : start_hr + ".30");
+				if (i%2 != 0) start_hr++;
+			}
 		div#app
 			div.content
 				div.container
 					div.page-title-wrap
 						h1.page-title คำร้องของฉัน
 					div
-						each i in [1,2,3,4]
-							a.card.shadow.hoverable.request-card(href=i)
+						if !myRequests
+							h1 no request
+						each m in myRequests
+							a.card.shadow.hoverable.request-card(href=m.id)
 								div.req-info
-									h1.card-title M03, คณะเทคโนโลยีสารสนเทศ
-									p 30 กุมภาพันธ์ 2561 เวลา 10.00 - 12.00 น.
-									p.grayed รอการอนุมัติ
-									p.grayed ยืนคำร้องเมื่อ: 28 กุมภาพันธ์ 2561
+									h1.card-title= m.space.fullName + ", " + m.space.department.fullThaiName
+									p #{m.dates_th} เวลา #{times[(m.period.start)-1] + "-" + times[m.period.end]} น.
+									p.grayed= m.status
+									p.grayed ยืนคำร้องเมื่อ: #{m.createdAt_th}
 								div.req-status
 									img(src="/public/img/wait.svg", alt="success", width="48", height="48")

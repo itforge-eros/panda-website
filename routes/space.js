@@ -60,7 +60,8 @@ const createRequest = rq => {
 					"start": parseInt(rq.start),
 					"end": parseInt(rq.end)
 				},
-				"spaceId": rq.space
+				"spaceId": rq.space,
+				"body": rq.reason
 			}
 		}
 	});

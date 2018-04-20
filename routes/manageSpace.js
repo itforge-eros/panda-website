@@ -62,8 +62,9 @@ const createSpace = sp => {
 				"fullName": sp.fullName,
 				"description": sp.description,
 				"capacity": parseInt(sp.capacity),
+				"category": sp.category,
 				"isAvailable": sp.isAvailable == "true" ? true : false,
-				"departmentId": "3bl08h4mwWUvFBj18AK2DX"
+				"departmentId": sp.deptId
 			}
 		}
 	});
@@ -118,6 +119,7 @@ router.get("/:dept/:name", (req, res) => {
 });
 router.post(/\/.*\/save/, multer().array(), (req, res) => {
 	if (req.session.member) {
+		req.body.deptId = req.session.currentDept.id;
 		createSpace(req.body)
 			.then(data => {
 				createSpaceStatus = "success";

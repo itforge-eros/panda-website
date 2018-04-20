@@ -13,8 +13,6 @@ const gql = require("graphql-tag");
 
 let token = "";
 
-router.use((req, res, next) => {token = req.session.token; next()});
-
 const authLink = setContext((_, { headers }) => {
 	return { headers: { authorization: token ? `bearer${token}` : "" } };
 });
@@ -45,12 +43,53 @@ const getRequest = id => {
 	});
 };
 
+const getMyRequests = () => {
+	return apollo_auth.query({
+		query: gql`
+			{
+				me {
+					requests {
+						id dates period {start end} status createdAt
+						space {fullName department {fullThaiName}}
+					}
+				}
+			}
+		`
+	})
+}
+
+router.use((req, res, next) => {
+	token = req.session.token;
+	next()
+});
+
 router.get("/", (req, res) => {
-	res.render("my-request", {
-		session: testData.session,
-		user: testData.user,
-		member: req.session.member
-	});
+	// token = req.session.token;
+	console.log(req.session.token);
+	if (req.session.member) {
+		getMyRequests()
+			.then(myRequests => {
+				const updatedRequests = [];
+				for (var i = 0; i < myRequests.data.me.requests.length; i++) {
+					let tmp = Object.assign({}, myRequests.data.me.requests[i]);
+					tmp.createdAt_th = dhp.thaiDateOf(dhp.epochToDate(tmp.createdAt));
+					tmp.dates_th = tmp.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d)));
+					updatedRequests.push(tmp)
+				}
+				res.render("my-request", {
+					session: testData.session,
+					user: testData.user,
+					member: req.session.member,
+					currentDept: req.session.currentDept,
+					myRequests: updatedRequests
+				});
+			})
+			.catch(err => {
+				if (globalVars.env != "production") console.log(err);
+			});
+	} else {
+		res.redirect("/authen/login");
+	}
 });
 router.get("/:id", (req, res) => {
 	if (req.session.member) {
