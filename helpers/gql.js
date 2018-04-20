@@ -138,6 +138,15 @@ ghp.getRole = (apollo_auth, roleId) => {
 		`
 	})
 }
+ghp.getRoleMembers = (apollo_auth, roleId) => {
+	return apollo_auth.query({
+		query: gql`
+			{
+				role(id: "${roleId}") {id name members {id firstName lastName}}
+			}
+		`
+	})
+}
 ghp.createSpace = (apollo_auth, sp) => {
 	return apollo_auth.mutate({
 		mutation: gql`
