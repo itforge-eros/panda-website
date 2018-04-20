@@ -28,12 +28,21 @@ ghp.getSpace = (apollo, dept, spaceName) => {
 		`
 	});
 };
-ghp.getMaterials = (apollo_auth, deptName) => {
+ghp.getMaterials = (apollo, deptName) => {
 	// can accept auth
-	return apollo_auth.query({
+	return apollo.query({
 		query: gql`
 			{
 				department(name: "${deptName}") {materials {id name {th}}}
+			}
+		`
+	})
+};
+ghp.getPermissions = apollo => {
+	return apollo.query({
+		query: gql`
+			{
+				permissions { name description }
 			}
 		`
 	})
@@ -183,7 +192,7 @@ ghp.createRole = (apollo_auth, r) => {
 	return apollo_auth.mutate({
 		mutation: gql`
 			mutation($roleInput: CreateRoleInput!) {
-				createRole(roleInput: $roleInput) {id}
+				createRole(input: $roleInput) {id}
 			}
 		`,
 		variables: {

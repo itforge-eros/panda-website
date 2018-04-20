@@ -53,16 +53,23 @@ router.get("/", (req, res) => {
 });
 router.get("/new", (req, res) => {
 	if (req.session.member) {
-		res.render("manage-role-single", {
-			session: testData.session,
-			user: testData.user,
-			member: req.session.member,
-			currentDept: req.session.currentDept,
-			orgData: orgData,
-			status: createRoleStatus
-		});
-		orgData = {};
-		createRoleStatus = "";
+		ghp.getPermissions(apollo_auth)
+			.then(permissions => {
+				res.render("manage-role-single", {
+					session: testData.session,
+					user: testData.user,
+					member: req.session.member,
+					currentDept: req.session.currentDept,
+					orgData: orgData,
+					permissions: permissions.data.permissions,
+					status: createRoleStatus
+				});
+				orgData = {};
+				createRoleStatus = "";
+			})
+			.catch(err => {
+				res.redirect("/error/")
+			})
 	} else { res.redirect("/authen/login/") }
 });
 router.post(/\/.*\/save/, multer().array(), (req, res) => {
@@ -71,7 +78,7 @@ router.post(/\/.*\/save/, multer().array(), (req, res) => {
 		ghp.createRole(apollo_auth, req.body)
 			.then(data => {
 				createRoleStatus = "success";
-				res.redirect("/manage-role/" + data.data.createRole.role.id);
+				res.redirect("/manage-role/" + data.data.createRole.id);
 			})
 			.catch(err => {
 				if (globalVars.env != "production") console.log(err);
