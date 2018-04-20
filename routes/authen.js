@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 const session = require("express-session");
 const testData = require("../models/testData");
+const ghp = require("../helpers/gql");
 
 // required for apollo
 const ApolloClient = require("apollo-client").ApolloClient;
@@ -35,41 +36,6 @@ const apollo_auth = new ApolloClient({
 	cache: new InMemoryCache(),
 	defaultOptions: {query: {fetchPolicy: "no-cache"}}
 });
-
-const sendLogin = (usr, pwd) => {
-	return apollo.query({
-		query: gql`
-			{
-				login(username: "${usr}", password: "${pwd}") {
-					member {
-						id, username, firstName, lastName, email
-					},
-					token
-				}
-			}
-		`
-	});
-};
-
-const getMe = () => {
-	return apollo_auth.query({
-		query: gql`
-			{
-				me {
-					roles {
-						name
-						department {
-							id name fullThaiName description
-						}
-						permissions {
-							accesses
-						}
-					}
-				}
-			}
-		`
-	});
-};
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -103,26 +69,31 @@ router.post("/login", multer().array(), (req, res, next) => {
 		res.redirect("/authen/login/");
 	} else {
 		// console.log(req.body.username + " " + req.body.password);
-		sendLogin(req.body.username, req.body.password)
+		ghp.sendLogin(apollo, req.body.username, req.body.password)
 			.then(data => {
 				req.session.token = data.data.login.token;
 				req.session.member = data.data.login.member;
 				token = req.session.token;
-				getMe().then(meData => {
+				ghp.getMe(apollo_auth).then(meData => {
 					req.session.member = Object.assign({}, req.session.member, meData.data.me);
 					if (req.session.member.roles.length > 1) {
 						res.session.currentDept = {};
 						res.redirect("/choose-dept/")
 					} else if (req.session.member.roles.length == 1) {
 						req.session.currentDept = req.session.member.roles[0].department;
-						res.redirect("/");
+						ghp.getAccesses(apollo_auth, req.session.currentDept.id)
+							.then(ac => {
+								req.session.currentAccesses = ac.data.accesses;
+								res.redirect("/");
+								console.log(req.session.currentAccesses);
+							}).catch(err => console.log(err));
 					} else {
 						req.session.currentDept = {};
 						res.redirect("/");
 					}
 				}).catch(err => {
 					if (globalVars.env != "production") console.log(err);
-				})
+				});
 			})
 			.catch(err => {
 				// console.log(err.graphQLErrors[0].message);
