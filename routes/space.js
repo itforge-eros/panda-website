@@ -45,29 +45,6 @@ const getSpace = (dept, spaceName) => {
 	});
 };
 
-const createRequest = rq => {
-	return apollo_auth.mutate({
-		mutation: gql`
-			mutation($requestInput: CreateRequestInput!) {
-				createRequest(input: $requestInput) {
-					id
-				}
-			}
-		`,
-		variables: {
-			"requestInput": {
-				"dates": [rq.r_date_raw],
-				"period": {
-					"start": parseInt(rq.start),
-					"end": parseInt(rq.end)
-				},
-				"spaceId": rq.space,
-				"body": rq.reason
-			}
-		}
-	});
-};
-
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
