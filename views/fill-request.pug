@@ -41,21 +41,21 @@ html
 						div.input-wrap
 							label(for="seats") จำนวนผู้ใช้งาน (จำเป็น)
 							input(type="number", name="seats", required)
-							span.err กรุณากรอกข้อมูล
+							//- span.err กรุณากรอกข้อมูล
 						div.input-wrap
 							label(for="reason") เหตุผลในการจอง (จำเป็น)
 							textarea(name="reason", rows="4", required)
-							span.err กรุณากรอกข้อมูล
+							//- span.err กรุณากรอกข้อมูล
 						div.marg-b-1
 							label อุปกรณ์ที่ต้องการยืม
 							table
-								each item in [1,2,3]
+								each item in materials
 									tr
 										td
 											label.control.checkbox
-												input(type="checkbox", name="borrow-"+item)
+												input(type="checkbox", name="borrow", value=item.id)
 												span.control-indicator
-												| ไมโครฟง
+												= item.name.th
 						button.raised
 							i.fas.fa-paper-plane
 							| ส่งข้อมูล

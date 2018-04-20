@@ -28,6 +28,16 @@ ghp.getSpace = (apollo, dept, spaceName) => {
 		`
 	});
 };
+ghp.getMaterials = (apollo_auth, deptName) => {
+	// can accept auth
+	return apollo_auth.query({
+		query: gql`
+			{
+				department(name: "${deptName}") {materials {id name {th}}}
+			}
+		`
+	})
+};
 
 // require auth
 ghp.getAccesses = (apollo_auth, deptId) => {
@@ -88,15 +98,6 @@ ghp.getMyRequests = apollo_auth => {
 						space {fullName department {fullThaiName}}
 					}
 				}
-			}
-		`
-	})
-};
-ghp.getMaterials = (apollo_auth, deptName) => {
-	return apollo_auth.query({
-		query: gql`
-			{
-				department(name: "${deptName}") {materials {id name {th}}}
 			}
 		`
 	})

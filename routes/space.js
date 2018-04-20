@@ -65,14 +65,19 @@ router.post("/:dept/:name/reserve", multer().array(), (req, res) => {
 		ghp.getSpace(apollo_auth, req.params.dept, req.params.name)
 			.then(returnedSpace => {
 				if (returnedSpace.data.space != null) {
-					res.render("fill-request", {
-						session: testData.session,
-						user: testData.user,
-						member: req.session.member,
-						currentDept: req.session.currentDept,
-						reservation: req.body,
-						space: returnedSpace.data.space
-					});
+					ghp.getMaterials(apollo, returnedSpace.data.space.department.name)
+						.then(returnedMaterials => {
+							res.render("fill-request", {
+								session: testData.session,
+								user: testData.user,
+								member: req.session.member,
+								currentDept: req.session.currentDept,
+								reservation: req.body,
+								space: returnedSpace.data.space,
+								materials: returnedMaterials.data.department.materials
+							});
+						})
+						.catch(err => res.redirect("/error"))
 				} else {
 					res.redirect("/error");
 				}
