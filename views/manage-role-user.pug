@@ -11,7 +11,7 @@ html
 				div.container
 					div.page-title-wrap
 						h2.page-pretitle จัดการผู้ใช้ในสิทธิ์
-						h1.page-title Student
+						h1.page-title= role.name
 					div
 						a.button.marg-b-1(href="#")
 							i.fas.fa-plus-circle
@@ -20,10 +20,12 @@ html
 							label(for="role-name") พิมพ์รหัสประจำตัวคั่นด้วยลูกน้ำและกด Enter
 							input(type="text", name="role-name", style="width:100%")
 					table.styled.striped
-						each item in [1,2,3,4,5,6,7,8]
+						if role.members.length == 0
+							h3 ยังไม่มีผู้ใช้
+						each m in role.members
 							tr
-								td.w-10 12345678
-								td Kumanop Ob-Ob-Ob
+								td.w-10= m.username
+								td= m.firstName + " " + m.lastName
 								td.actions
 									a(href="#")
 										i.fas.fa-trash

@@ -113,12 +113,17 @@ router.get("/:id", (req, res) => {
 		.catch(err => res.redirect("/error/"));
 });
 router.get("/:id/users", (req, res) => {
-	res.render("manage-role-user", {
-		session: testData.session,
-		user: testData.user,
-		member: req.session.member,
-		currentDept: req.session.currentDept
-	});
+	ghp.getRoleMembers(apollo_auth, req.params.id)
+		.then(role => {
+			res.render("manage-role-user", {
+				session: testData.session,
+				user: testData.user,
+				member: req.session.member,
+				currentDept: req.session.currentDept,
+				role: role.data.role
+			});
+		})
+		.catch(err => res.redirect("/error/"));
 });
 
 module.exports = router;
