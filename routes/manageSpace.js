@@ -15,6 +15,7 @@ const gql = require("graphql-tag");
 
 let token = "";
 let createSpaceStatus = "";
+let orgData = {};
 
 const authLink = setContext((_, { headers }) => {
 	return { headers: { authorization: token ? `bearer${token}` : "" } };
@@ -94,9 +95,10 @@ router.get("/new", (req, res) => {
 			member: req.session.member,
 			currentDept: req.session.currentDept,
 			amenities: amenities,
-			orgData: {},
+			orgData: orgData,
 			status: createSpaceStatus
 		});
+		orgData = {};
 		createSpaceStatus = "";
 	} else {
 		res.redirect("/authen/login/");
@@ -114,6 +116,7 @@ router.get("/:dept/:name", (req, res) => {
 				orgData: data.data.space,
 				status: createSpaceStatus
 			});
+			orgData = {};
 			createSpaceStatus = "";
 		})
 		.catch(err => console.log(err))
@@ -129,6 +132,8 @@ router.post(/\/.*\/save/, multer().array(), (req, res) => {
 			.catch(err => {
 				if (globalVars.env != "production") console.log(err);
 				createSpaceStatus = err.graphQLErrors[0].message;
+				orgData = req.body;
+				res.redirect("/manage-space/new/");
 			});
 	} else {
 		res.redirect("/authen/login/")
