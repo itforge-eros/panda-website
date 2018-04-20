@@ -28,6 +28,7 @@
     "express-session": "^1.15.6",
     "graphql": "^0.13.2",
     "graphql-tag": "^2.8.0",
+    "memorystore": "^1.6.0",
     "multer": "^1.3.0",
     "node-fetch": "^2.1.2",
     "pug": "^2.0.1"
