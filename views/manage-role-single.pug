@@ -9,13 +9,21 @@ html
 		div#app
 			div.content
 				div.container
+					if status == "success"
+						div.notice.success
+							i.fas.fa-check-circle
+							|  บันทึกข้อมูลเรียบร้อย
+					else if status != ""
+						div.notice.warning
+							i.fas.fa-exclamation-circle
+							|  ยังไม่ได้บันทึกข้อมูล กรุณาตรวจสอบข้อมูลอีกครั้ง (#{status})
 					div.page-title-wrap
 						h2.page-pretitle จัดการสิทธิ์
-						h1.page-title Student
-					form(action="")
+						h1.page-title {{ name || "สิทธิ์ใหม่" }}
+					form(action="save", method="POST")
 						div.marg-b-1
 							label(for="role-name") ชื่อสิทธิ์
-							input(type="text", name="role-name", style="width:100%")
+							input(type="text", name="name", v-model="name")
 						div.marg-b-1
 							label อำนาจ
 							table
@@ -23,9 +31,12 @@ html
 									tr
 										td
 											label.control.checkbox
-												input(type="checkbox")
+												input(type="checkbox", name="permissions", value="REQUEST_CREATE_ACCESS")
 												span.control-indicator
-												| สร้างสถานที่
+												| REQUEST_CREATE_ACCESS
 						button.raised
 							i.fas.fa-save
 							| บันทึก
+		script(src="/public/scripts/manage-role-single.js")
+		script
+			| app.name = "#{orgData.name}"

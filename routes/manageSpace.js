@@ -40,10 +40,7 @@ const amenities = [
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
-router.use((req, res, next) => {
-	token = req.session.token;
-	next()
-});
+router.use((req, res, next) => {token = req.session.token; next()});
 
 router.get("/", (req, res) => {
 	if (req.session.member) {
