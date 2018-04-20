@@ -59,29 +59,6 @@ ghp.getSpace = (apollo_auth, dept, spaceName) => {
 		`
 	});
 };
-
-ghp.createSpace = (apollo_auth, sp) => {
-	return apollo_auth.mutate({
-		mutation: gql`
-			mutation($spaceInput: CreateSpaceInput!) {
-				createSpace(input: $spaceInput) {
-					name department { name }
-				}
-			}
-		`,
-		variables: {
-			"spaceInput": {
-				"name": sp.name.toLowerCase().replace(/ /g, "-"),
-				"fullName": sp.fullName,
-				"description": sp.description,
-				"capacity": parseInt(sp.capacity),
-				"category": sp.category,
-				"isAvailable": sp.isAvailable == "true" ? true : false,
-				"departmentId": sp.deptId
-			}
-		}
-	});
-};
 ghp.getRequest = (apollo_auth, id) => {
 	return apollo_auth.query({
 		query: gql`
@@ -112,6 +89,43 @@ ghp.getMyRequests = apollo_auth => {
 				}
 			}
 		`
+	})
+};
+ghp.createSpace = (apollo_auth, sp) => {
+	return apollo_auth.mutate({
+		mutation: gql`
+			mutation($spaceInput: CreateSpaceInput!) {
+				createSpace(input: $spaceInput) {
+					name department { name }
+				}
+			}
+		`,
+		variables: {
+			"spaceInput": {
+				"name": sp.name.toLowerCase().replace(/ /g, "-"),
+				"fullName": sp.fullName,
+				"description": sp.description,
+				"capacity": parseInt(sp.capacity),
+				"category": sp.category,
+				"isAvailable": sp.isAvailable == "true" ? true : false,
+				"departmentId": sp.deptId
+			}
+		}
+	});
+};
+ghp.createMaterial = (apollo_auth, deptId, name) => {
+	return apollo_auth.mutate({
+		mutation: gql`
+			mutation($materialInput: CreateMaterialInput!) {
+				createMaterial(input: $materialInput) {name {th}}
+			}
+		`,
+		variables: {
+			"materialInput": {
+				"departmentId": deptId,
+				"name": {"th": name}
+			}
+		}
 	})
 };
 
