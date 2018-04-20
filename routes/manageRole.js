@@ -37,12 +37,19 @@ const apollo_auth = new ApolloClient({
 });
 
 router.get("/", (req, res) => {
-		res.render("manage-role", {
-		session: testData.session,
-		user: testData.user,
-		member: req.session.member,
-		currentDept: req.session.currentDept
-	});
+	ghp.getRolesInDepartment(apollo_auth, req.session.currentDept.name)
+		.then(roles => {
+			res.render("manage-role", {
+				session: testData.session,
+				user: testData.user,
+				member: req.session.member,
+				currentDept: req.session.currentDept,
+				roles: roles.data.department.roles
+			});
+		})
+		.catch(err => {
+			res.redirect("/error/")
+		})
 });
 router.get("/new", (req, res) => {
 	if (req.session.member) {
@@ -69,7 +76,6 @@ router.post(/\/.*\/save/, multer().array(), (req, res) => {
 			.catch(err => {
 				if (globalVars.env != "production") console.log(err);
 				createRoleStatus = err.graphQLErrors[0].message;
-				console.log(createRoleStatus)
 				orgData = req.body;
 				res.redirect("/manage-role/new/");
 			});
