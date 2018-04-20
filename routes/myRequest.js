@@ -13,6 +13,11 @@ const gql = require("graphql-tag");
 
 let token = "";
 
+router.use((req, res, next) => {
+	token = req.session.token;
+	next()
+});
+
 const authLink = setContext((_, { headers }) => {
 	return { headers: { authorization: token ? `bearer${token}` : "" } };
 });
@@ -21,7 +26,8 @@ const apollo_auth = new ApolloClient({
 	link: authLink.concat(
 		createHttpLink({ uri: globalVars.gqlURL, fetch: fetch })
 	),
-	cache: new InMemoryCache()
+	cache: new InMemoryCache(),
+	defaultOptions: {query: {fetchPolicy: "no-cache"}}
 });
 
 const getRequest = id => {
@@ -58,14 +64,7 @@ const getMyRequests = () => {
 	})
 }
 
-router.use((req, res, next) => {
-	token = req.session.token;
-	next()
-});
-
 router.get("/", (req, res) => {
-	// token = req.session.token;
-	console.log(req.session.token);
 	if (req.session.member) {
 		getMyRequests()
 			.then(myRequests => {

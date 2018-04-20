@@ -25,7 +25,8 @@ const apollo_auth = new ApolloClient({
 	link: authLink.concat(
 		createHttpLink({ uri: globalVars.gqlURL, fetch: fetch })
 	),
-	cache: new InMemoryCache()
+	cache: new InMemoryCache(),
+	defaultOptions: {query: {fetchPolicy: "no-cache"}}
 });
 
 const amenities = [
