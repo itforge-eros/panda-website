@@ -19,6 +19,7 @@ const gql = require("graphql-tag");
 let token = "";
 let createRoleStatus = "";
 let orgData = {};
+let assignMemberStatus = "";
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -120,10 +121,30 @@ router.get("/:id/users", (req, res) => {
 				user: testData.user,
 				member: req.session.member,
 				currentDept: req.session.currentDept,
-				role: role.data.role
+				role: role.data.role,
+				status: assignMemberStatus
 			});
+			assignMemberStatus = "";
 		})
 		.catch(err => res.redirect("/error/"));
+});
+router.post("/:id/users/addmember", multer().array(), (req, res) => {
+	ghp.getMemberId(apollo_auth, req.body.member)
+		.then(member => {
+			ghp.assignRole(apollo_auth, req.params.id, member.data.member.id)
+				.then(() => {
+					assignMemberStatus = "success";
+					res.redirect("/manage-role/" + req.params.id + "/users/");
+				})
+				.catch(err => {
+					assignMemberStatus = err.graphQLErrors[0].message;
+					res.redirect("/manage-role/" + req.params.id + "/users/");
+				})
+		})
+		.catch(err => {
+			assignMemberStatus = err.graphQLErrors[0].message;
+			res.redirect("/manage-role/" + req.params.id + "/users/");
+		});
 });
 
 module.exports = router;

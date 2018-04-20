@@ -9,16 +9,24 @@ html
 		div#app
 			div.content
 				div.container
+					if status == "success"
+						div.notice.success
+							i.fas.fa-check-circle
+							|  เพิ่มผู้ใช้เรียบร้อย
+					else if status != ""
+						div.notice.warning
+							i.fas.fa-exclamation-circle
+							= " " + status
 					div.page-title-wrap
 						h2.page-pretitle จัดการผู้ใช้ในสิทธิ์
 						h1.page-title= role.name
 					div
-						a.button.marg-b-1(href="#")
+						button.marg-b-1(onclick="toggleAdder()")
 							i.fas.fa-plus-circle
 							| เพิ่มผู้ใช้เข้าสิทธิ์นี้
-						form(action="")
-							label(for="role-name") พิมพ์รหัสประจำตัวคั่นด้วยลูกน้ำและกด Enter
-							input(type="text", name="role-name", style="width:100%")
+						form#adder(action="addmember", method="POST", style="display:none")
+							label(for="member") พิมพ์รหัสประจำตัวและกด Enter
+							input(type="text", name="member", style="width:100%")
 					table.styled.striped
 						if role.members.length == 0
 							h3 ยังไม่มีผู้ใช้
@@ -29,3 +37,14 @@ html
 								td.actions
 									a(href="#")
 										i.fas.fa-trash
+		script
+			| var toggled = false;
+			| function toggleAdder() {
+			| 	if (toggled) {
+			| 		document.getElementById("adder").style.display = "none";
+			| 		toggled = false;
+			| 	} else {
+			| 		document.getElementById("adder").style.display = "block";
+			| 		toggled = true;
+			| 	}
+			| }

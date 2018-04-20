@@ -97,6 +97,15 @@ ghp.getMe = apollo_auth => {
 		`
 	});
 };
+ghp.getMemberId = (apollo_auth, username) => {
+	return apollo_auth.query({
+		query: gql`
+			{
+				member(username: "${username}") {id}
+			}
+		`
+	})
+}
 ghp.getRequest = (apollo_auth, id) => {
 	return apollo_auth.query({
 		query: gql`
@@ -223,5 +232,14 @@ ghp.createRole = (apollo_auth, r) => {
 		}
 	});
 };
+ghp.assignRole = (apollo_auth, roleId, memberId) => {
+	return apollo_auth.mutate({
+		mutation: gql`
+			mutation {
+				assignRole(input: {roleId: "${roleId}", memberId: "${memberId}"}) { id }
+			}
+		`
+	})
+}
 
 module.exports = ghp;
