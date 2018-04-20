@@ -46,12 +46,23 @@ router.use((req, res, next) => {
 });
 
 router.get("/", (req, res) => {
-	res.render("manage-space", {
-		session: testData.session,
-		user: testData.user,
-		member: req.session.member,
-		currentDept: req.session.currentDept
-	});
+	if (req.session.member) {
+		ghp.getSpacesInDepartment(apollo_auth, req.session.currentDept.name)
+			.then(spaces => {
+				res.render("manage-space", {
+					session: testData.session,
+					user: testData.user,
+					member: req.session.member,
+					currentDept: req.session.currentDept,
+					spaces: spaces.data.department.spaces
+				});
+			})
+			.catch(err => {
+				res.redirect("/error/");
+			});
+	} else {
+		res.redirect("/authen/login/")
+	}
 });
 router.get("/new", (req, res) => {
 	if (req.session.member) {

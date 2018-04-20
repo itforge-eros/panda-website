@@ -102,6 +102,15 @@ ghp.getMyRequests = apollo_auth => {
 		`
 	})
 };
+ghp.getSpacesInDepartment = (apollo, deptName) => {
+	return apollo.query({
+		query: gql`
+			{
+				department(name: "${deptName}") {id name spaces {name fullName}}
+			}
+		`
+	})
+};
 ghp.createSpace = (apollo_auth, sp) => {
 	return apollo_auth.mutate({
 		mutation: gql`

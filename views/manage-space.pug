@@ -21,11 +21,11 @@ html
 							i.fas.fa-plus-circle
 							| สร้างสถานที่ใหม่
 					table.styled.striped
-						each item in [1,2,3,4,5,6,7,8]
+						each s in spaces
 							tr
-								td= "M0" + item
+								td= s.fullName
 								td.actions
-									a(href="/manage-space/" + item)
+									a(href=currentDept.name + "/" + s.name + "/")
 										i.fas.fa-cog
 									a(href="#")
 										i.fas.fa-trash
