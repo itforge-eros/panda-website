@@ -108,13 +108,14 @@ router.post("/login", multer().array(), (req, res, next) => {
 				token = req.session.token;
 				getMe().then(meData => {
 					req.session.member = Object.assign({}, req.session.member, meData.data.me);
-					// console.log(req.session.member);
 					if (req.session.member.roles.length > 1) {
+						res.session.currentDept = {};
 						res.redirect("/choose-dept/")
 					} else if (req.session.member.roles.length == 1) {
 						req.session.currentDept = req.session.member.roles[0].department;
 						res.redirect("/");
 					} else {
+						req.session.currentDept = {};
 						res.redirect("/");
 					}
 				}).catch(err => {
