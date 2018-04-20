@@ -91,6 +91,15 @@ ghp.getMyRequests = apollo_auth => {
 		`
 	})
 };
+ghp.getMaterials = (apollo_auth, deptName) => {
+	return apollo_auth.query({
+		query: gql`
+			{
+				department(name: "${deptName}") {materials {id name {th}}}
+			}
+		`
+	})
+};
 ghp.createSpace = (apollo_auth, sp) => {
 	return apollo_auth.mutate({
 		mutation: gql`
