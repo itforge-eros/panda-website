@@ -133,7 +133,7 @@ ghp.getRole = (apollo_auth, roleId) => {
 	return apollo_auth.query({
 		query: gql`
 			{
-				role(id: "${roleId}") {id name}
+				role(id: "${roleId}") {id name permissions {name}}
 			}
 		`
 	})
