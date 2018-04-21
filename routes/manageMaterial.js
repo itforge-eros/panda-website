@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const testData = require("../models/testData");
 const ghp = require("../helpers/gql");
+const ahp = require("../helpers/authen");
 const session = require("express-session");
 const multer = require("multer");
 const bodyParser = require("body-parser");
@@ -36,21 +37,31 @@ const apollo_auth = new ApolloClient({
 });
 
 router.get("/", (req, res) => {
-	ghp.getMaterials(apollo_auth, req.session.currentDept.name)
-		.then(m => {
-			res.render("manage-material", {
-				session: testData.session,
-				user: testData.user,
-				member: req.session.member,
-				currentDept: req.session.currentDept,
-				materials: m.data.department.materials
+	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["MATERIAL_CREATE_ACCESS", "MATERIAL_DELETE_ACCESS"])) {
+		ghp.getMaterials(apollo_auth, req.session.currentDept.name)
+			.then(m => {
+				res.render("manage-material", {
+					session: testData.session,
+					user: testData.user,
+					member: req.session.member,
+					currentDept: req.session.currentDept,
+					materials: m.data.department.materials
+				});
+			}).catch(err => {
+				if (globalVars.env != "production") console.log(err);
+				res.redirect("/error/");
 			});
-		}).catch(err => console.log(err));
+	} else { res.redirect("/error/") }
 });
 router.post("/new", multer().array(), (req, res) => {
-	ghp.createMaterial(apollo_auth, req.session.currentDept.id, req.body.nameTh)
-		.then(() => res.redirect("/manage-material/"))
-		.catch(err => console.log(err));
+	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["MATERIAL_CREATE_ACCESS"])) {
+		ghp.createMaterial(apollo_auth, req.session.currentDept.id, req.body.nameTh)
+			.then(() => res.redirect("/manage-material/"))
+			.catch(err => {
+				if (globalVars.env != "production") console.log(err);
+				res.redirect("/error/");
+			});
+	} else { res.redirect("/error/") }
 })
 
 module.exports = router;
