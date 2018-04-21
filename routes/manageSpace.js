@@ -71,7 +71,8 @@ router.get("/new", (req, res) => {
 			currentDept: req.session.currentDept,
 			amenities: amenities,
 			orgData: orgData,
-			status: createSpaceStatus
+			status: createSpaceStatus,
+			canSave: true
 		});
 		orgData = {};
 		createSpaceStatus = "";
@@ -90,7 +91,8 @@ router.get("/:dept/:name", (req, res) => {
 					currentDept: req.session.currentDept,
 					amenities: amenities,
 					orgData: data.data.space,
-					status: createSpaceStatus
+					status: createSpaceStatus,
+					canSave: hasAllAccess(req.session.member.currentAccesses, ["SPACE_UPDATE_ACCESS"])
 				});
 				orgData = {};
 				createSpaceStatus = "";

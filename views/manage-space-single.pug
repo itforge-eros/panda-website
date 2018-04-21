@@ -16,6 +16,10 @@ html
 						div.notice.success
 							i.fas.fa-check-circle
 							|  บันทึกข้อมูลเรียบร้อย
+					else if !canSave
+						div.notice
+							i.fas.fa-exclamation-circle
+							|  คุณไม่มีสิทธิ์แก้ไขข้อมูล
 					else if status != ""
 						div.notice.warning
 							i.fas.fa-exclamation-circle
@@ -31,20 +35,20 @@ html
 						div.row
 							div.col-50.marg-b-1
 								label(for="space-name") ชื่อสถานที่ *
-								input.fluid(type="text", name="fullName", required, v-model="spaceName")
+								input.fluid(type="text", name="fullName", required, v-model="spaceName", disabled=!canSave)
 							div.col-50.marg-b-1
 								label(for="space-seats") จำนวนที่นั่ง
-								input.fluid(type="number", name="capacity", value=(orgData.capacity ? orgData.capacity : "/authen/login/"))
+								input.fluid(type="number", name="capacity", value=(orgData.capacity ? orgData.capacity : "/authen/login/"), disabled=!canSave)
 						div.row
 							div.col-50.marg-b-1
 								label(for="slug") ประเภทสถานที่ *
 								div.select
 									select(aria-label="Choose a faculty", name="category")
 										each t in [{x: "ห้องเรียน", v: "CLASSROOM"}, {x: "ห้องประชุม", v: "MEETING_ROOM"}]
-											option(value=t.v, checked=(orgData.category == t.v))= t.x
+											option(value=t.v, checked=(orgData.category == t.v), disabled=!canSave)= t.x
 						div(style="margin-bottom:0.5em")
 							label(for="name_raw") ชื่อสำหรับใช้ใน URL (ภาษาอังกฤษเท่านั้น) *
-							input(type="text", name="name_raw", required, v-model="spaceURI")
+							input(type="text", name="name_raw", required, v-model="spaceURI", disabled=!canSave)
 						div.marg-b-1
 							code#spaceURL https://space.itforge.io/space/#{currentDept.name}/
 								span#spaceURI {{ computedSpaceURI || "sample" }}
@@ -54,26 +58,27 @@ html
 								tr
 									td
 										label.control.checkbox
-											input(type="checkbox", name="isAvailable", value="true", checked)
+											input(type="checkbox", name="isAvailable", value="true", checked, disabled=!canSave)
 											span.control-indicator
 											| เปิดให้จอง
 								each item in amenities
 									tr
 										td
 											label.control.checkbox
-												input(type="checkbox", name="amenities", value=item.id)
+												input(type="checkbox", name="amenities", value=item.id, disabled=!canSave)
 												span.control-indicator
 												= item.name
 						div.marg-b-1
 							label คำอธิบาย
-							textarea(name="description", rows="4")
+							textarea(name="description", rows="4", disabled=!canSave)
 								= orgData.description ? orgData.description : ""
 						div.marg-b-1
 							label ภาพของห้อง
 							div(style="height: 250px; background-color: #F0F0F0")
-						button.raised
-							i.fas.fa-save
-							| บันทึก
+						if canSave
+							button.raised
+								i.fas.fa-save
+								| บันทึก
 		script(src="/public/scripts/manage-space-single.js")
 		script
 			| app.spaceName = "#{orgData.fullName ? orgData.fullName : ""}";
