@@ -241,5 +241,25 @@ ghp.assignRole = (apollo_auth, roleId, memberId) => {
 		`
 	})
 }
+ghp.updateSpace = (apollo_auth, sp) => {
+	return apollo_auth.mutate({
+		mutation: gql`
+			mutation($spaceInput: UpdateSpaceInput!) {
+				updateSpace(input: $spaceInput) { id name department {name} }
+			}
+		`,
+		variables: {
+			"spaceInput": {
+				"spaceId": sp.spaceId,
+				"name": sp.name.toLowerCase().replace(/ /g, "-"),
+				"fullName": sp.fullName,
+				"description": sp.description,
+				"category": sp.category,
+				"capacity": parseInt(sp.capacity),
+				"isAvailable": sp.isAvailable == "true" ? true : false
+			}
+		}
+	})
+}
 
 module.exports = ghp;
