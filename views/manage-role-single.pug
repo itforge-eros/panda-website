@@ -16,6 +16,10 @@ html
 						div.notice.success
 							i.fas.fa-check-circle
 							|  บันทึกข้อมูลเรียบร้อย
+					else if !canSave
+						div.notice
+							i.fas.fa-exclamation-circle
+							|  คุณไม่มีสิทธิ์แก้ไขข้อมูล
 					else if status != ""
 						div.notice.warning
 							i.fas.fa-exclamation-circle
@@ -26,7 +30,7 @@ html
 					form(action="save", method="POST")
 						div.marg-b-1
 							label(for="role-name") ชื่อสิทธิ์
-							input(type="text", name="name", v-model="name")
+							input(type="text", name="name", disabled=!canSave, v-model="name")
 						div.marg-b-1
 							label อำนาจ
 							table
@@ -34,13 +38,14 @@ html
 									tr
 										td
 											label.control.checkbox
-												input(type="checkbox", name="permissions", value=p.name, checked=checkedPermissions.includes(p.name))
+												input(type="checkbox", name="permissions", value=p.name, checked=checkedPermissions.includes(p.name), disabled=!canSave)
 												span.control-indicator
 												= p.name
 											p.marg-t-0= p.description
-						button.raised
-							i.fas.fa-save
-							| บันทึก
+						if canSave
+							button.raised
+								i.fas.fa-save
+								| บันทึก
 		script(src="/public/scripts/manage-role-single.js")
 		script
 			| app.name = "#{role.name}"
