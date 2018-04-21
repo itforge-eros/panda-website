@@ -92,18 +92,24 @@ html
 										| จอง
 						if space.description
 							div.card= space.description
-						div
-							button#report(onclick="showModal('modal')")
-								i.fas.fa-exclamation-triangle
-								| รายงานปัญหา 
-			div.modal#modal
-				div.card
-					span.close(onclick="closeModal('modal')")
-						i.fas.fa-times-circle
-					h1.modal-title รายงานปัญหา
-					p= space.name
-					textarea.marg-b-1(name="report", rows="4")
-					button.raised ส่งรายงาน
+						if member
+							div
+								button#report(onclick="showModal('modal')")
+									i.fas.fa-exclamation-triangle
+									| รายงานปัญหา
+			if member
+				div.modal#modal
+					div.card
+						span.close(onclick="closeModal('modal')")
+							i.fas.fa-times-circle
+						h1.modal-title รายงานปัญหา
+						form(action="report")
+							p <strong>#{space.fullName}</strong>
+							label(for="title") หัวข้อ (ไม่เกิน 64 ตัวอักษร)
+							input.fluid.marg-b-1(type="text", name="title")
+							label(for="report") รายละเอียด
+							textarea.marg-b-1(name="report", rows="4")
+							button.raised ส่งรายงาน
 		script(src="/public/vendor/pikaday/pikaday.min.js")
 		script(src="/public/scripts/single-page.js")
 		script(src="/public/scripts/modal.js")
