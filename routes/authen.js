@@ -88,7 +88,6 @@ router.post("/login", multer().array(), (req, res, next) => {
 							.then(accesses => {
 								// set accesses of the current role
 								req.session.member.currentAccesses = accesses.data.me.accesses;
-								console.log(req.session.member.currentAccesses);
 								res.redirect("/choose-dept/");
 							})
 							.catch(err => {
