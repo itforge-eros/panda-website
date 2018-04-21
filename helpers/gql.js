@@ -67,12 +67,12 @@ ghp.getPermissions = apollo => {
 };
 
 // require auth
-ghp.getAccesses = (apollo_auth, deptId) => {
+ghp.getAccesses = (apollo_auth, deptName) => {
 	return apollo_auth.query({
 		query: gql`
 			{
 				me {
-					accesses(departmentId: "${deptId}")
+					accesses(department: "${deptName}")
 				}
 			}
 		`

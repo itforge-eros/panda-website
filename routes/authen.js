@@ -72,19 +72,44 @@ router.post("/login", multer().array(), (req, res, next) => {
 				req.session.token = data.data.login.token;
 				req.session.member = data.data.login.member;
 				token = req.session.token;
+
 				// get current user's info
 				ghp.getMe(apollo_auth).then(meData => {
 					req.session.member = Object.assign({}, req.session.member, meData.data.me);
+
 					// check how many roles the user has
 					if (req.session.member.roles.length > 1) {
+
 						// user has > 1 role, set default to the first one
 						req.session.currentDept = req.session.member.roles[0].department;
-						res.redirect("/choose-dept/")
+
+						// get accesses for the current department
+						ghp.getAccesses(apollo_auth, req.session.currentDept.name)
+							.then(accesses => {
+								// set accesses of the current role
+								req.session.member.currentAccesses = accesses.data.me.accesses;
+								res.redirect("/choose-dept/");
+							})
+							.catch(err => {
+								if (globalVars.env != "production") console.log(err);
+								res.redirect("/error/");
+							});
+
 					} else if (req.session.member.roles.length == 1) {
 						req.session.currentDept = req.session.member.roles[0].department;
-						res.redirect("/");
+						ghp.getAccesses(apollo_auth, req.session.currentDept.name)
+							.then(accesses => {
+								req.session.member.currentAccesses = accesses.data.me.accesses;
+								res.redirect("/");
+							})
+							.catch(err => {
+								if (globalVars.env != "production") console.log(err);
+								res.redirect("/error/");
+							});
+
 					} else {
 						req.session.currentDept = {};
+						// req.session.member.currentAccesses = ["SOME_ACCESS_HERE"]; set default accesses for no-role user
 						res.redirect("/");
 					}
 				}).catch(err => {

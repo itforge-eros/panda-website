@@ -1,6 +1,4 @@
 nav
-	if member
-		= "hello " + member.currentAcceses
 	.logo
 		a(href="/") KMITL OSRS
 	if member && member.roles != "undefined"
@@ -19,26 +17,31 @@ nav
 				i.fas.fa-search
 			span.tooltip ค้นหาสถานที่
 		if member && member.roles != "undefined"
+			if member.currentAccesses.includes("SPACE_CREATE_ACCESS") || member.currentAccesses.includes("SPACE_UPDATE_ACCESS")
+				li
+					a.icon-link(href="/manage-space/")
+						i.fas.fa-building
+					span.tooltip จัดการสถานที่
+		if member && member.roles != "undefined"
+			if member.currentAccesses.includes("ROLE_ASSIGN_ACCESS")
+				li
+					a.icon-link(href="/manage-role/")
+						i.fas.fa-users
+					span.tooltip จัดการสิทธิ์
+		if member
 			li
-				a.icon-link(href="/manage-space/")
-					i.fas.fa-building
-				span.tooltip จัดการสถานที่
-		li
-			a.icon-link(href="/manage-role/")
-				i.fas.fa-users
-			span.tooltip จัดการสิทธิ์
-		li
-			a.icon-link(href="/manage-material/")
-				i.fas.fa-cube
-			span.tooltip จัดการอุปกรณ์ให้ยืม
-		li
-			a.icon-link(href="/manage-request/")
-				i.fas.fa-clipboard-check
-			span.tooltip จัดการคำร้อง
-		li
-			a.icon-link(href="/my-request/")
-				i.fas.fa-book
-			span.tooltip คำร้องของฉัน
+				a.icon-link(href="/manage-material/")
+					i.fas.fa-cube
+				span.tooltip จัดการอุปกรณ์ให้ยืม
+			li
+				a.icon-link(href="/manage-request/")
+					i.fas.fa-clipboard-check
+				span.tooltip จัดการคำร้อง
+		if member
+			li
+				a.icon-link(href="/my-request/")
+					i.fas.fa-book
+				span.tooltip คำร้องของฉัน
 		a.authen(href=(member ? "/authen/logout/" : "/authen/login/"))= (member ? member.firstName : "เข้าสู่ระบบ") + " "
 			if member
 				i.fas.fa-times-circle
