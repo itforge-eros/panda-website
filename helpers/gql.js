@@ -245,7 +245,7 @@ ghp.updateSpace = (apollo_auth, sp) => {
 	return apollo_auth.mutate({
 		mutation: gql`
 			mutation($spaceInput: UpdateSpaceInput!) {
-				updateSpace(input: $spaceInput) { id }
+				updateSpace(input: $spaceInput) { id name department {name} }
 			}
 		`,
 		variables: {

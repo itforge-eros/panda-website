@@ -93,7 +93,7 @@ router.get("/:dept/:name", (req, res) => {
 					amenities: amenities,
 					orgData: data.data.space,
 					status: createSpaceStatus,
-					canSave: hasAllAccess(req.session.member.currentAccesses, ["SPACE_UPDATE_ACCESS"]),
+					canSave: ahp.hasAllAccess(req.session.member.currentAccesses, ["SPACE_UPDATE_ACCESS"]),
 					isNew: false
 				});
 				orgData = {};
@@ -124,7 +124,17 @@ router.post(/\/.*\/create/, multer().array(), (req, res) => {
 });
 router.post(/\/.*\/update/, multer().array(), (req, res) => {
 	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["SPACE_UPDATE_ACCESS"])) {
-		//
+		ghp.updateSpace(apollo_auth, req.body)
+			.then(data => {
+				createSpaceStatus = "success";
+				res.redirect("/manage-space/" + data.data.updateSpace.department.name + "/" + data.data.updateSpace.name + "/");
+			})
+			.catch(err => {
+				if (globalVars.env != "production") console.log(err);
+				createSpaceStatus = err.graphQLErrors[0].message;
+				orgData = req.body;
+				res.redirect("/manage-space/" + req.body.deptId + "/" + req.body.orgSpaceName + "/");
+			})
 	} else {
 		res.redirect("/error/");
 	}
