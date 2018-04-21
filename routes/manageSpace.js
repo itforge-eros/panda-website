@@ -72,7 +72,8 @@ router.get("/new", (req, res) => {
 			amenities: amenities,
 			orgData: orgData,
 			status: createSpaceStatus,
-			canSave: true
+			canSave: true,
+			isNew: true
 		});
 		orgData = {};
 		createSpaceStatus = "";
@@ -92,7 +93,8 @@ router.get("/:dept/:name", (req, res) => {
 					amenities: amenities,
 					orgData: data.data.space,
 					status: createSpaceStatus,
-					canSave: hasAllAccess(req.session.member.currentAccesses, ["SPACE_UPDATE_ACCESS"])
+					canSave: hasAllAccess(req.session.member.currentAccesses, ["SPACE_UPDATE_ACCESS"]),
+					isNew: false
 				});
 				orgData = {};
 				createSpaceStatus = "";
@@ -102,8 +104,8 @@ router.get("/:dept/:name", (req, res) => {
 		res.redirect("/error/");
 	}
 });
-router.post(/\/.*\/save/, multer().array(), (req, res) => {
-	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS", "SPACE_UPDATE_ACCESS"])) {
+router.post(/\/.*\/create/, multer().array(), (req, res) => {
+	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS"])) {
 		req.body.deptId = req.session.currentDept.id;
 		ghp.createSpace(apollo_auth, req.body)
 			.then(data => {
@@ -117,7 +119,14 @@ router.post(/\/.*\/save/, multer().array(), (req, res) => {
 				res.redirect("/manage-space/new/");
 			});
 	} else {
-		res.redirect("/error/")
+		res.redirect("/error/");
+	}
+});
+router.post(/\/.*\/update/, multer().array(), (req, res) => {
+	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["SPACE_UPDATE_ACCESS"])) {
+		//
+	} else {
+		res.redirect("/error/");
 	}
 });
 

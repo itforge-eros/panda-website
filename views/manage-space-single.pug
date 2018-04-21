@@ -27,7 +27,7 @@ html
 					div.page-title-wrap
 						h2.page-pretitle จัดการสถานที่
 						h1.page-title {{ spaceName || "สถานที่ใหม่" }}
-					form(action="save", method="POST")
+					form(action=(isNew ? "create" : "update"), method="POST")
 						p ช่องที่มีเครื่องหมายดอกจันทร์ (*) จำเป็นต้องกรอก
 						hr
 						div(style="display:none")
