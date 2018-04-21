@@ -41,9 +41,8 @@ router.get("/:dept/:id", (req, res) => {
 	req.session.currentDept = {name: req.params.dept, id: req.params.id};
 	ghp.getAccesses(apollo_auth, req.session.currentDept.id)
 		.then(ac => {
-			req.session.currentAccesses = ac.data.accesses;
+			req.session.member.currentAccesses = ac.data.accesses;
 			res.redirect("/")
-			console.log(req.session.currentAccesses);
 		}).catch(err => {
 			console.log(err);
 			res.redirect("/error");

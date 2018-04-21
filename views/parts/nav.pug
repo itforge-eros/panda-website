@@ -1,4 +1,6 @@
 nav
+	if member
+		= "hello " + member.currentAcceses
 	.logo
 		a(href="/") KMITL OSRS
 	if member && member.roles != "undefined"
@@ -17,7 +19,6 @@ nav
 				i.fas.fa-search
 			span.tooltip ค้นหาสถานที่
 		if member && member.roles != "undefined"
-			//- if member.roles[0].department.name.permissions.accesses.includes("SPACE_CREATE_ACCESS")
 			li
 				a.icon-link(href="/manage-space/")
 					i.fas.fa-building

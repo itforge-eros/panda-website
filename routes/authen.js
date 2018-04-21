@@ -75,30 +75,14 @@ router.post("/login", multer().array(), (req, res, next) => {
 				// get current user's info
 				ghp.getMe(apollo_auth).then(meData => {
 					req.session.member = Object.assign({}, req.session.member, meData.data.me);
-					// check how many departments the user manages
+					// check how many roles the user has
 					if (req.session.member.roles.length > 1) {
-						// user manages > 1 department, set default to the first one
+						// user has > 1 role, set default to the first one
 						req.session.currentDept = req.session.member.roles[0].department;
-						// get current user's access of the current department
-						ghp.getAccesses(apollo_auth, req.session.currentDept.id)
-							.then(ac => {
-								req.session.currentAccesses = ac.data.accesses;
-								res.redirect("/choose-dept/")
-							}).catch(err => {
-								console.log(err);
-								res.redirect("/error");
-							});
+						res.redirect("/choose-dept/")
 					} else if (req.session.member.roles.length == 1) {
 						req.session.currentDept = req.session.member.roles[0].department;
-						// get current user's access of the current department
-						ghp.getAccesses(apollo_auth, req.session.currentDept.id)
-							.then(ac => {
-								req.session.currentAccesses = ac.data.accesses;
-								res.redirect("/");
-							}).catch(err => {
-								console.log(err);
-								res.redirect("/error");
-							});
+						res.redirect("/");
 					} else {
 						req.session.currentDept = {};
 						res.redirect("/");
