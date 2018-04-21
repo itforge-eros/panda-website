@@ -59,11 +59,11 @@ router.get("/", (req, res) => {
 				res.redirect("/error/");
 			});
 	} else {
-		res.redirect("/authen/login/")
+		res.redirect("/error/")
 	}
 });
 router.get("/new", (req, res) => {
-	if (req.session.member) {
+	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS"])) {
 		res.render("manage-space-single", {
 			session: testData.session,
 			user: testData.user,
@@ -76,28 +76,32 @@ router.get("/new", (req, res) => {
 		orgData = {};
 		createSpaceStatus = "";
 	} else {
-		res.redirect("/authen/login/");
+		res.redirect("/error/");
 	}
 });
 router.get("/:dept/:name", (req, res) => {
-	ghp.getSpace(apollo_auth, req.params.dept, req.params.name)
-		.then(data => {
-			res.render("manage-space-single", {
-				session: testData.session,
-				user: testData.user,
-				member: req.session.member,
-				currentDept: req.session.currentDept,
-				amenities: amenities,
-				orgData: data.data.space,
-				status: createSpaceStatus
-			});
-			orgData = {};
-			createSpaceStatus = "";
-		})
-		.catch(err => console.log(err))
+	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS", "SPACE_UPDATE_ACCESS"])) {
+		ghp.getSpace(apollo_auth, req.params.dept, req.params.name)
+			.then(data => {
+				res.render("manage-space-single", {
+					session: testData.session,
+					user: testData.user,
+					member: req.session.member,
+					currentDept: req.session.currentDept,
+					amenities: amenities,
+					orgData: data.data.space,
+					status: createSpaceStatus
+				});
+				orgData = {};
+				createSpaceStatus = "";
+			})
+			.catch(err => console.log(err))
+	} else {
+		res.redirect("/error/");
+	}
 });
 router.post(/\/.*\/save/, multer().array(), (req, res) => {
-	if (req.session.member) {
+	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS", "SPACE_UPDATE_ACCESS"])) {
 		req.body.deptId = req.session.currentDept.id;
 		ghp.createSpace(apollo_auth, req.body)
 			.then(data => {
@@ -111,7 +115,7 @@ router.post(/\/.*\/save/, multer().array(), (req, res) => {
 				res.redirect("/manage-space/new/");
 			});
 	} else {
-		res.redirect("/authen/login/")
+		res.redirect("/error/")
 	}
 });
 
