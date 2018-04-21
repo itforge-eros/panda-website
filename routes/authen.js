@@ -109,7 +109,7 @@ router.post("/login", multer().array(), (req, res, next) => {
 
 					} else {
 						req.session.currentDept = {};
-						// req.session.member.currentAccesses = ["SOME_ACCESS_HERE"]; set default accesses for no-role user
+						req.session.member.currentAccesses = ["SPACE_READ_ACCESS"]; // set access for no-role user
 						res.redirect("/");
 					}
 				}).catch(err => {
