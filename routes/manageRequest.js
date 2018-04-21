@@ -31,30 +31,41 @@ const apollo_auth = new ApolloClient({
 });
 
 router.get("/", (req, res) => {
-	if (req.session.member) {
+	if (req.session.member){ //&& !(Object.keys(req.session.currentDept).length === 0)) {
 		ghp.getCanApprove(apollo_auth, req.session.currentDept.name)
 			.then(canSee => {
-				if(canSee.data.me.accesses.indexOf("REVIEW_CREATE_ACCESS")) //allowed
+				console.log(canSee.data.me.accesses);
+				if(canSee.data.me.accesses.indexOf("REVIEW_CREATE_ACCESS") !== -1) //allowed to See The Requests of each department that You can approve
 				{
 					ghp.getSpacesInDepartment(apollo_auth, req.session.currentDept.name)
 					.then(spaces => {
 							const updatedRequests = [];
-							console.log(spaces.data.department.spaces.length);
+							// console.log(spaces.data.department.spaces);
 							for (var i = 0; i < spaces.data.department.spaces.length; i++) {
 								let tmp = Object.assign({}, spaces.data.department.spaces[i]);
-								updatedRequests.push(tmp)
-								console.log(updatedRequests);
-							} res.render("manage-request", {
-								session: testData.session,
-								user: testData.user,
-								member: req.session.member,
-								currentDept: req.session.currentDept,
-								canSee: updatedRequests,
+								// updatedRequests.push(tmp)
+								console.log(tmp.name);
+								ghp.findRequests(apollo_auth, req.session.currentDept.name, tmp.name)
+								.then(requests => { 
+									for (var i = 0; i < requests.data.space.requests.length; i++) {
+									let tmp1 = Object.assign({}, requests.data.space.requests[i]);
+									updatedRequests.push(tmp1)
+								}
+									res.render("manage-request", {
+									session: testData.session,
+									user: testData.user,
+									member: req.session.member,
+									currentDept: req.session.currentDept,
+									requestsFrom: updatedRequests,
+									currectSpace: requests.data.space,
 								})
-							})
-				}
+									console.log(updatedRequests);
+									}).catch(err => { if (globalVars.env != "production") console.log(err); })
+							}
+						}).catch(err => { if (globalVars.env != "production") console.log(err); })
+					}
 				else {
-
+					console.log("aaaa");
 				}
 						
 				// console.log(canSee.data.me.accesses);

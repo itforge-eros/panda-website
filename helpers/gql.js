@@ -167,6 +167,19 @@ ghp.getCanApprove = (apollo_auth, currentDepartment) => {
 		`
 	})
 }
+ghp.findRequests = (apollo_auth, currentDepartment, spaceName) => {
+	return apollo_auth.query({
+		query: gql`
+			{	
+				space(department: "${currentDepartment}", name: "${spaceName}") {
+					id
+					name
+					capacity
+					requests { status dates id client { id firstName lastName email } period { start end } } }
+			}`
+	})
+}
+
 
 ghp.createSpace = (apollo_auth, sp) => {
 	return apollo_auth.mutate({
@@ -253,5 +266,6 @@ ghp.assignRole = (apollo_auth, roleId, memberId) => {
 		`
 	})
 }
+
 
 module.exports = ghp;

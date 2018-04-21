@@ -17,12 +17,16 @@ html
 						li
 							a(href="#") อนุมัติแล้ว
 					div
-						if !canSee
-							h1 no request
-						each m in canSee
-							a.card.shadow.hoverable.request-card(href=m.name)
+						if !requestsFrom
+							h1 no permission
+						each m in requestsFrom
+							a.card.shadow.hoverable.request-card(href=currectSpace.name)
 								div.req-info
-									h1.card-title= m.fullName
-									p.grayed= m.status
+									h1.card-title= currectSpace.name 
+									p.grayed= "ผู้ส่งคำร้องขอ: "+m.client.firstName + "("+m.client.email+")"
+									p.grayed= "ขอใช้ในวันที่: "+m.dates + " เวลา  " + m.period.start + "-" + m.period.end 
+								div.req-status
+									img(src="/public/img/wait.svg", alt="success", width="48", height="48")
+									//- p.grayed #{m.status}
 
 //- สอนผมด้วยนะครั บ VUE อยากลองทำเองก่อนตรง ที่สามารถสลับหน้าไปอนุมัติ ! ได้ !! 
