@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const testData = require("../models/testData");
 const ghp = require("../helpers/gql");
+const ahp = require("../helpers/authen");
 
 const bodyParser = require("body-parser");
 const multer = require("multer");
@@ -43,7 +44,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use((req, res, next) => {token = req.session.token; next()});
 
 router.get("/", (req, res) => {
-	if (req.session.member) {
+	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS", "SPACE_UPDATE_ACCESS"])) {
 		ghp.getSpacesInDepartment(apollo_auth, req.session.currentDept.name)
 			.then(spaces => {
 				res.render("manage-space", {
