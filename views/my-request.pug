@@ -17,10 +17,15 @@ html
 			div.content
 				div.container
 					div.page-title-wrap
-						h1.page-title คำร้องของฉัน
+						if myRequests.length == 0
+							h1.page-title.text-center คำร้องของฉัน
+						else
+							h1.page-title คำร้องของฉัน
 					div
-						if !myRequests
-							h1 no request
+						if myRequests.length == 0
+							div.text-center
+								img.marg-b-1(src="/public/img/no_data.svg", alt="no data", width="200")
+								h3 ยังไม่มีประวัติคำร้อง
 						each m in myRequests
 							a.card.shadow.hoverable.request-card(href=m.id)
 								div.req-info

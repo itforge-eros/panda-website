@@ -62,7 +62,7 @@ router.get("/new", (req, res) => {
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					orgData: orgData,
-					role: {},
+					role: {permissions: []}, // current role (empty because we're creating a new role)
 					permissions: permissions.data.permissions,
 					status: createRoleStatus
 				});

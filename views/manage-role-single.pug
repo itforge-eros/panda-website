@@ -7,8 +7,8 @@ html
 	body.manage-role-single
 		include parts/nav
 		-
-			const myPermissions = role.permissions.map(p => p.name)
-			const checkedPermissions = permissions.filter(p => myPermissions.includes(p.name)).map(q => q.name)
+			const myPermissions = role.permissions.map(p => p.name); // current role's permissions
+			const checkedPermissions = permissions.filter(p => myPermissions.includes(p.name)).map(q => q.name);
 		div#app
 			div.content
 				div.container

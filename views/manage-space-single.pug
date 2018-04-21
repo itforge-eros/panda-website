@@ -32,7 +32,7 @@ html
 						hr
 						div(style="display:none")
 							input(type="text", name="name", required, v-model="computedSpaceURI")
-							input(type="text", name="spaceId", required, value=orgData.id)
+							input(type="text", name="spaceId", required=orgData.id, value=orgData.id)
 							input(type="text", name="orgSpaceName", value=(orgData.name ? orgData.name : ""))
 						div.row
 							div.col-50.marg-b-1
