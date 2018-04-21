@@ -54,7 +54,7 @@ router.get("/", (req, res) => {
 	} else { res.redirect("/error/") }
 });
 router.post("/new", multer().array(), (req, res) => {
-	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["MATERIAL_CREATE_ACCESS"])) {
+	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["MATERIAL_CREATE_ACCESS"])) {
 		ghp.createMaterial(apollo_auth, req.session.currentDept.id, req.body.nameTh)
 			.then(() => res.redirect("/manage-material/"))
 			.catch(err => {
