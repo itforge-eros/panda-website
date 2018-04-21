@@ -39,13 +39,13 @@ router.get("/", (req, res) => {
 });
 router.get("/:dept/:id", (req, res) => {
 	req.session.currentDept = {name: req.params.dept, id: req.params.id};
-	ghp.getAccesses(apollo_auth, req.session.currentDept.id)
-		.then(ac => {
-			req.session.member.currentAccesses = ac.data.accesses;
+	ghp.getAccesses(apollo_auth, req.session.currentDept.name)
+		.then(accesses => {
+			req.session.member.currentAccesses = accesses.data.me.accesses;
 			res.redirect("/")
 		}).catch(err => {
-			console.log(err);
-			res.redirect("/error");
+			if (globalVars.env != "production") console.log(err);
+			res.redirect("/error/");
 		});
 });
 

@@ -72,7 +72,7 @@ ghp.getAccesses = (apollo_auth, deptName) => {
 		query: gql`
 			{
 				me {
-					accesses(departmentId: "${deptName}")
+					accesses(department: "${deptName}")
 				}
 			}
 		`
