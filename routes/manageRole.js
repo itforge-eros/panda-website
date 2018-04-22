@@ -39,7 +39,6 @@ const apollo_auth = new ApolloClient({
 });
 
 router.get("/", (req, res) => {
-	console.log(req.session.member.currentAccesses);
 	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["ROLE_CREATE_ACCESS", "ROLE_ASSIGN_ACCESS", "ROLE_UPDATE_ACCESS"])) {
 		ghp.getRolesInDepartment(apollo_auth, req.session.currentDept.name)
 			.then(roles => {
