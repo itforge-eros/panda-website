@@ -44,6 +44,7 @@ router.get("/", (req, res) => {
 					session: testData.session,
 					user: testData.user,
 					member: req.session.member,
+					memberToken: req.session.token,
 					currentDept: req.session.currentDept,
 					materials: m.data.department.materials
 				});
