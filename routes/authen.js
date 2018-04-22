@@ -77,10 +77,10 @@ router.post("/login", multer().array(), (req, res, next) => {
 				ghp.getMe(apollo_auth).then(meData => {
 					req.session.member = Object.assign({}, req.session.member, meData.data.me);
 
-					// check how many roles the user has
+					// check how many departments the user is in
 					if (req.session.member.roles.length > 1) {
 
-						// user has > 1 role, set default to the first one
+						// user is in > 1 dept, set default to the first one
 						req.session.currentDept = req.session.member.roles[0].department;
 
 						// get accesses for the current department
