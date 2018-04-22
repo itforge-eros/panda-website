@@ -8,23 +8,11 @@ html
 	body.single-space
 		include parts/nav
 		-
-			let slots1 = [];
-			let slots2 = [];
-			let start_hr = 8;
-			let slot_num = 1;
-			for (let i = 1; i <= 6.5; i+=0.5) {
-				slots1.push({id: i+7, slot_num: slot_num});
-				if (i%2 != 0) start_hr++;
-				slot_num++;
+			let displayTime = [];
+			for (let i = 0, t = 9; t <= 20; i++) {
+				if (i % 2 == 0) displayTime.push(t++);
+				else displayTime.push(" ");
 			}
-			for (let i = 1; i <= 6.5; i+=0.5) {
-				slots2.push({id: i+13, slot_num: slot_num});
-				if (i%2 != 0) start_hr++;
-				slot_num++;
-			}
-			start_hr = 8; // reset
-			for (let i = 0; i < slots1.length; i++) slots1[i].t = i%2 == 0 ? start_hr++ : ".30";
-			for (let i = 0; i < slots2.length; i++) slots2[i].t = i%2 == 0 ? start_hr++ : ".30";
 		div#app
 			div.content
 				div.container
@@ -66,23 +54,15 @@ html
 										i.fas.fa-calendar-alt
 										input(type="text", placeholder="date", name="r_date", v-model="r_date", id="datepicker")
 									i.fas.fa-chevron-circle-right
-								div.slot-wrap-wrapper
-									div.slot-wrap
-										table.times.text-center
-											tr
-												each time in ['8','.30','9','.30','10','.30','11','.30','12','.30','13','.30']
-													td= time
-										div.slots#slots-1
-											each slot in slots1
-												time-slot(id='slot-'+slot.id,:available="true", :position=slot.id, :slotnum=slot.slot_num)= slot.t
-									div.slot-wrap
-										table.times.text-center
-											tr
-												each time in ['14','.30','15','.30','16','.30','17','.30','18','.30','19','.30']
-													td= time
-										div.slots#slots-2
-											each slot in slots2
-												time-slot(id='slot-'+slot.id, :available="false", :position=slot.id, :slotnum=slot.slot_num)= slot.t
+								div.timetable
+									div.time
+										each time in displayTime
+											span= time
+									div.boxes
+										each i in [1,2,3,4,5,6,7,8,9,10,11]
+											div.box
+												div.half.unavailable
+												div.half
 								hr
 								p.text-center(v-show="chosenTimes.length == 0") กรุณาเลือกเวลาเพื่อจอง
 								p.text-center(v-show="chosenTimes.length != 0") ที่เลือกไว้: {{ chosenTimePeriod }}
