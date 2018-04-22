@@ -68,6 +68,7 @@ router.post("/:dept/:name/reserve", multer().array(), (req, res) => {
 				if (returnedSpace.data.space != null) {
 					ghp.getMaterials(apollo, returnedSpace.data.space.department.name)
 						.then(returnedMaterials => {
+							console.log(req.body);
 							res.render("fill-request", {
 								session: testData.session,
 								user: testData.user,

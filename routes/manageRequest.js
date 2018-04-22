@@ -4,6 +4,8 @@ const router = express.Router();
 const testData = require("../models/testData");
 const dhp = require("../helpers/date");
 const ghp = require("../helpers/gql");
+const ahp = require("../helpers/authen");
+const R = require("Ramda");
 
 const ApolloClient = require("apollo-client").ApolloClient;
 const InMemoryCache = require("apollo-cache-inmemory").InMemoryCache;
@@ -31,65 +33,48 @@ const apollo_auth = new ApolloClient({
 });
 
 router.get("/", (req, res) => {
-	if (req.session.member){ //&& !(Object.keys(req.session.currentDept).length === 0)) {
-		ghp.getCanApprove(apollo_auth, req.session.currentDept.name)
-			.then(canSee => {
-				console.log(canSee.data.me.accesses);
-				if(canSee.data.me.accesses.indexOf("REVIEW_CREATE_ACCESS") !== -1) //allowed to See The Requests of each department that You can approve
-				{
-					ghp.getSpacesInDepartment(apollo_auth, req.session.currentDept.name)
-					.then(spaces => {
-							const updatedRequests = [];
-							// console.log(spaces.data.department.spaces);
-							for (var i = 0; i < spaces.data.department.spaces.length; i++) {
-								let tmp = Object.assign({}, spaces.data.department.spaces[i]);
-								// updatedRequests.push(tmp)
-								console.log(tmp.name);
-								ghp.findRequests(apollo_auth, req.session.currentDept.name, tmp.name)
-								.then(requests => { 
-									for (var i = 0; i < requests.data.space.requests.length; i++) {
-									let tmp1 = Object.assign({}, requests.data.space.requests[i]);
-									updatedRequests.push(tmp1)
-								}
-									res.render("manage-request", {
-									session: testData.session,
-									user: testData.user,
-									member: req.session.member,
-									currentDept: req.session.currentDept,
-									requestsFrom: updatedRequests,
-									currectSpace: requests.data.space,
-								})
-									console.log(updatedRequests);
-									}).catch(err => { if (globalVars.env != "production") console.log(err); })
-							}
-						}).catch(err => { if (globalVars.env != "production") console.log(err); })
-					}
-				else {
-					console.log("aaaa");
-				}
-						
-				// console.log(canSee.data.me.accesses);
-				// console.log(testData.session);
-				// console.log(testData.use);
-				// console.log(req.session.member);
-			})
-			.catch(err => {
-				if (globalVars.env != "production") console.log(err);
-			});
+	if (req.session.member){ 
+		ghp.getPermissionsAndRequestsBySPECIFIC_Department(apollo_auth, req.session.currentDept.name).then(requestInfo => {
+			if (ahp.hasAllAccess(req.session.member.currentAccesses, ["REVIEW_CREATE_ACCESS"])) 
+					{ res.render("manage-request", {
+						session: req.session,
+						user: testData.user,
+						member: req.session.member,
+						currentDept: req.session.currentDept,
+						fullThaiCurrentDeptName: requestInfo.data.department.fullThaiName,
+						id: req.params.id,
+						reqInfo: (R.chain(space => space.requests, requestInfo.data.department.spaces))
+					}); 
+				// console.log(requestInfo.data.department.spaces[0])
+				console.log(R.chain(space => space.requests, requestInfo.data.department.spaces));
+			}
+
+            else { console.log("still stuck") } 
+		}).catch(error => {if (globalVars.env != "production") console.log(error); 
+		res.redirect("/error");})
 	} else {
 		res.redirect("/authen/login");
 	}
 });
 
 router.get("/:id", (req, res) => {
-		res.render("manage-request-single", {
-		session: testData.session,
-		user: testData.user,
-		member: req.session.member,
-		currentDept: req.session.currentDept,
-		id: req.params.id,
-		reqInfo: testData.requestInfo
-	});
+			if (req.session.member){ 
+		ghp.getDetailOfViewSpaces(apollo_auth, req.params.id).then(detailEachSpace => {
+			console.log(detailEachSpace.data.request.id);
+					 res.render("manage-request-single", {
+							session: testData.session,
+							user: testData.user,
+							member: req.session.member,
+							currentDept: req.session.currentDept,
+							id: req.params.id,
+							details: detailEachSpace,
+					}); 
+				// console.log(requestInfo.data.department.spaces[0])
+		}).catch(error => {if (globalVars.env != "production") console.log(error); 
+		res.redirect("/error");})
+	} else {
+		res.redirect("/authen/login");
+	}
 });
 
 module.exports = router;

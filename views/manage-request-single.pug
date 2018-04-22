@@ -16,10 +16,10 @@ html
 						tr.status.pending
 							td สถานะ
 							td รอการอนุมัติ (1 จาก 2)
-						each item in reqInfo
+						each item in details
 							tr
-								td= item.name
-								td= item.data
+								td= item.request
+								td= item
 					a.button.raised(onclick="showModal('modal')")
 						i.fas.fa-check
 						| อนุมัติ

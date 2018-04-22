@@ -153,30 +153,48 @@ ghp.getRoleMembers = (apollo_auth, roleId) => {
 		`
 	})
 }
-ghp.getCanApprove = (apollo_auth, currentDepartment) => {
+ghp.getPermissionsAndRequestsBySPECIFIC_Department = (apollo_auth, currentDepartment) => {
 	return apollo_auth.query({
 		query: gql`
-			{
-				me 	{
-				accesses(department: "${currentDepartment}")
+			{			  
+				department(name: "${currentDepartment}") {
+				fullThaiName
+			    spaces { requests { 
+			    	body dates period {start end}
+			    id client { firstName email }
+			    space { name } } 
+					} 
 				}
 			}
 		`
 	})
 }
-ghp.findRequests = (apollo_auth, currentDepartment, spaceName) => {
+
+ghp.getDetailOfViewSpaces = (apollo_auth, requestID) => {
 	return apollo_auth.query({
 		query: gql`
-			{	
-				space(department: "${currentDepartment}", name: "${spaceName}") {
-					id
-					name
-					capacity
-					requests { status dates id client { id firstName lastName email } period { start end } } }
-			}`
+				{
+				  request(id: "${requestID}") {
+				    id
+				    body
+				    dates
+				    period{start end}
+				    status
+				    createdAt
+				    space {
+				      id
+				    }
+				    client {
+				      id
+				    }
+				    reviews {
+				      id
+				    }
+				  }
+				}
+		`
 	})
 }
-
 
 ghp.createSpace = (apollo_auth, sp) => {
 	return apollo_auth.mutate({

@@ -17,12 +17,12 @@ html
 						li
 							a(href="#") อนุมัติแล้ว
 					div
-						if !requestsFrom
+						if !reqInfo
 							h1 no permission
-						each m in requestsFrom
-							a.card.shadow.hoverable.request-card(href=currectSpace.name)
+						each m in reqInfo
+							a.card.shadow.hoverable.request-card(href=m.id)
 								div.req-info
-									h1.card-title= currectSpace.name 
+									h1.card-title= m.space.name + ", " + fullThaiCurrentDeptName
 									p.grayed= "ผู้ส่งคำร้องขอ: "+m.client.firstName + "("+m.client.email+")"
 									p.grayed= "ขอใช้ในวันที่: "+m.dates + " เวลา  " + m.period.start + "-" + m.period.end 
 								div.req-status
