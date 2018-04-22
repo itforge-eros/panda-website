@@ -93,18 +93,33 @@ html
 										| จอง
 						if space.description
 							div.card= space.description
-						div
-							button#report(onclick="showModal('modal')")
-								i.fas.fa-exclamation-triangle
-								| รายงานปัญหา 
-			div.modal#modal
-				div.card
-					span.close(onclick="closeModal('modal')")
-						i.fas.fa-times-circle
-					h1.modal-title รายงานปัญหา
-					p= space.name
-					textarea.marg-b-1(name="report", rows="4")
-					button.raised ส่งรายงาน
+						if member
+							div
+								button#report(onclick="showModal('modal')", @click="reportSent = false")
+									i.fas.fa-exclamation-triangle
+									| รายงานปัญหา
+			if member
+				div.modal#modal
+					div.card
+						span.close(onclick="closeModal('modal')")
+							i.fas.fa-times-circle
+						h1.modal-title รายงานปัญหา
+						div(v-show="!reportSent")
+							p <strong>#{space.fullName}</strong>
+							label(for="reportTitle") หัวข้อ (ไม่เกิน 64 ตัวอักษร)
+							input.fluid.marg-b-1(type="text", name="reportTitle", maxlength="64", required, v-model="reportTitle")
+							label(for="reportBody") รายละเอียด
+							textarea.marg-b-1(name="reportBody", rows="4", v-model="reportBody")
+							div.marg-b-1(v-show="submitHasError") เกิดข้อผิดพลาด กรุณาลองอีกครั้ง
+							button.raised(type="button", :disabled="reportTitle == '' && reportBody == ''", @click="sendReport()") {{ submitText }}
+						div.text-center(v-show="reportSent")
+							img(src="/public/img/success.svg", alt="succeed", width="100")
+							p ส่งรายงานเรียบร้อย
 		script(src="/public/vendor/pikaday/pikaday.min.js")
+		script(src="/public/vendor/axios/axios.min.js")
 		script(src="/public/scripts/single-page.js")
 		script(src="/public/scripts/modal.js")
+		if member
+			script
+				| app.reportToken = "#{memberToken}";
+				| app.spaceId = "#{space.id}";

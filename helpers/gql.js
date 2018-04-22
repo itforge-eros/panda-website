@@ -67,12 +67,12 @@ ghp.getPermissions = apollo => {
 };
 
 // require auth
-ghp.getAccesses = (apollo_auth, deptId) => {
+ghp.getAccesses = (apollo_auth, deptName) => {
 	return apollo_auth.query({
 		query: gql`
 			{
 				me {
-					accesses(departmentId: "${deptId}")
+					accesses(department: "${deptName}")
 				}
 			}
 		`
@@ -83,14 +83,11 @@ ghp.getMe = apollo_auth => {
 		query: gql`
 			{
 				me {
+					departments { edges { node { id name fullThaiName } } }
 					roles {
 						name
-						department {
-							id name fullThaiName description
-						}
-						permissions {
-							accesses
-						}
+						department { id name fullThaiName description }
+						permissions { accesses }
 					}
 				}
 			}
@@ -232,7 +229,7 @@ ghp.createRequest = (apollo_auth, rq) => {
 				"dates": [rq.r_date_raw],
 				"period": {
 					"start": parseInt(rq.start),
-					"end": parseInt(rq.end)
+					"end": parseInt(rq.end) + 1
 				},
 				"spaceId": rq.space,
 				"body": rq.reason
@@ -264,6 +261,26 @@ ghp.assignRole = (apollo_auth, roleId, memberId) => {
 				assignRole(input: {roleId: "${roleId}", memberId: "${memberId}"}) { id }
 			}
 		`
+	})
+}
+ghp.updateSpace = (apollo_auth, sp) => {
+	return apollo_auth.mutate({
+		mutation: gql`
+			mutation($spaceInput: UpdateSpaceInput!) {
+				updateSpace(input: $spaceInput) { id name department {name} }
+			}
+		`,
+		variables: {
+			"spaceInput": {
+				"spaceId": sp.spaceId,
+				"name": sp.name.toLowerCase().replace(/ /g, "-"),
+				"fullName": sp.fullName,
+				"description": sp.description,
+				"category": sp.category,
+				"capacity": parseInt(sp.capacity),
+				"isAvailable": sp.isAvailable == "true" ? true : false
+			}
+		}
 	})
 }
 

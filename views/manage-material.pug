@@ -12,21 +12,26 @@ html
 					div.page-title-wrap
 						h1.page-title จัดการอุปกรณ์ให้ยืม
 						h2.page-subtitle อุปกรณ์ของคณะที่ผู้จองห้องสามารถขอยืมได้
-					div
-						button.marg-b-1(onclick="toggleAdder()")
-							i.fas.fa-plus-circle
-							| เพิ่มอุปกรณ์ใหม่
-						form#adder(action="new", method="POST", style="display:none")
-							label(for="nameTh") พิมพ์ชื่ออุปกรณ์และกด Enter
-							input(type="text", name="nameTh")
+					if accesses.includes("MATERIAL_CREATE_ACCESS")
+						div
+							button.marg-b-1(onclick="toggleAdder()")
+								i.fas.fa-plus-circle
+								| เพิ่มอุปกรณ์ใหม่
+							form#adder(action="new", method="POST", style="display:none")
+								label(for="nameTh") พิมพ์ชื่ออุปกรณ์และกด Enter
+								input(type="text", name="nameTh")
 					table.styled.striped
 						each item in materials
-							tr
+							tr(id=item.id)
 								td= item.name.th
-								td.actions
-									a(href="#")
-										i.fas.fa-trash
+								if accesses.includes("MATERIAL_DELETE_ACCESS")
+									td.actions
+										a(@click=`deleteMaterial("${item.id}")`)
+											i.fas.fa-trash
+		script(src="/public/vendor/axios/axios.min.js")
+		script(src="/public/scripts/manage-material.js")
 		script
+			| app.token = "#{memberToken}";
 			| var toggled = false;
 			| function toggleAdder() {
 			| 	if (toggled) {

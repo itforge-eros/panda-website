@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const testData = require("../models/testData");
 const ghp = require("../helpers/gql");
+const ahp = require("../helpers/authen");
 
 const bodyParser = require("body-parser");
 const multer = require("multer");
@@ -43,7 +44,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.use((req, res, next) => {token = req.session.token; next()});
 
 router.get("/", (req, res) => {
-	if (req.session.member) {
+	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS", "SPACE_UPDATE_ACCESS"])) {
 		ghp.getSpacesInDepartment(apollo_auth, req.session.currentDept.name)
 			.then(spaces => {
 				res.render("manage-space", {
@@ -58,11 +59,11 @@ router.get("/", (req, res) => {
 				res.redirect("/error/");
 			});
 	} else {
-		res.redirect("/authen/login/")
+		res.redirect("/error/")
 	}
 });
 router.get("/new", (req, res) => {
-	if (req.session.member) {
+	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS"])) {
 		res.render("manage-space-single", {
 			session: testData.session,
 			user: testData.user,
@@ -70,33 +71,41 @@ router.get("/new", (req, res) => {
 			currentDept: req.session.currentDept,
 			amenities: amenities,
 			orgData: orgData,
-			status: createSpaceStatus
+			status: createSpaceStatus,
+			canSave: true,
+			isNew: true
 		});
 		orgData = {};
 		createSpaceStatus = "";
 	} else {
-		res.redirect("/authen/login/");
+		res.redirect("/error/");
 	}
 });
 router.get("/:dept/:name", (req, res) => {
-	ghp.getSpace(apollo_auth, req.params.dept, req.params.name)
-		.then(data => {
-			res.render("manage-space-single", {
-				session: testData.session,
-				user: testData.user,
-				member: req.session.member,
-				currentDept: req.session.currentDept,
-				amenities: amenities,
-				orgData: data.data.space,
-				status: createSpaceStatus
-			});
-			orgData = {};
-			createSpaceStatus = "";
-		})
-		.catch(err => console.log(err))
+	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS", "SPACE_UPDATE_ACCESS"])) {
+		ghp.getSpace(apollo_auth, req.params.dept, req.params.name)
+			.then(data => {
+				res.render("manage-space-single", {
+					session: testData.session,
+					user: testData.user,
+					member: req.session.member,
+					currentDept: req.session.currentDept,
+					amenities: amenities,
+					orgData: data.data.space,
+					status: createSpaceStatus,
+					canSave: ahp.hasAllAccess(req.session.member.currentAccesses, ["SPACE_UPDATE_ACCESS"]),
+					isNew: false
+				});
+				orgData = {};
+				createSpaceStatus = "";
+			})
+			.catch(err => console.log(err))
+	} else {
+		res.redirect("/error/");
+	}
 });
-router.post(/\/.*\/save/, multer().array(), (req, res) => {
-	if (req.session.member) {
+router.post(/\/.*\/create/, multer().array(), (req, res) => {
+	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS"])) {
 		req.body.deptId = req.session.currentDept.id;
 		ghp.createSpace(apollo_auth, req.body)
 			.then(data => {
@@ -110,7 +119,24 @@ router.post(/\/.*\/save/, multer().array(), (req, res) => {
 				res.redirect("/manage-space/new/");
 			});
 	} else {
-		res.redirect("/authen/login/")
+		res.redirect("/error/");
+	}
+});
+router.post(/\/.*\/update/, multer().array(), (req, res) => {
+	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["SPACE_UPDATE_ACCESS"])) {
+		ghp.updateSpace(apollo_auth, req.body)
+			.then(data => {
+				createSpaceStatus = "success";
+				res.redirect("/manage-space/" + data.data.updateSpace.department.name + "/" + data.data.updateSpace.name + "/");
+			})
+			.catch(err => {
+				if (globalVars.env != "production") console.log(err);
+				createSpaceStatus = err.graphQLErrors[0].message;
+				orgData = req.body;
+				res.redirect("/manage-space/" + req.body.deptId + "/" + req.body.orgSpaceName + "/");
+			})
+	} else {
+		res.redirect("/error/");
 	}
 });
 

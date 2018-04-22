@@ -15,7 +15,7 @@ html
 						form#login(action="/authen/login", method="POST")
 							div.input-wrap.marg-b-1
 								label(for="username") เลขประจำตัว
-								input(type="text", name="username", required, v-model="usr")
+								input(type="text", name="username", required, autofocus, v-model="usr")
 								span.err(v-show="showError && usr == ''") กรุณากรอกข้อมูล
 							div.input-wrap.marg-b-1
 								label(for="password") รหัสผ่าน

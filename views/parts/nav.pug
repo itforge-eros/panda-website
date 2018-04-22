@@ -1,3 +1,6 @@
+-
+	let accesses = [];
+	if (member) accesses = member.currentAccesses;
 nav
 	.logo
 		a(href="/") KMITL OSRS
@@ -5,39 +8,44 @@ nav
 		if member.roles.length > 0
 			div.dropdown
 				span #{currentDept ? "กำลังจัดการ" : "เลือกคณะ"} <strong>#{currentDept.name}</strong> 
+				if member.roles.length > 1
 					i.fas.fa-caret-down
-				div.dropdown-content
-					ul
-						each r in member.roles
-							li
-								a(href="/choose-dept/" + r.department.name + "/" + r.department.id) <strong>#{r.department.name}</strong> - #{r.name}
+					div.dropdown-content
+						ul
+							each r in member.departments.edges
+								li
+									a(href="/choose-dept/" + r.node.name + "/" + r.node.id) <strong>#{r.node.fullThaiName}</strong>
 	ul.menu
 		li
 			a.icon-link(href="/")
 				i.fas.fa-search
 			span.tooltip ค้นหาสถานที่
 		if member && member.roles != "undefined"
-			//- if member.roles[0].department.name.permissions.accesses.includes("SPACE_CREATE_ACCESS")
+			if accesses.includes("SPACE_CREATE_ACCESS") || accesses.includes("SPACE_UPDATE_ACCESS")
+				li
+					a.icon-link(href="/manage-space/")
+						i.fas.fa-building
+					span.tooltip จัดการสถานที่
+			if accesses.includes("ROLE_ASSIGN_ACCESS") || accesses.includes("ROLE_CREATE_ACCESS") || accesses.includes("ROLE_UPDATE_ACCESS")
+				li
+					a.icon-link(href="/manage-role/")
+						i.fas.fa-users
+					span.tooltip จัดการสิทธิ์
+			if accesses.includes("MATERIAL_CREATE_ACCESS") || accesses.includes("MATERIAL_DELETE_ACCESS")
+				li
+					a.icon-link(href="/manage-material/")
+						i.fas.fa-cube
+					span.tooltip จัดการอุปกรณ์ให้ยืม
+			if accesses.includes("REVIEW_CREATE_ACCESS")
+				li
+					a.icon-link(href="/manage-request/")
+						i.fas.fa-clipboard-check
+					span.tooltip จัดการคำร้อง
+		if member
 			li
-				a.icon-link(href="/manage-space/")
-					i.fas.fa-building
-				span.tooltip จัดการสถานที่
-		li
-			a.icon-link(href="/manage-role/")
-				i.fas.fa-users
-			span.tooltip จัดการสิทธิ์
-		li
-			a.icon-link(href="/manage-material/")
-				i.fas.fa-cube
-			span.tooltip จัดการอุปกรณ์ให้ยืม
-		li
-			a.icon-link(href="/manage-request/")
-				i.fas.fa-clipboard-check
-			span.tooltip จัดการคำร้อง
-		li
-			a.icon-link(href="/my-request/")
-				i.fas.fa-book
-			span.tooltip คำร้องของฉัน
+				a.icon-link(href="/my-request/")
+					i.fas.fa-book
+				span.tooltip คำร้องของฉัน
 		a.authen(href=(member ? "/authen/logout/" : "/authen/login/"))= (member ? member.firstName : "เข้าสู่ระบบ") + " "
 			if member
 				i.fas.fa-times-circle
@@ -48,23 +56,27 @@ nav.mobile-nav#mobile-nav
 		li
 			a.icon-link(href="/")
 				i.fas.fa-search
-		if user.isAdmin
+		if member && member.roles != "undefined"
+			if accesses.includes("SPACE_CREATE_ACCESS") || accesses.includes("SPACE_UPDATE_ACCESS")
+				li
+					a.icon-link(href="/manage-space/")
+						i.fas.fa-building
+			if accesses.includes("ROLE_ASSIGN_ACCESS") || accesses.includes("ROLE_CREATE_ACCESS") || accesses.includes("ROLE_UPDATE_ACCESS")
+				li
+					a.icon-link(href="/manage-role/")
+						i.fas.fa-users
+			if accesses.includes("MATERIAL_CREATE_ACCESS") || accesses.includes("MATERIAL_DELETE_ACCESS")
+				li
+					a.icon-link(href="/manage-material/")
+						i.fas.fa-cube
+			if accesses.includes("REVIEW_CREATE_ACCESS")
+				li
+					a.icon-link(href="/manage-request/")
+						i.fas.fa-clipboard-check
+		if member
 			li
-				a.icon-link(href="/manage-space/")
-					i.fas.fa-building
-			li
-				a.icon-link(href="/manage-role/")
-					i.fas.fa-users
-			li
-				a.icon-link(href="/manage-material/")
-					i.fas.fa-cube
-		if user.isApprover
-			li
-				a.icon-link(href="/manage-request/")
-					i.fas.fa-clipboard-check
-		li
-			a.icon-link(href="/my-request/")
-				i.fas.fa-book
+				a.icon-link(href="/my-request/")
+					i.fas.fa-book
 
 script
 	| if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {

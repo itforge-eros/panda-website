@@ -12,7 +12,7 @@ html
 					div.page-title-wrap
 						h1.page-title เลือกคณะเพื่อเข้าสู่ระบบ
 				div.container.steep
-					each i in member.roles
-						a.card.shadow.hoverable.marg-b-1(href=i.department.name + "/" + i.department.id)
-							h1.card-title= i.department.fullThaiName
-							p= i.department.description
+					each i in member.departments.edges
+						a.card.shadow.hoverable.marg-b-1(href=i.node.name + "/" + i.node.id)
+							h1.card-title= i.node.fullThaiName
+							p= i.node.description

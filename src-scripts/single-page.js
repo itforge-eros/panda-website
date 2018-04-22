@@ -3,6 +3,8 @@ var weekdaysTH = ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
 var monthsEN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 var weekdaysEN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
+const apiURL = "https://api.space.itforge.io/graphql";
+
 function converterToHour(endTime, startTime) {
 	return Math.floor(endTime - startTime);
 	// this function use for finding duration of room reservation with hour that be floored
@@ -79,7 +81,45 @@ var app = new Vue({
 		r_date: new Date(),
 		r_date_raw: "",
 		chosenTimes: [],
-		chosenSlots: []
+		chosenSlots: [],
+		submitText: "ส่งรายงาน",
+		spaceId: "",
+		reportTitle: "",
+		reportBody: "",
+		reportToken: "",
+		reportSent: false,
+		submitHasError: false
+	},
+	methods: {
+		sendReport: function () {
+			this.submitText = "กำลังส่ง...";
+			axios(apiURL, {
+				method: "POST",
+				data: {
+					query: `
+						mutation {
+							createProblem(input: {spaceId: "${app.spaceId}", title: "${app.reportTitle}", body: "${app.reportBody}"}) {
+								id
+							}
+						}
+					`
+				},
+				headers: {"Authorization": "bearer" + app.reportToken}
+			})
+				.then(function(result) {
+					console.log(result);
+					app.submitText = "ส่งรายงาน";
+					app.reportSent = true;
+					app.reportTitle = "";
+					app.reportBody = "";
+				})
+				.catch(function(err) {
+					console.log(err);
+					app.reportSent = false;
+					app.submitText = "ส่งรายงาน";
+					app.submitHasError = true;
+				});
+		}
 	},
 	computed: {
 		chosenTimePeriod: function () {
