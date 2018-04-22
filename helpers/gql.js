@@ -83,15 +83,11 @@ ghp.getMe = apollo_auth => {
 		query: gql`
 			{
 				me {
-					departments { nodes { name } }
+					departments { edges { nodes { name } } }
 					roles {
 						name
-						department {
-							id name fullThaiName description
-						}
-						permissions {
-							accesses
-						}
+						department { id name fullThaiName description }
+						permissions { accesses }
 					}
 				}
 			}
