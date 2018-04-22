@@ -20,7 +20,7 @@ const gql = require("graphql-tag");
 let token = "";
 
 router.use((req, res, next) => {token = req.session.token; next()});
-router.use(session(globalVars.sessionOptions));
+// router.use(session(globalVars.sessionOptions));
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 

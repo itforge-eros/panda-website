@@ -12,8 +12,9 @@ html
 					div.page-title-wrap
 						h1.page-title จัดการสถานที่
 					ul.tabs
-						li
-							a(href="/manage-space/") สถานที่
+						if member.currentAccesses.includes("SPACE_CREATE_ACCESS") || member.currentAccesses.includes("SPACE_UPDATE_ACCESS")
+							li
+								a(href="/manage-space/") สถานที่
 						li.selected
 							a(href="/manage-report/") รายงานปัญหา
 					table.styled.striped
