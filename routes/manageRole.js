@@ -39,6 +39,7 @@ const apollo_auth = new ApolloClient({
 });
 
 router.get("/", (req, res) => {
+	console.log(req.session.member.currentAccesses);
 	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["ROLE_CREATE_ACCESS", "ROLE_ASSIGN_ACCESS", "ROLE_UPDATE_ACCESS"])) {
 		ghp.getRolesInDepartment(apollo_auth, req.session.currentDept.name)
 			.then(roles => {
@@ -77,7 +78,7 @@ router.get("/new", (req, res) => {
 			.catch(err => {
 				res.redirect("/error/")
 			})
-	} else { res.redirect("/authen/login/") }
+	} else { res.redirect("/error/") }
 });
 router.post(/\/.*\/save/, multer().array(), (req, res) => {
 	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["ROLE_CREATE_ACCESS", "ROLE_UPDATE_ACCESS"])) {

@@ -12,9 +12,9 @@ nav
 					i.fas.fa-caret-down
 					div.dropdown-content
 						ul
-							each r in member.roles
+							each r in member.departments.edges
 								li
-									a(href="/choose-dept/" + r.department.name + "/" + r.department.id) <strong>#{r.department.name}</strong> - #{r.name}
+									a(href="/choose-dept/" + r.node.name + "/" + r.node.id) <strong>#{r.node.fullThaiName}</strong>
 	ul.menu
 		li
 			a.icon-link(href="/")
