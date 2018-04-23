@@ -5,12 +5,7 @@ const hasAllAccess = (my, required) => {
 	return !flag
 };
 
-const hasEitherAccess = (my, required) => {
-	let pass = false;
-	for(var i = 0; i < required.length; i++)
-		if (my.includes(required[i])) {pass = true; break}
-	return pass
-};
+const hasEitherAccess = (my, required) => required.some(r => my.includes(r));
 
 module.exports = {
 	hasAllAccess: hasAllAccess,
