@@ -21,17 +21,17 @@ nav
 				i.fas.fa-search
 			span.tooltip ค้นหาสถานที่
 		if member && member.roles != "undefined"
-			if accesses.includes("SPACE_CREATE_ACCESS") || accesses.includes("SPACE_UPDATE_ACCESS")
+			if accesses.some(a => a == "SPACE_CREATE_ACCESS" || a == "SPACE_UPDATE_ACCESS" || a == "PROBLEM_READ_ACCESS")
 				li
 					a.icon-link(href="/manage-space/")
 						i.fas.fa-building
 					span.tooltip จัดการสถานที่
-			if accesses.includes("ROLE_ASSIGN_ACCESS") || accesses.includes("ROLE_CREATE_ACCESS") || accesses.includes("ROLE_UPDATE_ACCESS")
+			if accesses.some(a => a == "ROLE_ASSIGN_ACCESS" || a == "ROLE_CREATE_ACCESS" || a == "ROLE_UPDATE_ACCESS" || a == "ROLE_DELETE_ACCESS")
 				li
 					a.icon-link(href="/manage-role/")
 						i.fas.fa-users
 					span.tooltip จัดการสิทธิ์
-			if accesses.includes("MATERIAL_CREATE_ACCESS") || accesses.includes("MATERIAL_DELETE_ACCESS")
+			if accesses.some(a => a == "MATERIAL_CREATE_ACCESS" || a == "MATERIAL_DELETE_ACCESS")
 				li
 					a.icon-link(href="/manage-material/")
 						i.fas.fa-cube
@@ -59,15 +59,15 @@ if member
 				a.icon-link(href="/")
 					i.fas.fa-search
 			if member && member.roles != "undefined"
-				if accesses.includes("SPACE_CREATE_ACCESS") || accesses.includes("SPACE_UPDATE_ACCESS")
+				if accesses.some(a => a == "SPACE_CREATE_ACCESS" || a == "SPACE_UPDATE_ACCESS" || a == "PROBLEM_READ_ACCESS")
 					li
 						a.icon-link(href="/manage-space/")
 							i.fas.fa-building
-				if accesses.includes("ROLE_ASSIGN_ACCESS") || accesses.includes("ROLE_CREATE_ACCESS") || accesses.includes("ROLE_UPDATE_ACCESS")
+				if accesses.some(a => a == "ROLE_ASSIGN_ACCESS" || a == "ROLE_CREATE_ACCESS" || a == "ROLE_UPDATE_ACCESS" || a == "ROLE_DELETE_ACCESS")
 					li
 						a.icon-link(href="/manage-role/")
 							i.fas.fa-users
-				if accesses.includes("MATERIAL_CREATE_ACCESS") || accesses.includes("MATERIAL_DELETE_ACCESS")
+				if accesses.some(a => a == "MATERIAL_CREATE_ACCESS" || a == "MATERIAL_DELETE_ACCESS")
 					li
 						a.icon-link(href="/manage-material/")
 							i.fas.fa-cube
