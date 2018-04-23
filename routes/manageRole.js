@@ -101,7 +101,10 @@ router.post(/\/.*\/save/, multer().array(), (req, res) => {
 	}
 });
 router.get("/:id", (req, res) => {
-	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["ROLE_CREATE_ACCESS", "ROLE_UPDATE_ACCESS"])) {
+	let myRoleIds = req.session.member.roles.map(r => r.id);
+	if (req.session.member &&
+		ahp.hasEitherAccess(req.session.member.currentAccesses, ["ROLE_CREATE_ACCESS", "ROLE_UPDATE_ACCESS"]) &&
+		!myRoleIds.includes(req.params.id)) {
 		ghp.getRole(apollo_auth, req.params.id)
 			.then(role => {
 				ghp.getPermissions(apollo_auth)

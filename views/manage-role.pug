@@ -6,6 +6,8 @@ html
 		include parts/scripts
 	body.manage-role
 		include parts/nav
+		-
+			let myRoleIds = member.roles.map(r => r.id);
 		div#app
 			div.content
 				div.container
@@ -28,5 +30,6 @@ html
 										i.fas.fa-user
 									a(href="/manage-role/" + r.id + "/")
 										i.fas.fa-cog
-									a(href="/manage-role/" + r.id + "/delete/", onclick="return confirm('ต้องการลบสิทธิ์นี้หรือไม่')")
-										i.fas.fa-trash
+									if !myRoleIds.includes(r.id)
+										a(href="/manage-role/" + r.id + "/delete/", onclick="return confirm('ต้องการลบสิทธิ์นี้หรือไม่')")
+											i.fas.fa-trash

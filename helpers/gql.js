@@ -85,6 +85,7 @@ ghp.getMe = apollo_auth => {
 				me {
 					departments { edges { node { id name fullThaiName } } }
 					roles {
+						id
 						name
 						department { id name fullThaiName description }
 						permissions { accesses }
