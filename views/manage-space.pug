@@ -9,6 +9,10 @@ html
 		div#app
 			div.content
 				div.container
+					if status == "success"
+						div.notice.success
+							i.fas.fa-check-circle
+							|  เพิ่มสถานที่เรียบร้อย
 					div.page-title-wrap
 						h1.page-title จัดการสถานที่
 					ul.tabs

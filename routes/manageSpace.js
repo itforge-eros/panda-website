@@ -52,8 +52,11 @@ router.get("/", (req, res) => {
 					user: testData.user,
 					member: req.session.member,
 					currentDept: req.session.currentDept,
-					spaces: spaces.data.department.spaces
+					spaces: spaces.data.department.spaces,
+					status: createSpaceStatus
 				});
+				orgData = {};
+				createSpaceStatus = "";
 			})
 			.catch(err => {
 				res.redirect("/error/");
@@ -111,7 +114,7 @@ router.post(/\/.*\/create/, multer().array(), (req, res) => {
 		ghp.createSpace(apollo_auth, req.body)
 			.then(data => {
 				createSpaceStatus = "success";
-				res.redirect("/manage-space/" + data.data.createSpace.department.name + "/" + data.data.createSpace.name + "/");
+				res.redirect("/manage-space/");
 			})
 			.catch(err => {
 				if (globalVars.env != "production") console.log(err);
