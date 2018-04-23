@@ -71,8 +71,8 @@ var app = new Vue({
 	data: {
 		r_date: "",
 		r_date_raw: new Date(),
-		r_startTime: "",
-		r_endTime: "",
+		r_startTime: "18",
+		r_endTime: "19",
 		chosenTimes: [],
 		chosenSlots: [],
 		submitText: "ส่งรายงาน",
@@ -185,5 +185,6 @@ $("#timeEnd").clockTimePicker({
 	onAdjust: (newVal, oldVal) => {
 		let time = newVal.split(":");
 		app.r_endTime = timeToSlot(time[0] + ":" + time[1]);
-	}
+	},
+	onClose: () => {isFirstTimeChoosing = false}
 });
