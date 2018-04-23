@@ -8,11 +8,7 @@ html
 		include parts/nav
 		-
 			let times = [];
-			let start_hr = 8;
-			for (let i = 0; i <= 24; i++) {
-				times.push(i%2 == 0 ? start_hr + ".00" : start_hr + ".30");
-				if (i%2 != 0) start_hr++;
-			}
+			for (let t = 0, i = 0; t <= 23.5; t+=0.5, i++) times.push({slot: i, time: t});
 		div#app
 			div.content
 				div.container
@@ -28,14 +24,14 @@ html
 							| #{space.fullName}, #{space.department.fullThaiName}
 						p
 							strong วันที่ต้องการจอง: 
-							= reservation.r_date + ' ' + reservation.r_date_raw.slice(0, 4)
+							= reservation.date_raw + ' ' + reservation.date.slice(0,4)
 						p
 							strong เวลาที่ต้องการจอง: 
-							= times[(reservation.start)-1] + "-" + times[reservation.end]
+							= reservation.start_raw + " - " + reservation.end_raw + " น."
 					form(action="submit/", method="POST")
 						div(style="display:none")
 							input(type="text", name="space", value=space.id)
-							input(type="text", name="r_date_raw", value=reservation.r_date_raw)
+							input(type="text", name="date", value=reservation.date)
 							input(type="number", name="start", value=reservation.start)
 							input(type="number", name="end", value=reservation.end)
 						div.input-wrap

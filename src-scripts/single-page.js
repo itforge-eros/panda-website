@@ -18,7 +18,7 @@ function setSelected () {
 		document.getElementById(id="slot-" + j).setAttribute("class", "slot selected");
 	}
 }
-function setRawDate(date) {
+function setApiDate(date) {
 	// create a raw date for sending to the API (eg. 2018-04-14)
 	let m = date.getMonth() + 1;
 	let d = date.getDate();
@@ -69,8 +69,8 @@ function setRawDate(date) {
 var app = new Vue({
 	el: '#app',
 	data: {
-		r_date: new Date(),
-		r_date_raw: "",
+		r_date: "",
+		r_date_raw: new Date(),
 		r_startTime: "",
 		r_endTime: "",
 		chosenTimes: [],
@@ -136,8 +136,8 @@ var picker = new Pikaday({
 	),
 	yearRange: [today.getFullYear(), today.getFullYear() + 1],
 	onClose: () => {
-		app.r_date = document.getElementById("datepicker").value;
-		app.r_date_raw = setRawDate(picker.getDate());
+		app.r_date_raw = document.getElementById("datepicker").value;
+		app.r_date = setApiDate(picker.getDate());
 	},
 	toString(date) {
 		const day = date.toString().split(" ")[2];
@@ -145,11 +145,11 @@ var picker = new Pikaday({
 		const weekday = date.toString().split(" ")[0];
 		const monthsMapper = element => element == `${month}`;
 		const weekdaysMapper = element => element == `${weekday}`;
-		app.r_date = `${weekdaysTH[weekdaysEN.findIndex(weekdaysMapper)]}\u0020${day}\u0020${monthsTH[monthsEN.findIndex(monthsMapper)]}`;
+		app.r_date_raw = `${weekdaysTH[weekdaysEN.findIndex(weekdaysMapper)]}\u0020${day}\u0020${monthsTH[monthsEN.findIndex(monthsMapper)]}`;
 		return `${weekdaysTH[weekdaysEN.findIndex(weekdaysMapper)]}\u0020${day}\u0020${monthsTH[monthsEN.findIndex(monthsMapper)]}`;
 	}
 });
-app.r_date_raw = setRawDate(picker.getDate()); // initial to present
+app.r_date = setApiDate(picker.getDate()); // initial to present
 
 // Time picker
 const timeToSlot = time => {
