@@ -5,10 +5,6 @@ var weekdaysEN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
 const apiURL = "https://api.space.itforge.io/graphql";
 
-function convertToHour(endTime, startTime) {
-	return Math.floor(endTime - startTime);
-	// this function use for finding duration of room reservation with hour that be floored
-}
 function convertOverToMins(endTime, startTime) {
 	return (((endTime - startTime) - Math.floor(endTime - startTime)) * 60);
 	// this function use for finding duration of room servation by bring the overtime from hour convert to minutes
@@ -122,11 +118,6 @@ var app = new Vue({
 		}
 	},
 	computed: {
-		chosenTimePeriod: function () {
-			let startTime = Math.min.apply(null, this.chosenTimes);
-			let endTime = Math.max.apply(null, this.chosenTimes)+0.5;
-			return convertToHumanity(startTime) + '-' + convertToHumanity(endTime) + ' น. (' + convertToHour(endTime, startTime) +' ชั่วโมง '+ convertOverToMins(endTime, startTime) + ' นาที)'
-		},
 		selectedStartSlot: function () {
 			return Math.min.apply(null, this.chosenSlots);
 		},
