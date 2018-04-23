@@ -11,7 +11,11 @@ html
 		div#app
 			div.content
 				div.container
-					if deleteRoleStatus == "success"
+					if createRoleStatus == "success"
+						div.notice.success
+							i.fas.fa-check-circle
+							|  เพิ่มสิทธิ์เรียบร้อย
+					else if deleteRoleStatus == "success"
 						div.notice.success
 							i.fas.fa-check-circle
 							|  ลบสิทธิ์เรียบร้อย

@@ -51,7 +51,9 @@ router.get("/", (req, res) => {
 					roles: roles.data.department.roles,
 					deleteRoleStatus: deleteRoleStatus
 				});
+				orgData = {};
 				deleteRoleStatus = "";
+				createRoleStatus = "";
 			})
 			.catch(err => {
 				res.redirect("/error/")
@@ -82,13 +84,13 @@ router.get("/new", (req, res) => {
 			})
 	} else { res.redirect("/error/") }
 });
-router.post(/\/.*\/save/, multer().array(), (req, res) => {
+router.post(/\/.*\/create/, multer().array(), (req, res) => {
 	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["ROLE_CREATE_ACCESS", "ROLE_UPDATE_ACCESS"])) {
 		req.body.deptId = req.session.currentDept.id;
 		ghp.createRole(apollo_auth, req.body)
 			.then(data => {
 				createRoleStatus = "success";
-				res.redirect("/manage-role/" + data.data.createRole.id);
+				res.redirect("/manage-role/");
 			})
 			.catch(err => {
 				if (globalVars.env != "production") console.log(err);

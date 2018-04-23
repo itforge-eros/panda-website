@@ -27,7 +27,7 @@ html
 					div.page-title-wrap
 						h2.page-pretitle จัดการสิทธิ์
 						h1.page-title {{ name || "สิทธิ์ใหม่" }}
-					form(action="save", method="POST")
+					form(action="create", method="POST")
 						div.marg-b-1
 							label(for="role-name") ชื่อสิทธิ์
 							input(type="text", name="name", disabled=!canSave, v-model="name")
