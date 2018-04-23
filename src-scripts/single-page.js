@@ -24,7 +24,7 @@ function setRawDate(date) {
 	);
 }
 
-Vue.component('time-slot', {
+/*Vue.component('time-slot', {
 	props: {
 		available: Boolean,
 		position: Number,
@@ -35,7 +35,7 @@ Vue.component('time-slot', {
 		return {isChosen: false, isAvailable: this.available}
 	},
 	methods: {
-		choose: function () {
+		choose: () => {
 			let beSelected = document.getElementsByClassName("slot selected");
 			if (app.chosenTimes.length > 1) app.chosenTimes.length = 0;
 			if (app.chosenSlots.length > 1) app.chosenSlots.length = 0;
@@ -61,7 +61,7 @@ Vue.component('time-slot', {
 			setSelected();
 		}
 	}
-});
+});*/
 
 var app = new Vue({
 	el: '#app',
@@ -79,7 +79,7 @@ var app = new Vue({
 		submitHasError: false
 	},
 	methods: {
-		sendReport: function () {
+		sendReport: () => {
 			this.submitText = "กำลังส่ง...";
 			axios(apiURL, {
 				method: "POST",
@@ -94,27 +94,19 @@ var app = new Vue({
 				},
 				headers: {"Authorization": "bearer" + app.reportToken}
 			})
-				.then(function(result) {
+				.then(result => {
 					console.log(result);
 					app.submitText = "ส่งรายงาน";
 					app.reportSent = true;
 					app.reportTitle = "";
 					app.reportBody = "";
 				})
-				.catch(function(err) {
+				.catch(err => {
 					console.log(err);
 					app.reportSent = false;
 					app.submitText = "ส่งรายงาน";
 					app.submitHasError = true;
 				});
-		}
-	},
-	computed: {
-		selectedStartSlot: function () {
-			return Math.min.apply(null, this.chosenSlots);
-		},
-		selectedEndSlot: function () {
-			return Math.max.apply(null, this.chosenSlots);
 		}
 	}
 });
@@ -128,7 +120,7 @@ var picker = new Pikaday({
     	nextMonth     : 'เดือนหน้า',
 		months : ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'],
 		weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-	    weekdaysShort : ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
+	    weekdaysShort : ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.']
 	},
 	firstDay: 1,
 	minDate: today,
@@ -138,21 +130,16 @@ var picker = new Pikaday({
 		today.getDate()
 	),
 	yearRange: [today.getFullYear(), today.getFullYear() + 1],
-	onClose: function() {
+	onClose: () => {
 		app.r_date = document.getElementById("datepicker").value;
 		app.r_date_raw = setRawDate(picker.getDate());
 	},
 	toString(date) {
-		picker_date = date;
 		const day = date.toString().split(" ")[2];
 		const month = date.toString().split(" ")[1];
 		const weekday = date.toString().split(" ")[0];
-		function monthsMapper(element) {
-			return element == `${month}`;
-		}
-		function weekdaysMapper(element) {
-			return element == `${weekday}`;
-		}
+		const monthsMapper = element => element == `${month}`;
+		const weekdaysMapper = element => element == `${weekday}`;
 		app.r_date = `${weekdaysTH[weekdaysEN.findIndex(weekdaysMapper)]}\u0020${day}\u0020${monthsTH[monthsEN.findIndex(monthsMapper)]}`;
 		return `${weekdaysTH[weekdaysEN.findIndex(weekdaysMapper)]}\u0020${day}\u0020${monthsTH[monthsEN.findIndex(monthsMapper)]}`;
 	}
