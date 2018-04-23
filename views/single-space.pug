@@ -49,8 +49,8 @@ html
 								div(style="display:none")
 									input(type="text", name="space", value=space.id)
 									input(type="text", name="r_date_raw", v-model="r_date_raw")
-									input(type="number", name="start")
-									input(type="number", name="end")
+									input(type="number", name="start", v-model="r_startTime")
+									input(type="number", name="end", v-model="r_endTime")
 								div.date
 									i.fas.fa-chevron-circle-left
 									div.input-with-icon.inp-date
@@ -73,7 +73,7 @@ html
 										input.fluid.text-center#timeStart(type="text", name="start", value="09:00")
 									div.time-end
 										label(for="end") เวลาสิ้นสุด
-										input.fluid.text-center#timeEnd(type="text", name="end")
+										input.fluid.text-center#timeEnd(type="text", name="end", value="09:30")
 								div.text-center(v-show="true")
 									button.raised
 										i.fas.fa-pencil-alt

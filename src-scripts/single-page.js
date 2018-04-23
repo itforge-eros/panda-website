@@ -3,6 +3,9 @@ const weekdaysTH = ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
 const monthsEN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const weekdaysEN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
+const times = [];
+for (let t = 0, i = 0; t <= 23.5; t+=0.5, i++) times.push({slot: i, time: t});
+
 const apiURL = "https://api.space.itforge.io/graphql";
 
 function findMin_Max() {
@@ -68,6 +71,8 @@ var app = new Vue({
 	data: {
 		r_date: new Date(),
 		r_date_raw: "",
+		r_startTime: "",
+		r_endTime: "",
 		chosenTimes: [],
 		chosenSlots: [],
 		submitText: "ส่งรายงาน",
@@ -147,6 +152,14 @@ var picker = new Pikaday({
 app.r_date_raw = setRawDate(picker.getDate()); // initial to present
 
 // Time picker
+const timeToSlot = time => {
+	let hr = parseInt(time.split(":")[0]);
+	let mn = parseInt(time.split(":")[1]);
+	if (mn == 0) return times[hr*2].slot;
+	else return times[hr*2 + 1].slot;
+}
+let isFirstTimeChoosing = true;
+
 $("#timeStart").clockTimePicker({
 	precision: 30,
 	required: true,
@@ -154,15 +167,23 @@ $("#timeStart").clockTimePicker({
 	maximum: "19:30",
 	onAdjust: (newVal, oldVal) => {
 		let time = newVal.split(":");
-		let hr = time[1] == "00" ? time[0] : ++time[0];
-		let mn = time[1] == "00" ? "30" : "00";
-		let allowedLeastEndTime = hr + ":" + mn;
-		$("#timeEnd").val(allowedLeastEndTime)
-	}
+		app.r_startTime = timeToSlot(time[0] + ":" + time[1]);
+		if (isFirstTimeChoosing) {
+			let endHr = time[1] == "00" ? time[0] : ++time[0];
+			let endMn = time[1] == "00" ? "30" : "00";
+			$("#timeEnd").val(endHr + ":" + endMn);
+			app.r_endTime = timeToSlot(endHr + ":" + endMn);
+		}
+	},
+	onClose: () => {isFirstTimeChoosing = false}
 });
 $("#timeEnd").clockTimePicker({
 	precision: 30,
 	required: true,
 	minimum: "09:00",
-	maximum: "19:30"
+	maximum: "19:30",
+	onAdjust: (newVal, oldVal) => {
+		let time = newVal.split(":");
+		app.r_endTime = timeToSlot(time[0] + ":" + time[1]);
+	}
 });
