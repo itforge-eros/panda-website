@@ -36,12 +36,14 @@ router.get("/", (req, res) => {
 		ghp.getMyRequests(apollo_auth)
 			.then(myRequests => {
 				const updatedRequests = [];
-				for (var i = 0; i < myRequests.data.me.requests.length; i++) {
-					let tmp = Object.assign({}, myRequests.data.me.requests[i]);
+				myRequests.data.me.requests.map(r => {
+					let tmp = Object.assign({}, r);
 					tmp.createdAt_th = dhp.thaiDateOf(dhp.epochToDate(tmp.createdAt));
 					tmp.dates_th = tmp.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d)));
-					updatedRequests.push(tmp)
-				}
+					tmp.startTime = dhp.slotToTime(r.period.start);
+					tmp.endTime = dhp.slotToTime(r.period.end);
+					updatedRequests.push(tmp);
+				});
 				res.render("my-request", {
 					session: testData.session,
 					user: testData.user,
@@ -63,10 +65,11 @@ router.get("/:id", (req, res) => {
 			.then(returnedReq => {
 				let updatedData = {
 					createdAt_th: dhp.thaiDateOf(dhp.epochToDate(returnedReq.data.request.createdAt)),
-					dates_th: returnedReq.data.request.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d)))
+					dates_th: returnedReq.data.request.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d))),
+					startTime: dhp.slotToTime(returnedReq.data.request.period.start),
+					endTime: dhp.slotToTime(returnedReq.data.request.period.end)
 				}
 				const rq = Object.assign({}, updatedData, returnedReq.data.request);
-				if (globalVars.env != "production") console.log(rq);
 				res.render("single-request", {
 					session: testData.session,
 					user: testData.user,

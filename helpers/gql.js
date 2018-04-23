@@ -204,7 +204,7 @@ ghp.createRequest = (apollo_auth, rq) => {
 				"dates": [rq.date],
 				"period": {
 					"start": parseInt(rq.start),
-					"end": parseInt(rq.end) + 1
+					"end": parseInt(rq.end)
 				},
 				"spaceId": rq.space,
 				"body": rq.reason
