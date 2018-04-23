@@ -1,0 +1,1 @@
+{"version":3,"sources":["manage-role-single.js"],"names":["app","Vue","el","data","name"],"mappings":"AAAA,IAAIA,MAAM,IAAIC,GAAJ,CAAQ;AACjBC,KAAI,MADa;AAEjBC,OAAM,EAACC,MAAM,EAAP;AAFW,CAAR,CAAV","file":"manage-role-single.js","sourcesContent":["var app = new Vue({\n\tel: \"#app\",\n\tdata: {name: \"\"}\n})\n"]}
