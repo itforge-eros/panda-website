@@ -27,4 +27,9 @@ html
 									p.grayed= m.status
 									p.grayed ยืนคำร้องเมื่อ: #{m.createdAt_th}
 								div.req-status
-									img(src="/public/img/wait.svg", alt="success", width="48", height="48")
+									if m.status == "PENDING"
+										img(src="/public/img/wait.svg", alt="pending", width="48", height="48")
+									else if m.status == "COMPLETED"
+										img(src="/public/img/success.svg", alt="succeed", width="48", height="48")
+									else
+										img(src="/public/img/failure.svg", alt="failed", width="48", height="48")
