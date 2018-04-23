@@ -1,35 +1,27 @@
-var monthsTH = ['ม.ค.','ก.พ.','มี.ค','เม.ย.','พ.ค.','มิ.ย','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
-var weekdaysTH = ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
-var monthsEN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-var weekdaysEN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const monthsTH = ['ม.ค.','ก.พ.','มี.ค','เม.ย.','พ.ค.','มิ.ย','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const weekdaysTH = ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
+const monthsEN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const weekdaysEN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
 const apiURL = "https://api.space.itforge.io/graphql";
 
-function convertOverToMins(endTime, startTime) {
-	return (((endTime - startTime) - Math.floor(endTime - startTime)) * 60);
-	// this function use for finding duration of room servation by bring the overtime from hour convert to minutes
-}
-function convertToHumanity(time) {
-	if (time%1 !== 0) {
-		return (Math.floor(time) + ':' +((time.toFixed(2) - Math.floor(time).toFixed(2))*60).toFixed(0));
-	} else {
-		if((((time).toFixed(2) - Math.floor(time).toFixed(2))*60).toFixed(0) == 0) {
-			return (Math.floor(time) + ':' +((time.toFixed(2) - Math.floor(time).toFixed(2))*60).toFixed(0)) + '0';
-		} else {
-			return (Math.floor(time) + ':' +((time.toFixed(2) - Math.floor(time).toFixed(2))*60).toFixed(0));
-		}
-	}
-	// this function use for converting the format .5 hour to humanity format
-}
 function findMin_Max() {
 	min_time = Math.min.apply(null, app.chosenTimes);
 	max_time = Math.max.apply(null, app.chosenTimes);
 }
 function setSelected () {
-	for (var j = min_time; j <= (max_time); j+=0.5) {	
+	for (let j = min_time; j <= (max_time); j+=0.5) {	
 		document.getElementById(id="slot-" + j).removeAttribute("class");
 		document.getElementById(id="slot-" + j).setAttribute("class", "slot selected");
 	}
+}
+function setRawDate(date) {
+	// create a raw date for sending to the API (eg. 2018-04-14)
+	let m = date.getMonth() + 1;
+	let d = date.getDate();
+	return (
+		date.getFullYear() + "-" + (m < 10 ? "0" + m : m) + "-" + (d < 10 ? "0" + d : d)
+	);
 }
 
 Vue.component('time-slot', {
@@ -44,11 +36,11 @@ Vue.component('time-slot', {
 	},
 	methods: {
 		choose: function () {
-			var beSelected = document.getElementsByClassName("slot selected");
+			let beSelected = document.getElementsByClassName("slot selected");
 			if (app.chosenTimes.length > 1) app.chosenTimes.length = 0;
 			if (app.chosenSlots.length > 1) app.chosenSlots.length = 0;
 			while(beSelected.length >= 1) {
-				for (var i = 0; i < (beSelected.length); i+=1)
+				for (let i = 0; i < (beSelected.length); i+=1)
 					beSelected[i].setAttribute("class", "slot");
 			}
 			if (this.isAvailable) {
@@ -127,17 +119,8 @@ var app = new Vue({
 	}
 });
 
-function setRawDate(date) {
-	// create a raw date for sending to the API (eg. 2018-04-14)
-	var m = date.getMonth() + 1;
-	var d = date.getDate();
-	return (
-		date.getFullYear() + "-" + (m < 10 ? "0" + m : m) + "-" + (d < 10 ? "0" + d : d)
-	);
-}
-
+// Date picker
 const today = new Date();
-
 var picker = new Pikaday({
 	field: document.getElementById("datepicker"),
 	i18n: {
@@ -174,9 +157,8 @@ var picker = new Pikaday({
 		return `${weekdaysTH[weekdaysEN.findIndex(weekdaysMapper)]}\u0020${day}\u0020${monthsTH[monthsEN.findIndex(monthsMapper)]}`;
 	}
 });
+app.r_date_raw = setRawDate(picker.getDate()); // initial to present
 
 // Time picker
 $("#timeStart").clockTimePicker({precision: 30, required: true, minimum: "09:00", maximum: "19:30"});
 $("#timeEnd").clockTimePicker({precision: 30, required: true, minimum: "09:00", maximum: "19:30"});
-
-app.r_date_raw = setRawDate(picker.getDate()); // initial to present
