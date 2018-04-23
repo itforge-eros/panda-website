@@ -9,6 +9,10 @@ html
 		div#app
 			div.content
 				div.container
+					if deleteRoleStatus == "success"
+						div.notice.success
+							i.fas.fa-check-circle
+							|  ลบสิทธิ์เรียบร้อย
 					div.page-title-wrap
 						h1.page-title จัดการสิทธิ์
 					div
@@ -24,5 +28,5 @@ html
 										i.fas.fa-user
 									a(href="/manage-role/" + r.id + "/")
 										i.fas.fa-cog
-									a(href="#")
+									a(href="/manage-role/" + r.id + "/delete/", onclick="return confirm('ต้องการลบสิทธิ์นี้หรือไม่')")
 										i.fas.fa-trash

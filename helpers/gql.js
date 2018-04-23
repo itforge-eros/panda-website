@@ -260,5 +260,14 @@ ghp.updateSpace = (apollo_auth, sp) => {
 		}
 	})
 }
+ghp.deleteRole = (apollo_auth, roleId) => {
+	return apollo_auth.mutate({
+		mutation: gql`
+			mutation {
+				deleteRole(input: {roleId: "${roleId}"}) { id }
+			}
+		`
+	})
+}
 
 module.exports = ghp;

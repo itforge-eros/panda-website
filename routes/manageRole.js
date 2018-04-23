@@ -21,6 +21,7 @@ let token = "";
 let createRoleStatus = "";
 let orgData = {};
 let assignMemberStatus = "";
+let deleteRoleStatus = "";
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -47,8 +48,10 @@ router.get("/", (req, res) => {
 					user: testData.user,
 					member: req.session.member,
 					currentDept: req.session.currentDept,
-					roles: roles.data.department.roles
+					roles: roles.data.department.roles,
+					deleteRoleStatus: deleteRoleStatus
 				});
+				deleteRoleStatus = "";
 			})
 			.catch(err => {
 				res.redirect("/error/")
@@ -159,5 +162,18 @@ router.post("/:id/users/addmember", multer().array(), (req, res) => {
 			});
 	} else { res.redirect("/error/") }
 });
+router.get("/:id/delete", (req, res) => {
+	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["ROLE_DELETE_ACCESS"])) {
+		ghp.deleteRole(apollo_auth, req.params.id)
+			.then(data => {
+				res.redirect("/manage-role/");
+				deleteRoleStatus = "success";
+			})
+			.catch(err => {
+				if (globalVars.env != "production") console.log(err);
+				res.redirect("/error/");
+			});
+	} else { res.redirect("/error/") }
+})
 
 module.exports = router;
