@@ -5,11 +5,11 @@ var weekdaysEN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
 const apiURL = "https://api.space.itforge.io/graphql";
 
-function converterToHour(endTime, startTime) {
+function convertToHour(endTime, startTime) {
 	return Math.floor(endTime - startTime);
 	// this function use for finding duration of room reservation with hour that be floored
 }
-function converterOverToMins(endTime, startTime) {
+function convertOverToMins(endTime, startTime) {
 	return (((endTime - startTime) - Math.floor(endTime - startTime)) * 60);
 	// this function use for finding duration of room servation by bring the overtime from hour convert to minutes
 }
@@ -125,7 +125,7 @@ var app = new Vue({
 		chosenTimePeriod: function () {
 			let startTime = Math.min.apply(null, this.chosenTimes);
 			let endTime = Math.max.apply(null, this.chosenTimes)+0.5;
-			return convertToHumanity(startTime) + '-' + convertToHumanity(endTime) + ' น. (' + converterToHour(endTime, startTime) +' ชั่วโมง '+ converterOverToMins(endTime, startTime) + ' นาที)'
+			return convertToHumanity(startTime) + '-' + convertToHumanity(endTime) + ' น. (' + convertToHour(endTime, startTime) +' ชั่วโมง '+ convertOverToMins(endTime, startTime) + ' นาที)'
 		},
 		selectedStartSlot: function () {
 			return Math.min.apply(null, this.chosenSlots);
@@ -135,7 +135,6 @@ var app = new Vue({
 		}
 	}
 });
-
 
 function setRawDate(date) {
 	// create a raw date for sending to the API (eg. 2018-04-14)
@@ -184,5 +183,9 @@ var picker = new Pikaday({
 		return `${weekdaysTH[weekdaysEN.findIndex(weekdaysMapper)]}\u0020${day}\u0020${monthsTH[monthsEN.findIndex(monthsMapper)]}`;
 	}
 });
+
+// Time picker
+$("#timeStart").clockTimePicker({precision: 30, required: true, minimum: "09:00", maximum: "19:30"});
+$("#timeEnd").clockTimePicker({precision: 30, required: true, minimum: "09:00", maximum: "19:30"});
 
 app.r_date_raw = setRawDate(picker.getDate()); // initial to present

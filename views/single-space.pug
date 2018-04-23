@@ -67,9 +67,14 @@ html
 												div.half(id=timeSlots[++thisSlot].slot)
 												div.half(id=timeSlots[++thisSlot].slot)
 								hr
-								p.text-center(v-show="chosenTimes.length == 0") กรุณาเลือกเวลาเพื่อจอง
-								p.text-center(v-show="chosenTimes.length != 0") ที่เลือกไว้: {{ chosenTimePeriod }}
-								div.text-center(v-show="chosenTimes.length != 0")
+								div.marg-b-1
+									div.time-start
+										label(for="start") เวลาเริ่ม
+										input.fluid.text-center#timeStart(type="text", name="start", value="09:00")
+									div.time-end
+										label(for="end") เวลาสิ้นสุด
+										input.fluid.text-center#timeEnd(type="text", name="end")
+								div.text-center(v-show="true")
 									button.raised
 										i.fas.fa-pencil-alt
 										| จอง
@@ -97,7 +102,9 @@ html
 						div.text-center(v-show="reportSent")
 							img(src="/public/img/success.svg", alt="succeed", width="100")
 							p ส่งรายงานเรียบร้อย
+		script(src="/public/vendor/jquery-3.3.1.min.js")
 		script(src="/public/vendor/pikaday/pikaday.min.js")
+		script(src="/public/vendor/jquery-clock-timepicker.min.js")
 		script(src="/public/vendor/axios/axios.min.js")
 		script(src="/public/scripts/single-page.js")
 		script(src="/public/scripts/modal.js")

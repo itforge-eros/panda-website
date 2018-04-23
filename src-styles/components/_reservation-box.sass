@@ -35,30 +35,13 @@
 					&.selected
 						background-color: $color-primary
 						box-shadow: $shadow-normal
-
-@media screen and (max-width: 767px)
-	/*.reservation-box
-		.slot-wrap
-			table.times
-				td
-					display: table-cell*/
-@media screen and (max-width: 579px)
-	/*.reservation-box
-		.slot-wrap-wrapper
-			overflow-x: auto
-			white-space: nowrap
-		.slot-wrap
-			display: inline-block
-			table.times
-				display: none
-			.slots
-				background-color: transparent
-				padding-left: 0
-				padding-right: 0
-				.slot
-					color: #FFF
-					width: 50px
-					height: 50px
-					padding-top: 1em
-			.slots#slots-2
-				padding-left: 12px*/
+	.clock-timepicker
+		width: 100%
+	.time-start
+		display: inline-block
+		width: 50%
+		padding-right: $gap-size-20 / 2
+	.time-end
+		display: inline-block
+		width: 50%
+		padding-left: $gap-size-20 / 2
