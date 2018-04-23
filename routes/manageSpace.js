@@ -85,6 +85,7 @@ router.get("/:dept/:name", (req, res) => {
 	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS", "SPACE_UPDATE_ACCESS"])) {
 		ghp.getSpace(apollo_auth, req.params.dept, req.params.name)
 			.then(data => {
+				console.log(data.data.space);
 				res.render("manage-space-single", {
 					session: testData.session,
 					user: testData.user,

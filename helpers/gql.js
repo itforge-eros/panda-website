@@ -22,7 +22,7 @@ ghp.getSpace = (apollo, dept, spaceName) => {
 		query: gql`
 			{
 				space(department: "${dept}", name: "${spaceName}") {
-					id, name, fullName, description, capacity, isAvailable, department {name fullThaiName}
+					id name fullName description capacity category isAvailable department {name fullThaiName}
 				}
 			}
 		`
@@ -170,7 +170,8 @@ ghp.createSpace = (apollo_auth, sp) => {
 				"capacity": parseInt(sp.capacity),
 				"category": sp.category,
 				"isAvailable": sp.isAvailable == "true" ? true : false,
-				"departmentId": sp.deptId
+				"departmentId": sp.deptId,
+				"tags": sp.tags
 			}
 		}
 	})
@@ -253,7 +254,8 @@ ghp.updateSpace = (apollo_auth, sp) => {
 				"description": sp.description,
 				"category": sp.category,
 				"capacity": parseInt(sp.capacity),
-				"isAvailable": sp.isAvailable == "true" ? true : false
+				"isAvailable": sp.isAvailable == "true" ? true : false,
+				"tags": sp.tags
 			}
 		}
 	})
