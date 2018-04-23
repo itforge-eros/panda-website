@@ -18,5 +18,6 @@ const slotToTime = slot => {
 module.exports = {
 	epochToDate: epochToDate,
 	bigEndianToDate: bigEndianToDate,
-	thaiDateOf: thaiDateOf
+	thaiDateOf: thaiDateOf,
+	slotToTime: slotToTime
 }

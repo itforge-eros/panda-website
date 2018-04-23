@@ -6,13 +6,6 @@ html
 		include parts/scripts
 	body.my-request
 		include parts/nav
-		-
-			let times = [];
-			for (let t = 0, i = 0; t <= 23.5; t+=0.5, i++) times.push({slot: i, time: t});
-			const slotToTime = slot => {
-				if (slot % 2 == 0) return times[slot].time.toString() + ":00";
-				else return times[slot].time.toString().replace(".5", ":30");
-			}
 		div#app
 			div.content
 				div.container
@@ -30,7 +23,7 @@ html
 							a.card.shadow.hoverable.request-card(href=m.id)
 								div.req-info
 									h1.card-title= m.space.fullName + ", " + m.space.department.fullThaiName
-									p #{m.dates_th} เวลา #{slotToTime(m.period.start) + " - " + slotToTime(m.period.end-1)} น.
+									p #{m.dates_th} เวลา #{m.startTime} - #{m.endTime} น.
 									p.grayed= m.status
 									p.grayed ยืนคำร้องเมื่อ: #{m.createdAt_th}
 								div.req-status
