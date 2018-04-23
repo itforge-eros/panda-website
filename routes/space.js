@@ -96,7 +96,6 @@ router.post(/\/.*\/reserve\/submit/, multer().array(), (req, res) => {
 	if (req.session.member) {
 		ghp.createRequest(apollo_auth, req.body)
 			.then(rp => {
-				if (globalVars.env != "production") console.log(rp);
 				res.render("request-sent", {
 					session: testData.session,
 					user: testData.user,

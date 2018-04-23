@@ -8,65 +8,40 @@
 			margin: 0 10px
 			width: 70%
 			max-width: 180px
-	.slot-wrap
-		.times
-			width: 100%
+	.timetable
+		.time
+			margin-bottom: 5px
+			span
+				display: inline-block
+				width: calc(100%/23)
+				text-align: center
+		.boxes
 			padding-left: 10px
 			padding-right: 10px
-			td
-				padding: 0
-				width: calc(100%/12)
-		.slots
-			display: flex
-			justify-content: space-around
-			background-color: #FAFAFA
-			padding: 10px 15px
-			border-radius: 25px
-			.slot
+			.box
 				display: inline-block
-				width: 28px
-				height: 28px
-				margin-right: 12px
-				background-color: $color-green
-				border-radius: 50%
-				cursor: pointer
-				text-align: center
-				color: transparent
-				user-select: none
-				transition: box-shadow .1s
-				&:last-child
-					margin-right: 0
-				&:not(.unavailable):hover
-					box-shadow: $shadow-small-hover
-				&.unavailable
-					background-color: $color-red
-					cursor: default
-				&.selected
-					background-color: $color-primary
-					box-shadow: $shadow-normal
-@media screen and (max-width: 767px)
-	.reservation-box
-		.slot-wrap
-			table.times
-				td
-					display: table-cell
-@media screen and (max-width: 579px)
-	.reservation-box
-		.slot-wrap-wrapper
-			overflow-x: auto
-			white-space: nowrap
-		.slot-wrap
-			display: inline-block
-			table.times
-				display: none
-			.slots
-				background-color: transparent
-				padding-left: 0
-				padding-right: 0
-				.slot
-					color: #FFF
-					width: 50px
-					height: 50px
-					padding-top: 1em
-			.slots#slots-2
-				padding-left: 12px
+				width: calc(100%/11)
+				height: 30px
+				border-right: 1px solid #A0A0A0
+				&:first-of-type
+					border-left: 1px solid #A0A0A0
+				.half
+					display: inline-block
+					width: 50%
+					height: 30px
+					background-color: $color-green
+					&.unavailable
+						background-color: $color-red
+					&.selected
+						background-color: $color-primary
+						box-shadow: $shadow-normal
+	.clock-timepicker
+		width: 100%
+	.time-start
+		display: inline-block
+		width: 50%
+		padding-right: $gap-size-20 / 2
+	.time-end
+		display: inline-block
+		width: 50%
+		padding-left: $gap-size-20 / 2
