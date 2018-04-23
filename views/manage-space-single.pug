@@ -11,6 +11,7 @@ html
 		include parts/nav
 		-
 			let available = orgData.isAvailable == true || orgData.isAvailable == undefined ? true : false;
+			orgData.tags = orgData.tags ? orgData.tags : [];
 		div#app
 			div.content
 				div.container
@@ -69,7 +70,7 @@ html
 									tr
 										td
 											label.control.checkbox
-												input(type="checkbox", name="tags", value=item.id, disabled=!canSave)
+												input(type="checkbox", name="tags", value=item.id, checked=(orgData.tags.includes(item.id)), disabled=!canSave)
 												span.control-indicator
 												= item.name
 						div.marg-b-1

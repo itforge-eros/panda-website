@@ -4,7 +4,7 @@ const rename = require("gulp-rename");
 const srcmaps = require("gulp-sourcemaps");
 const autoprefixer = require("gulp-autoprefixer");
 const minifyjs = require("gulp-js-minify");
-const babel = require("gulp-babel");
+// const babel = require("gulp-babel");
 
 gulp.task("sass", function() {
 	return gulp

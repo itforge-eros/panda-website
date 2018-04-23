@@ -22,7 +22,7 @@ ghp.getSpace = (apollo, dept, spaceName) => {
 		query: gql`
 			{
 				space(department: "${dept}", name: "${spaceName}") {
-					id name fullName description capacity category isAvailable department {name fullThaiName}
+					id name fullName description capacity category tags isAvailable department {name fullThaiName}
 				}
 			}
 		`
