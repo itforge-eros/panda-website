@@ -118,9 +118,9 @@ var picker = new Pikaday({
 	i18n: {
 		previousMonth : 'เดือนที่แล้ว',
     	nextMonth     : 'เดือนหน้า',
-		months : ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'],
-		weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-	    weekdaysShort : ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.']
+		months : monthsTH,
+		weekdays      : weekdaysEN,
+	    weekdaysShort : weekdaysTH
 	},
 	firstDay: 1,
 	minDate: today,
@@ -147,5 +147,22 @@ var picker = new Pikaday({
 app.r_date_raw = setRawDate(picker.getDate()); // initial to present
 
 // Time picker
-$("#timeStart").clockTimePicker({precision: 30, required: true, minimum: "09:00", maximum: "19:30"});
-$("#timeEnd").clockTimePicker({precision: 30, required: true, minimum: "09:00", maximum: "19:30"});
+$("#timeStart").clockTimePicker({
+	precision: 30,
+	required: true,
+	minimum: "09:00",
+	maximum: "19:30",
+	onAdjust: (newVal, oldVal) => {
+		let time = newVal.split(":");
+		let hr = time[1] == "00" ? time[0] : ++time[0];
+		let mn = time[1] == "00" ? "30" : "00";
+		let allowedLeastEndTime = hr + ":" + mn;
+		$("#timeEnd").val(allowedLeastEndTime)
+	}
+});
+$("#timeEnd").clockTimePicker({
+	precision: 30,
+	required: true,
+	minimum: "09:00",
+	maximum: "19:30"
+});
