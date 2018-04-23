@@ -15,7 +15,7 @@ html
 						h1.page-title รายละเอียดคำร้อง
 						h2.page-subtitle คำร้อง ##{reqInfo.id}
 					table.styled.striped
-						tr.status.pending
+						tr.status(class=reqInfo.status.toLowerCase())
 							td สถานะ
 							td= reqInfo.status
 						tr
