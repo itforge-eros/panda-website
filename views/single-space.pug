@@ -13,6 +13,9 @@ html
 				if (i % 2 == 0) displayTime.push(t++);
 				else displayTime.push(" ");
 			}
+			let timeSlots = [];
+			for (let t = 0, i = 0; t <= 23.5; t+=0.5, i++) {timeSlots.push({slot: i, time: t})}
+			let thisSlot = 17;
 		div#app
 			div.content
 				div.container
@@ -59,10 +62,10 @@ html
 										each time in displayTime
 											span= time
 									div.boxes
-										each i in [1,2,3,4,5,6,7,8,9,10,11]
+										while thisSlot <= 17+20
 											div.box
-												div.half.unavailable
-												div.half
+												div.half(id=timeSlots[++thisSlot].slot)
+												div.half(id=timeSlots[++thisSlot].slot)
 								hr
 								p.text-center(v-show="chosenTimes.length == 0") กรุณาเลือกเวลาเพื่อจอง
 								p.text-center(v-show="chosenTimes.length != 0") ที่เลือกไว้: {{ chosenTimePeriod }}
