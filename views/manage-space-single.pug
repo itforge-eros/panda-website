@@ -40,7 +40,7 @@ html
 								input.fluid(type="text", name="fullName", required, v-model="spaceName", disabled=!canSave)
 							div.col-50.marg-b-1
 								label(for="space-seats") จำนวนที่นั่ง
-								input.fluid(type="number", name="capacity", value=(orgData.capacity ? orgData.capacity : "/authen/login/"), disabled=!canSave)
+								input.fluid(type="number", name="capacity", value=(orgData.capacity ? orgData.capacity : ""), disabled=!canSave)
 						div.row
 							div.col-50.marg-b-1
 								label(for="slug") ประเภทสถานที่ *

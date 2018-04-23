@@ -26,7 +26,6 @@ gulp.task("js", function() {
 	return gulp
 		.src("src-scripts/**/*.js")
 		.pipe(srcmaps.init())
-		.pipe(babel())
 		.pipe(minifyjs())
 		.pipe(srcmaps.write("./"))
 		.pipe(gulp.dest("./public/scripts/"));

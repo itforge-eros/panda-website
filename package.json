@@ -45,10 +45,18 @@
     "gulp-sourcemaps": "^2.6.4"
   },
   "babel": {
-    "presets": [["env", {
-      "targets": {
-        "browsers": ["last 3 versions", "> 7% in TH"]
-      }
-    }]]
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              "last 3 versions",
+              "> 7% in TH"
+            ]
+          }
+        }
+      ]
+    ]
   }
 }
