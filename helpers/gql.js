@@ -261,6 +261,23 @@ ghp.updateSpace = (apollo_auth, sp) => {
 		}
 	})
 }
+ghp.updateRole = (apollo_auth, r) => {
+	return apollo_auth.mutate({
+		mutation: gql`
+			mutation($roleInput: UpdateRoleInput!) {
+				updateRole(input: $roleInput) { id }
+			}
+		`,
+		variables: {
+			"roleInput": {
+				"roleId": r.roleId,
+				"name": r.name,
+				"description": r.description,
+				"permissions": r.permissions
+			}
+		}
+	})
+}
 ghp.deleteRole = (apollo_auth, roleId) => {
 	return apollo_auth.mutate({
 		mutation: gql`
