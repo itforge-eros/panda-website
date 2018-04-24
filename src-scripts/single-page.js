@@ -53,7 +53,7 @@ var app = new Vue({
 	},
 	methods: {
 		sendReport: () => {
-			this.submitText = "กำลังส่ง...";
+			app.submitText = "กำลังส่ง...";
 			axios(apiURL, {
 				method: "POST",
 				data: {
