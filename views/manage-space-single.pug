@@ -9,6 +9,9 @@ html
 			| span#spaceURI {color: #00A0FF}
 	body.manage-space-single
 		include parts/nav
+		-
+			let available = orgData.isAvailable == true || orgData.isAvailable == undefined ? true : false;
+			orgData.tags = orgData.tags ? orgData.tags : [];
 		div#app
 			div.content
 				div.container
@@ -40,14 +43,14 @@ html
 								input.fluid(type="text", name="fullName", required, v-model="spaceName", disabled=!canSave)
 							div.col-50.marg-b-1
 								label(for="space-seats") จำนวนที่นั่ง
-								input.fluid(type="number", name="capacity", value=(orgData.capacity ? orgData.capacity : "/authen/login/"), disabled=!canSave)
+								input.fluid(type="number", name="capacity", value=(orgData.capacity ? orgData.capacity : ""), disabled=!canSave)
 						div.row
 							div.col-50.marg-b-1
 								label(for="slug") ประเภทสถานที่ *
 								div.select
 									select(aria-label="Choose a faculty", name="category")
 										each t in [{x: "ห้องเรียน", v: "CLASSROOM"}, {x: "ห้องประชุม", v: "MEETING_ROOM"}]
-											option(value=t.v, checked=(orgData.category == t.v), disabled=!canSave)= t.x
+											option(value=t.v, selected=(orgData.category == t.v), disabled=!canSave)= t.x
 						div(style="margin-bottom:0.5em")
 							label(for="name_raw") ชื่อสำหรับใช้ใน URL (ภาษาอังกฤษเท่านั้น) *
 							input(type="text", name="name_raw", required, v-model="spaceURI", disabled=!canSave)
@@ -60,14 +63,14 @@ html
 								tr
 									td
 										label.control.checkbox
-											input(type="checkbox", name="isAvailable", value="true", checked, disabled=!canSave)
+											input(type="checkbox", name="isAvailable", value="true", checked=available, disabled=!canSave)
 											span.control-indicator
 											| เปิดให้จอง
 								each item in amenities
 									tr
 										td
 											label.control.checkbox
-												input(type="checkbox", name="amenities", value=item.id, disabled=!canSave)
+												input(type="checkbox", name="tags", value=item.id, checked=(orgData.tags.includes(item.id)), disabled=!canSave)
 												span.control-indicator
 												= item.name
 						div.marg-b-1

@@ -7,12 +7,6 @@ html
 	body.single-request
 		include parts/nav
 		-
-			const times = [];
-			let start_hr = 8;
-			for (let i = 0; i <= 24; i++) {
-				times.push(i%2 == 0 ? start_hr + ".00" : start_hr + ".30");
-				if (i%2 != 0) start_hr++;
-			}
 			const months = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]
 		div#app
 			div.content
@@ -21,7 +15,7 @@ html
 						h1.page-title รายละเอียดคำร้อง
 						h2.page-subtitle คำร้อง ##{reqInfo.id}
 					table.styled.striped
-						tr.status.pending
+						tr.status(class=reqInfo.status.toLowerCase())
 							td สถานะ
 							td= reqInfo.status
 						tr
@@ -38,10 +32,7 @@ html
 							td= reqInfo.dates_th
 						tr
 							td เวลาที่ต้องการจอง
-							td= times[reqInfo.period.start - 1] + " - " + times[reqInfo.period.end]
-						tr
-							td จำนวนที่นั่ง
-							td content here
+							td= reqInfo.startTime + " - " + reqInfo.endTime + " น."
 						tr
 							td เหตุผล
-							td content here
+							td= reqInfo.body

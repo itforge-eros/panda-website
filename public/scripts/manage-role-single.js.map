@@ -1,0 +1,1 @@
+{"version":3,"names":[],"mappings":"","sources":["manage-role-single.js"],"sourcesContent":["var app = new Vue({\n\tel: \"#app\",\n\tdata: {name: \"\"}\n})\n"],"file":"manage-role-single.js"}

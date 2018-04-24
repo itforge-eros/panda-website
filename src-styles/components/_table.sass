@@ -24,9 +24,9 @@ table
 		color: #FFF
 		&.pending
 			background-color: $color-secondary !important
-		&.approved
+		&.completed
 			background-color: $color-green !important
-		&.rejected
+		&.failed, &.cancelled
 			background-color: $color-red !important
 	&.striped
 		tr
@@ -54,13 +54,13 @@ table
 					color: #FFF
 				td:last-of-type
 					background-color: $color-secondary-normal
-			&.approved
+			&.completed
 				td:first-of-type
 					background-color: $color-green
 					color: #FFF
 				td:last-of-type
 					background-color: $color-green-normal
-			&.rejected
+			&.failed, &.cancelled
 				td:first-of-type
 					background-color: $color-red
 					color: #FFF

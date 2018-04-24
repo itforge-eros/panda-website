@@ -9,6 +9,7 @@ nav
 	box-shadow: 0 5px 10px rgba(0,0,0,0.05)
 	.logo
 		display: inline-block
+		margin-right: $gap-size-20
 		position: relative
 		left: 0
 		font-weight: bold
@@ -70,7 +71,6 @@ nav
 	.dropdown
 		display: inline-block
 		position: relative
-		margin-left: $gap-size-20
 		font-family: $font-styled
 		color: $color-primary
 		&:hover
@@ -132,10 +132,15 @@ ul.tabs
 			text-decoration: none
 			color: $color-grey
 
-@media screen and (max-width: 430px)
+@media screen and (max-width: 600px)
 	nav
 		ul.menu
 			li
 				display: none
 		&.mobile-nav
 			display: block
+
+@media screen and (max-width: 400px)
+	nav
+		.logo
+			display: none

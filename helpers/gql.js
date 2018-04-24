@@ -22,7 +22,7 @@ ghp.getSpace = (apollo, dept, spaceName) => {
 		query: gql`
 			{
 				space(department: "${dept}", name: "${spaceName}") {
-					id, name, fullName, description, capacity, isAvailable, department {name fullThaiName}
+					id name fullName description capacity category tags isAvailable department {name fullThaiName}
 				}
 			}
 		`
@@ -85,6 +85,7 @@ ghp.getMe = apollo_auth => {
 				me {
 					departments { edges { node { id name fullThaiName } } }
 					roles {
+						id
 						name
 						department { id name fullThaiName description }
 						permissions { accesses }
@@ -213,7 +214,8 @@ ghp.createSpace = (apollo_auth, sp) => {
 				"capacity": parseInt(sp.capacity),
 				"category": sp.category,
 				"isAvailable": sp.isAvailable == "true" ? true : false,
-				"departmentId": sp.deptId
+				"departmentId": sp.deptId,
+				"tags": sp.tags
 			}
 		}
 	})
@@ -244,10 +246,10 @@ ghp.createRequest = (apollo_auth, rq) => {
 		`,
 		variables: {
 			"requestInput": {
-				"dates": [rq.r_date_raw],
+				"dates": [rq.date],
 				"period": {
 					"start": parseInt(rq.start),
-					"end": parseInt(rq.end) + 1
+					"end": parseInt(rq.end)
 				},
 				"spaceId": rq.space,
 				"body": rq.reason
@@ -296,9 +298,36 @@ ghp.updateSpace = (apollo_auth, sp) => {
 				"description": sp.description,
 				"category": sp.category,
 				"capacity": parseInt(sp.capacity),
-				"isAvailable": sp.isAvailable == "true" ? true : false
+				"isAvailable": sp.isAvailable == "true" ? true : false,
+				"tags": sp.tags
 			}
 		}
+	})
+}
+ghp.updateRole = (apollo_auth, r) => {
+	return apollo_auth.mutate({
+		mutation: gql`
+			mutation($roleInput: UpdateRoleInput!) {
+				updateRole(input: $roleInput) { id }
+			}
+		`,
+		variables: {
+			"roleInput": {
+				"roleId": r.roleId,
+				"name": r.name,
+				"description": r.description,
+				"permissions": r.permissions
+			}
+		}
+	})
+}
+ghp.deleteRole = (apollo_auth, roleId) => {
+	return apollo_auth.mutate({
+		mutation: gql`
+			mutation {
+				deleteRole(input: {roleId: "${roleId}"}) { id }
+			}
+		`
 	})
 }
 

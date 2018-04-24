@@ -1,18 +1,1 @@
-var app = new Vue({
-	el: "#app",
-	data: {
-		usr: "",
-		pwd: "",
-		showError: false
-	},
-	methods: {
-		validate: function() {
-			if (this.usr != "" && this.pwd != "") document.getElementById("login").submit();
-			else this.showError = true;
-		}
-	}
-});
-
-document.getElementById("login").addEventListener("keydown", function(e) {
-	if (e.keyCode == 13) app.validate();
-})
+eval(function(p,a,c,k,e,d){e=function(c){return c.toString(36)};if(!''.replace(/^/,String)){while(c--)d[c.toString(a)]=k[c]||c.toString(a);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('p 1=f o({n:"#1",m:{7:"",3:"",2:l},k:{4:6(){5(0.7!=""&&0.3!="")8.a("9").h();g 0.2=j}}});8.a("9").c("d",6(e){5(e.i==b)1.4()})',26,26,'this|app|showError|pwd|validate|if|function|usr|document|login|getElementById|13|addEventListener|keydown||new|else|submit|keyCode|true|methods|false|data|el|Vue|var'.split('|'),0,{}))

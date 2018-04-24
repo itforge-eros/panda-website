@@ -21,6 +21,8 @@ let token = "";
 let createRoleStatus = "";
 let orgData = {};
 let assignMemberStatus = "";
+let deleteRoleStatus = "";
+let updateRoleStatus = "";
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -47,8 +49,12 @@ router.get("/", (req, res) => {
 					user: testData.user,
 					member: req.session.member,
 					currentDept: req.session.currentDept,
-					roles: roles.data.department.roles
+					roles: roles.data.department.roles,
+					deleteRoleStatus: deleteRoleStatus
 				});
+				orgData = {};
+				deleteRoleStatus = "";
+				createRoleStatus = "";
 			})
 			.catch(err => {
 				res.redirect("/error/")
@@ -79,13 +85,13 @@ router.get("/new", (req, res) => {
 			})
 	} else { res.redirect("/error/") }
 });
-router.post(/\/.*\/save/, multer().array(), (req, res) => {
+router.post(/\/.*\/create/, multer().array(), (req, res) => {
 	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["ROLE_CREATE_ACCESS", "ROLE_UPDATE_ACCESS"])) {
 		req.body.deptId = req.session.currentDept.id;
 		ghp.createRole(apollo_auth, req.body)
 			.then(data => {
 				createRoleStatus = "success";
-				res.redirect("/manage-role/" + data.data.createRole.id);
+				res.redirect("/manage-role/");
 			})
 			.catch(err => {
 				if (globalVars.env != "production") console.log(err);
@@ -98,7 +104,10 @@ router.post(/\/.*\/save/, multer().array(), (req, res) => {
 	}
 });
 router.get("/:id", (req, res) => {
-	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["ROLE_CREATE_ACCESS", "ROLE_UPDATE_ACCESS"])) {
+	let myRoleIds = req.session.member.roles.map(r => r.id);
+	if (req.session.member &&
+		ahp.hasEitherAccess(req.session.member.currentAccesses, ["ROLE_CREATE_ACCESS", "ROLE_UPDATE_ACCESS"]) &&
+		!myRoleIds.includes(req.params.id)) {
 		ghp.getRole(apollo_auth, req.params.id)
 			.then(role => {
 				ghp.getPermissions(apollo_auth)
@@ -108,7 +117,7 @@ router.get("/:id", (req, res) => {
 							user: testData.user,
 							member: req.session.member,
 							currentDept: req.session.currentDept,
-							status: createRoleStatus,
+							status: updateRoleStatus,
 							permissions: permissions.data.permissions,
 							role: role.data.role,
 							isNew: false,
@@ -130,6 +139,7 @@ router.get("/:id/users", (req, res) => {
 					session: testData.session,
 					user: testData.user,
 					member: req.session.member,
+					memberToken: req.session.token,
 					currentDept: req.session.currentDept,
 					role: role.data.role,
 					status: assignMemberStatus
@@ -159,5 +169,32 @@ router.post("/:id/users/addmember", multer().array(), (req, res) => {
 			});
 	} else { res.redirect("/error/") }
 });
+router.post("/:id/update", multer().array(), (req, res) => {
+	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["ROLE_UPDATE_ACCESS"])) {
+		req.body.roleId = req.params.id;
+		ghp.updateRole(apollo_auth, req.body)
+			.then(data => {
+				res.redirect("/manage-role/" + req.params.id + "/");
+				updateRoleStatus = "success";
+			})
+			.catch(err => {
+				if (globalVars.env != "production") console.log(err);
+				res.redirect("/error/");
+			})
+	} else { req.redirect("/error/") }
+})
+router.get("/:id/delete", (req, res) => {
+	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["ROLE_DELETE_ACCESS"])) {
+		ghp.deleteRole(apollo_auth, req.params.id)
+			.then(data => {
+				res.redirect("/manage-role/");
+				deleteRoleStatus = "success";
+			})
+			.catch(err => {
+				if (globalVars.env != "production") console.log(err);
+				res.redirect("/error/");
+			});
+	} else { res.redirect("/error/") }
+})
 
 module.exports = router;

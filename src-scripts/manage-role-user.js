@@ -3,23 +3,27 @@ const apiURL = "https://api.space.itforge.io/graphql";
 var app = new Vue({
 	el: "#app",
 	data: {
-		token: ""
+		token: "",
+		roleId: ""
 	},
 	methods: {
-		deleteMaterial: function (id) {
+		revokeRole: function (memberId) {
 			axios(apiURL, {
 				method: "POST",
 				data: {
-					query: `mutation {deleteMaterial(input: {materialId: "${id}"}) {id}}`
+					query: `
+						mutation {
+							revokeRole(input: {roleId: "${app.roleId}", memberId: "${memberId}"}) {id}
+						}
+					`
 				},
 				headers: {"Authorization": "bearer" + app.token}
 			}).then(function (result) {
 				console.log(result);
-				document.getElementById(id).remove();
+				document.getElementById(memberId).remove();
 			}).catch(function (err) {
 				console.log(err);
 			});
 		}
 	}
 })
-

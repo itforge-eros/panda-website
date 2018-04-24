@@ -1,0 +1,1 @@
+{"version":3,"names":[],"mappings":"","sources":["manage-space-single.js"],"sourcesContent":["var app = new Vue({\n\tel: \"#app\",\n\tdata: {\n\t\tspaceName: \"\",\n\t\tspaceURI: \"\"\n\t},\n\tcomputed: {\n\t\tcomputedSpaceURI: function() {\n\t\t\treturn this.spaceURI.toLowerCase().replace(/ /g, \"-\")\n\t\t}\n\t}\n});\n"],"file":"manage-space-single.js"}

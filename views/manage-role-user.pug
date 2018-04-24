@@ -31,13 +31,18 @@ html
 						if role.members.length == 0
 							h3 ยังไม่มีผู้ใช้
 						each m in role.members
-							tr
+							tr(id=m.id)
 								td.w-10= m.username
 								td= m.firstName + " " + m.lastName
-								td.actions
-									a(href="#")
-										i.fas.fa-trash
+								if accesses.includes("ROLE_ASSIGN_ACCESS")
+									td.actions
+										a(@click=`revokeRole("${m.id}")`)
+											i.fas.fa-trash
+		script(src="/public/vendor/axios/axios.min.js")
+		script(src="/public/scripts/manage-role-user.js")
 		script
+			| app.token = "#{memberToken}";
+			| app.roleId = "#{role.id}";
 			| var toggled = false;
 			| function toggleAdder() {
 			| 	if (toggled) {
