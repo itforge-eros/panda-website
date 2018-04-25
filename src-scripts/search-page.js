@@ -4,7 +4,6 @@ var monthsEN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov
 var weekdaysEN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
 const apiURL = "https://api.space.itforge.io/graphql";
-const trySamples = ["M03 IT", "Auditorium", "อาคารเรียนรวม"];
 
 Vue.component("result-card", {
 	props: ["slug", "name", "dept", "deptSlug", "capacity", "amenities"],
@@ -25,21 +24,10 @@ var app = new Vue({
 		s_type: "",
 		s_capacity: "",
 		firstSearch: true,
-		showAdvanced: false,
-		trySamples: trySamples,
 		searchResults: [],
 		loading: false
 	},
 	methods: {
-		toggleAdvanced: function() {
-			this.showAdvanced
-				? (this.s_faculty = "")
-				: (this.s_faculty = "fac-it");
-			this.showAdvanced
-				? (this.s_type = "")
-				: (this.s_type = "1");
-			this.showAdvanced = !this.showAdvanced;
-		},
 		doSearch: function() {
 			this.searchResults.length = 0;
 			this.loading = true;
