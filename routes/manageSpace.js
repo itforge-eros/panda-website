@@ -36,7 +36,8 @@ const amenities = [
 	{ id: "PROJECTOR", name: "โปรเจ็กเตอร์" },
 	{ id: "AIR_CONDITIONER", name: "แอร์" },
 	{ id: "SPEAKER", name: "ระบบเสียง" },
-	{ id: "INSTRUCTOR_PC", name: "คอมฯ ผู้สอน" }
+	{ id: "INSTRUCTOR_PC", name: "คอมฯ ผู้สอน" },
+	{ id: "APPLE_TV", name: "Apple TV" }
 ];
 
 router.use(bodyParser.json());

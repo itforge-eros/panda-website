@@ -5,6 +5,33 @@ var weekdaysEN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
 const apiURL = "https://api.space.itforge.io/graphql";
 
+function buildTagQuery(tags, type) {
+	var temp = "";
+	if (type) temp += (type + ",");
+	for (var i = 0; i < tags.length; i++) {
+		temp += tags[i];
+		if (i < tags.length-1) temp += ",";
+	}
+	return temp;
+}
+
+function buildSearchQuery(room, faculty, tags, capacity) {
+	var temp = "";
+	if (room) temp += (room + " ");
+	if (faculty) temp += ("department:" + faculty + " ");
+	if (tags) temp += ("tags:" + tags + " ");
+	if (capacity) temp += ("capacity:" + capacity);
+	return temp;
+}
+
+document.getElementById("search-box")
+	.addEventListener("keyup", function(e) {
+		e.preventDefault();
+		if (e.keyCode === 13) {
+			document.getElementById("search-btn").click();
+		}
+});
+
 Vue.component("result-card", {
 	props: ["slug", "name", "dept", "deptSlug", "capacity", "amenities"],
 	template: "#result-card"
@@ -17,11 +44,12 @@ Vue.component("spinner", {
 var app = new Vue({
 	el: "#app",
 	data: {
-		s_quick: "",
+		s_room: "",
 		s_date: new Date(),
 		s_date_raw: "",
 		s_faculty: "",
-		s_tags: "",
+		s_tags: [],
+		s_type: "",
 		s_capacity: "",
 		firstSearch: true,
 		searchResults: [],
@@ -30,7 +58,13 @@ var app = new Vue({
 	methods: {
 		doSearch: function() {
 			this.searchResults.length = 0;
+			this.s_tags.length = 0;
 			this.loading = true;
+			var tagInput = document.getElementsByName("s_tags");
+			for (var i = 0; i < tagInput.length; i++) if (tagInput[i].checked) this.s_tags.push(tagInput[i].value);
+			var tagQuery = buildTagQuery(this.s_tags, this.s_type);
+			var searchQuery = buildSearchQuery(this.s_room, this.s_faculty, tagQuery, this.s_capacity);
+			console.log("query: " + searchQuery);
 			if (this.firstSearch) {
 				document.getElementById("page-title").remove();
 				document.getElementById("search-house").remove();
@@ -41,7 +75,7 @@ var app = new Vue({
 				data: {
 					query: `
 						query {
-							searchSpaces(name: "${app.s_quick}") {
+							search(query: "${searchQuery}") {
 								id name fullName capacity
 								department {name fullThaiName}
 							}
@@ -50,7 +84,7 @@ var app = new Vue({
 				}
 			})
 				.then(function(result) {
-					app.searchResults = result.data.data.searchSpaces;
+					app.searchResults = result.data.data.search;
 					app.loading = false;
 				})
 				.catch(function(err) {
