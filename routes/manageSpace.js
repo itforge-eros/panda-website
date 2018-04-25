@@ -1,7 +1,6 @@
 const globalVars = require("../globalVars");
 const express = require("express");
 const router = express.Router();
-const testData = require("../models/testData");
 const ghp = require("../helpers/gql");
 const ahp = require("../helpers/authen");
 
@@ -55,7 +54,6 @@ router.get("/", (req, res) => {
 		ghp.getSpacesInDepartment(apollo_auth, req.session.currentDept.name)
 			.then(spaces => {
 				res.render("manage-space", {
-					session: testData.session,
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					spaces: spaces.data.department.spaces,
@@ -74,7 +72,6 @@ router.get("/", (req, res) => {
 router.get("/new", (req, res) => {
 	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS"])) {
 		res.render("manage-space-single", {
-			session: testData.session,
 			member: req.session.member,
 			currentDept: req.session.currentDept,
 			amenities: amenities,
@@ -96,7 +93,6 @@ router.get("/:dept/:name", (req, res) => {
 			.then(data => {
 				console.log(data.data.space);
 				res.render("manage-space-single", {
-					session: testData.session,
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					amenities: amenities,

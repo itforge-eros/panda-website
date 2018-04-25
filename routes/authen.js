@@ -4,7 +4,6 @@ const router = express.Router();
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const session = require("express-session");
-const testData = require("../models/testData");
 const ghp = require("../helpers/gql");
 
 // required for apollo
@@ -48,7 +47,6 @@ router.get("/", (req, res, next) => {
 
 router.get("/login", (req, res, next) => {
 	res.render("login", {
-		session: testData.session,
 		member: req.session.member,
 		isCredEmpty: isCredEmpty,
 		isCredInvalid: isCredInvalid,

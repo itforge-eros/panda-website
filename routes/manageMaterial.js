@@ -1,7 +1,6 @@
 const globalVars = require("../globalVars");
 const express = require("express");
 const router = express.Router();
-const testData = require("../models/testData");
 const ghp = require("../helpers/gql");
 const ahp = require("../helpers/authen");
 const session = require("express-session");
@@ -40,7 +39,6 @@ router.get("/", (req, res) => {
 		ghp.getMaterials(apollo_auth, req.session.currentDept.name)
 			.then(m => {
 				res.render("manage-material", {
-					session: testData.session,
 					member: req.session.member,
 					memberToken: req.session.token,
 					currentDept: req.session.currentDept,

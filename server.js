@@ -14,9 +14,6 @@ app.set("view engine", "pug");
 // Set publicly-accessible path
 app.use("/public", express.static(__dirname + "/public"));
 
-// Data
-const testData = require("./models/testData");
-
 // Routes
 const authenRouter = require("./routes/authen");
 const manageRequestRouter = require("./routes/manageRequest");
@@ -57,7 +54,6 @@ app.get("/", (req, res) => {
 	ghp.getDepartments(apollo)
 		.then(depts => {
 			res.render("index", {
-				session: testData.session,
 				member: req.session.member,
 				currentDept: req.session.currentDept,
 				faculty: depts.data.departments
@@ -70,7 +66,6 @@ app.get("/", (req, res) => {
 });
 app.get("/error", (req, res) => {
 	res.render("error", {
-		session: testData.session,
 		member: req.session.member,
 		currentDept: req.session.currentDept
 	});
