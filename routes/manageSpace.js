@@ -38,10 +38,10 @@ const apollo_auth = new ApolloClient({
 
 const amenities = [
 	{ id: "projector", name: "โปรเจ็กเตอร์" },
-	{ id: "air_conditioner", name: "แอร์" },
+	{ id: "air-conditioner", name: "แอร์" },
 	{ id: "speaker", name: "ระบบเสียง" },
-	{ id: "instructor_pc", name: "คอมฯ ผู้สอน" },
-	{ id: "apple_tv", name: "Apple TV" }
+	{ id: "instructor-pc", name: "คอมฯ ผู้สอน" },
+	{ id: "apple-tv", name: "Apple TV" }
 ];
 
 const spaceTypes = [
@@ -110,7 +110,6 @@ router.get("/:dept/:name", (req, res) => {
 	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS", "SPACE_UPDATE_ACCESS"])) {
 		ghp.getSpace(apollo_auth, req.params.dept, req.params.name)
 			.then(data => {
-				console.log(data.data.space);
 				res.render("manage-space-single", {
 					member: req.session.member,
 					currentDept: req.session.currentDept,
