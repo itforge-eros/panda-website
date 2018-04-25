@@ -16,45 +16,46 @@ html
 						div.row.flex
 							div.input-with-icon.inp-flex
 								i.fas.fa-building
-								input(type="text", placeholder="ชื่อสถานที่", name="s-quick", v-model="s_quick")
+								input(type="text", placeholder="ชื่อสถานที่", name="s_room", v-model="s_room")
 							div.input-with-icon#inp-date
 								i.fas.fa-calendar-alt
-								input(type="text", placeholder="วันที่", name="s-date", v-model="s_date", id="datepicker")
+								input(type="text", placeholder="วันที่", name="s_date", v-model="s_date", id="datepicker")
 							div.input-with-icon#inp-seat
 								i.fas.fa-user
-								input(type="text", placeholder="ที่นั่ง", name="s-capacity", v-model="s_capacity")
+								input(type="text", placeholder="ที่นั่ง", name="s_capacity", v-model="s_capacity")
 						div.row.flex
 							div.input-with-icon.inp-50
 								i.fas.fa-map-marker
 								div.select
-									select(aria-label="Choose a faculty", name="s-faculty", v-model="s_faculty")
+									select(aria-label="Choose a faculty", name="s_faculty", v-model="s_faculty")
 										option(value="", selected) คณะใดก็ได้
 										each fac in faculty
 											option(value=fac.slug)= fac.name
 							div.input-with-icon.inp-50
 								i.fas.fa-map-marker
 								div.select
-									select(aria-label="Choose a space type", name="s_tags", v-model="s_tags")
+									select(aria-label="Choose a space type", name="s_type", v-model="s_type")
 										option(value="", selected) ห้องชนิดใดก็ได้
-										option(value="2") ห้องเรียน
-										option(value="2") ห้องประชุม
+										option(value="CLASSROOM") ห้องเรียน
+										option(value="MEETING_ROOM") ห้องประชุม
+										option(value="COMPUTER_LAB") แล็บคอมพิวเตอร์
 						div.tags
 							label.control.checkbox
-								input(type="checkbox", name="s_tags", value="true")
+								input(type="checkbox", name="s_tags", value="PROJECTOR")
 								span.control-indicator
 								| มีโปรเจ็กเตอร์
 							label.control.checkbox
-								input(type="checkbox", name="s_tags", value="true")
+								input(type="checkbox", name="s_tags", value="INSTRUCTOR_PC")
 								span.control-indicator
 								| มีคอมฯ ผู้สอน
 							label.control.checkbox
-								input(type="checkbox", name="s_tags", value="true")
+								input(type="checkbox", name="s_tags", value="SPEAKER")
 								span.control-indicator
-								| มีหนู
+								| มีระบบเสียง
 							label.control.checkbox
-								input(type="checkbox", name="s_tags", value="true")
+								input(type="checkbox", name="s_tags", value="APPLE_TV")
 								span.control-indicator
-								| มีอาหาร
+								| มี Apple TV
 						div(style="display:none")
 							input#raw_date(type="text", name="raw_date", v-model="s_date_raw")
 						div.row.text-center.marg-b-1
