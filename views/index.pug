@@ -27,10 +27,10 @@ html
 							div.input-with-icon.inp-50
 								i.fas.fa-map-marker
 								div.select
-									select(aria-label="Choose a faculty", name="s_faculty", v-model="s_faculty", disabled)
+									select(aria-label="Choose a faculty", name="s_faculty", v-model="s_faculty")
 										option(value="", selected) คณะใดก็ได้
 										each fac in faculty
-											option(value=fac.slug)= fac.name
+											option(value=fac.name)= fac.fullThaiName
 							div.input-with-icon.inp-50
 								i.fas.fa-map-marker
 								div.select
