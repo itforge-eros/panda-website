@@ -22,7 +22,7 @@ ghp.getSpace = (apollo, dept, spaceName) => {
 		query: gql`
 			{
 				space(department: "${dept}", name: "${spaceName}") {
-					id name fullName description capacity category tags isAvailable department {name fullThaiName}
+					id name fullName description capacity tags isAvailable department {name fullThaiName}
 				}
 			}
 		`
@@ -32,7 +32,7 @@ ghp.getSpacesInDepartment = (apollo, deptName) => {
 	return apollo.query({
 		query: gql`
 			{
-				department(name: "${deptName}") {id name spaces {name fullName}}
+				department(name: "${deptName}") {id name spaces {id name fullName}}
 			}
 		`
 	})
@@ -299,6 +299,15 @@ ghp.deleteRole = (apollo_auth, roleId) => {
 		mutation: gql`
 			mutation {
 				deleteRole(input: {roleId: "${roleId}"}) { id }
+			}
+		`
+	})
+}
+ghp.deleteSpace = (apollo_auth, spaceId) => {
+	return apollo_auth.mutate({
+		mutation: gql`
+			mutation {
+				deleteSpace(input: {spaceId: "${spaceId}"}) { id }
 			}
 		`
 	})
