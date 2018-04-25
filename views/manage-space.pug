@@ -18,8 +18,9 @@ html
 					ul.tabs
 						li.selected
 							a(href="/manage-space/") สถานที่
-						li
-							a(href="/manage-report/") รายงานปัญหา
+						if member.currentAccesses.includes("PROBLEM_READ_ACCESS")
+							li
+								a(href="/manage-report/") รายงานปัญหา
 					div
 						a.button.marg-b-1(href="new/")
 							i.fas.fa-plus-circle

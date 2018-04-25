@@ -154,6 +154,15 @@ ghp.getRoleMembers = (apollo_auth, roleId) => {
 		`
 	})
 }
+ghp.getReportsInDepartment = (apollo_auth, deptName) => {
+	return apollo_auth.query({
+		query: gql`
+			{
+				department(name: "${deptName}") { spaces { fullName problems { id title } } }
+			}
+		`
+	})
+}
 ghp.createSpace = (apollo_auth, sp) => {
 	return apollo_auth.mutate({
 		mutation: gql`
