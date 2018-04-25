@@ -24,6 +24,14 @@ function buildSearchQuery(room, faculty, tags, capacity) {
 	return temp;
 }
 
+document.getElementById("search-box")
+	.addEventListener("keyup", function(e) {
+		e.preventDefault();
+		if (e.keyCode === 13) {
+			document.getElementById("search-btn").click();
+		}
+});
+
 Vue.component("result-card", {
 	props: ["slug", "name", "dept", "deptSlug", "capacity", "amenities"],
 	template: "#result-card"
@@ -56,6 +64,7 @@ var app = new Vue({
 			for (var i = 0; i < tagInput.length; i++) if (tagInput[i].checked) this.s_tags.push(tagInput[i].value);
 			var tagQuery = buildTagQuery(this.s_tags, this.s_type);
 			var searchQuery = buildSearchQuery(this.s_room, this.s_faculty, tagQuery, this.s_capacity);
+			console.log("query: " + searchQuery);
 			if (this.firstSearch) {
 				document.getElementById("page-title").remove();
 				document.getElementById("search-house").remove();

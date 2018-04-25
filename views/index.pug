@@ -12,7 +12,7 @@ html
 				div.container.steep
 					.page-title-wrap#page-title
 						h1.page-title.text-center ค้นหาสถานที่
-					div.search-box
+					div.search-box#search-box
 						div.row.flex
 							div.input-with-icon.inp-flex
 								i.fas.fa-building
@@ -27,7 +27,7 @@ html
 							div.input-with-icon.inp-50
 								i.fas.fa-map-marker
 								div.select
-									select(aria-label="Choose a faculty", name="s_faculty", v-model="s_faculty")
+									select(aria-label="Choose a faculty", name="s_faculty", v-model="s_faculty", disabled)
 										option(value="", selected) คณะใดก็ได้
 										each fac in faculty
 											option(value=fac.slug)= fac.name
@@ -59,7 +59,7 @@ html
 						div(style="display:none")
 							input#raw_date(type="text", name="raw_date", v-model="s_date_raw")
 						div.row.text-center.marg-b-1
-							button.raised(@click="doSearch()")
+							button.raised#search-btn(@click="doSearch()")
 								i.fas.fa-search
 								| ค้นหา
 				img#search-house(src="/public/img/search-house.svg")
