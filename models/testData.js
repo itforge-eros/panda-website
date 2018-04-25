@@ -8,9 +8,5 @@ let requestInfo = [
 ];
 
 module.exports = {
-	session: session,
-	user: user,
-	faculty: faculty,
-	requestInfo: requestInfo,
-	env: env
+	requestInfo: requestInfo
 }
