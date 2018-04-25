@@ -21,7 +21,7 @@ var app = new Vue({
 		s_date: new Date(),
 		s_date_raw: "",
 		s_faculty: "",
-		s_type: "",
+		s_tags: "",
 		s_capacity: "",
 		firstSearch: true,
 		searchResults: [],
@@ -33,7 +33,6 @@ var app = new Vue({
 			this.loading = true;
 			if (this.firstSearch) {
 				document.getElementById("page-title").remove();
-				document.getElementById("labels").remove();
 				document.getElementById("search-house").remove();
 				this.firstSearch = false;
 			}

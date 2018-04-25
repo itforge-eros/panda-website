@@ -19,28 +19,20 @@
 		text-align: center
 	.inp-flex
 		flex: 1
-	.inp-date
-		width: 32%
-	.inp-25
-		width: 25%
-	ul.label-list
-		list-style-type: none
-		padding-left: 0
-		margin: 0
-		li
-			display: inline-block
+	#inp-date
+		width: 30%
+	#inp-seat
+		width: 20%
+	.inp-50
+		width: 50%
+	.tags
+		margin-bottom: $gap-size-20
+		text-align: center
+		font-family: $font-styled
+		label
 			margin-right: 1em
-			padding: 4px 8px
-			cursor: pointer
-			border-radius: 4px
-			background-color: $color-secondary
-			color: #FFF
-			box-shadow: $shadow-small
-			transition: box-shadow .2s
-			&:last-child
+			&:last-of-type
 				margin-right: 0
-			&:hover
-				box-shadow: $shadow-small-hover
 
 @media screen and (max-width: $container-steep-width - 1)
 	.search-box
@@ -49,6 +41,5 @@
 			div
 				width: 100%
 				margin-right: 0 !important
-		ul.label-list
-			li
-				margin-bottom: 1em
+		#inp-date, #inp-seat
+			width: 100%
