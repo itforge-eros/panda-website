@@ -26,9 +26,7 @@ nav
 					a.icon-link(href="/manage-space/")
 						i.fas.fa-building
 					span.tooltip จัดการสถานที่
-			if accesses.some(a => a == "ROLE_ASSIGN_ACCESS" || 
-				a == "ROLE_CREATE_ACCESS" || a == "ROLE_UPDATE_ACCESS" || 
-				a == "ROLE_DELETE_ACCESS" || a == "ROLE_REVOKE_ACCESS")
+			if accesses.some(a => a == "ROLE_ASSIGN_ACCESS" || a == "ROLE_CREATE_ACCESS" || a == "ROLE_UPDATE_ACCESS" || a == "ROLE_DELETE_ACCESS" || a == "ROLE_REVOKE_ACCESS")
 				li
 					a.icon-link(href="/manage-role/")
 						i.fas.fa-users

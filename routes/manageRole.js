@@ -178,8 +178,8 @@ router.get("/:id/delete", (req, res) => {
 	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["ROLE_DELETE_ACCESS"])) {
 		ghp.deleteRole(apollo_auth, req.params.id)
 			.then(data => {
-				res.redirect("/manage-role/");
 				deleteRoleStatus = "success";
+				res.redirect("/manage-role/");
 			})
 			.catch(err => {
 				if (globalVars.env != "production") console.log(err);

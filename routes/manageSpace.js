@@ -16,6 +16,7 @@ const gql = require("graphql-tag");
 
 let token = "";
 let createSpaceStatus = "";
+let deleteSpaceStatus = "";
 let orgData = {};
 
 router.use(bodyParser.json());
@@ -57,10 +58,12 @@ router.get("/", (req, res) => {
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					spaces: spaces.data.department.spaces,
-					status: createSpaceStatus
+					createSpaceStatus: createSpaceStatus,
+					deleteSpaceStatus: deleteSpaceStatus
 				});
 				orgData = {};
 				createSpaceStatus = "";
+				deleteSpaceStatus = "";
 			})
 			.catch(err => {
 				res.redirect("/error/");
@@ -83,6 +86,22 @@ router.get("/new", (req, res) => {
 		});
 		orgData = {};
 		createSpaceStatus = "";
+	} else {
+		res.redirect("/error/");
+	}
+});
+router.get("/:id/delete", (req, res) => {
+	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["SPACE_DELETE_ACCESS"])) {
+		ghp.deleteSpace(apollo_auth, req.params.id)
+			.then(data => {
+				deleteSpaceStatus = "success";
+				res.redirect("/manage-space/");
+			})
+			.catch(err => {
+				if (globalVars.env != "production") console.log(err);
+				deleteSpaceStatus = err.graphQLErrors[0].message;
+				res.redirect("/manage-space/");
+			})
 	} else {
 		res.redirect("/error/");
 	}
