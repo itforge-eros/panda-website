@@ -21,12 +21,14 @@ nav
 				i.fas.fa-search
 			span.tooltip ค้นหาสถานที่
 		if member && member.roles != undefined
-			if accesses.some(a => a == "SPACE_CREATE_ACCESS" || a == "SPACE_UPDATE_ACCESS" || a == "PROBLEM_READ_ACCESS")
+			if accesses.some(a => a == "SPACE_CREATE_ACCESS" || a == "SPACE_UPDATE_ACCESS" || a == "SPACE_DELETE_ACCESS" || a == "PROBLEM_READ_ACCESS")
 				li
 					a.icon-link(href="/manage-space/")
 						i.fas.fa-building
 					span.tooltip จัดการสถานที่
-			if accesses.some(a => a == "ROLE_ASSIGN_ACCESS" || a == "ROLE_CREATE_ACCESS" || a == "ROLE_UPDATE_ACCESS" || a == "ROLE_DELETE_ACCESS")
+			if accesses.some(a => a == "ROLE_ASSIGN_ACCESS" || 
+				a == "ROLE_CREATE_ACCESS" || a == "ROLE_UPDATE_ACCESS" || 
+				a == "ROLE_DELETE_ACCESS" || a == "ROLE_REVOKE_ACCESS")
 				li
 					a.icon-link(href="/manage-role/")
 						i.fas.fa-users
