@@ -20,7 +20,6 @@ const gql = require("graphql-tag");
 let token = "";
 
 router.use((req, res, next) => {token = req.session.token; next()});
-// router.use(session(globalVars.sessionOptions));
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
@@ -42,7 +41,6 @@ router.get("/", (req, res) => {
 			.then(m => {
 				res.render("manage-material", {
 					session: testData.session,
-					user: testData.user,
 					member: req.session.member,
 					memberToken: req.session.token,
 					currentDept: req.session.currentDept,

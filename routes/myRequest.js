@@ -46,7 +46,6 @@ router.get("/", (req, res) => {
 				});
 				res.render("my-request", {
 					session: testData.session,
-					user: testData.user,
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					myRequests: updatedRequests
@@ -72,7 +71,6 @@ router.get("/:id", (req, res) => {
 				const rq = Object.assign({}, updatedData, returnedReq.data.request);
 				res.render("single-request", {
 					session: testData.session,
-					user: testData.user,
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					reqInfo: rq,

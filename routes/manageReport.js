@@ -18,7 +18,6 @@ const gql = require("graphql-tag");
 let token = "";
 
 router.use((req, res, next) => {token = req.session.token; next()});
-// router.use(session(globalVars.sessionOptions));
 
 const authLink = setContext((_, { headers }) => {
 	return { headers: { authorization: token ? `bearer${token}` : "" } };
@@ -39,7 +38,6 @@ router.get("/", (req, res) => {
 				reportsBySpaces.data.department.spaces
 				res.render("manage-report", {
 					session: testData.session,
-					user: testData.user,
 					member: req.session.member,
 					currentDept: req.session.currentDept
 				});
@@ -53,7 +51,6 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
 	res.render("manage-report-single", {
 		session: testData.session,
-		user: testData.user,
 		member: req.session.member,
 		currentDept: req.session.currentDept,
 		id: req.params.id

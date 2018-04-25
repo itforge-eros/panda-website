@@ -46,7 +46,6 @@ router.get("/", (req, res) => {
 			.then(roles => {
 				res.render("manage-role", {
 					session: testData.session,
-					user: testData.user,
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					roles: roles.data.department.roles,
@@ -67,7 +66,6 @@ router.get("/new", (req, res) => {
 			.then(permissions => {
 				res.render("manage-role-single", {
 					session: testData.session,
-					user: testData.user,
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					orgData: orgData,
@@ -114,7 +112,6 @@ router.get("/:id", (req, res) => {
 					.then(permissions => {
 						res.render("manage-role-single", {
 							session: testData.session,
-							user: testData.user,
 							member: req.session.member,
 							currentDept: req.session.currentDept,
 							status: updateRoleStatus,
@@ -137,7 +134,6 @@ router.get("/:id/users", (req, res) => {
 			.then(role => {
 				res.render("manage-role-user", {
 					session: testData.session,
-					user: testData.user,
 					member: req.session.member,
 					memberToken: req.session.token,
 					currentDept: req.session.currentDept,

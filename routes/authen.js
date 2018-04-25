@@ -21,7 +21,6 @@ let token = "";
 router.use((req, res, next) => {token = req.session.token; next()});
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
-router.use(session(globalVars.sessionOptions));
 
 const apollo = new ApolloClient({
 	link: createHttpLink({ uri: globalVars.gqlURL, fetch: fetch }),
@@ -50,7 +49,6 @@ router.get("/", (req, res, next) => {
 router.get("/login", (req, res, next) => {
 	res.render("login", {
 		session: testData.session,
-		user: testData.user,
 		member: req.session.member,
 		isCredEmpty: isCredEmpty,
 		isCredInvalid: isCredInvalid,

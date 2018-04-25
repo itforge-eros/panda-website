@@ -32,7 +32,6 @@ const apollo_auth = new ApolloClient({
 router.get("/", (req, res) => {
 	res.render("choose-dept", {
 		session: req.session,
-		user: testData.user,
 		member: req.session.member,
 		currentDept: req.session.currentDept
 	});

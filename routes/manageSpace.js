@@ -19,6 +19,10 @@ let token = "";
 let createSpaceStatus = "";
 let orgData = {};
 
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use((req, res, next) => {token = req.session.token; next()});
+
 const authLink = setContext((_, { headers }) => {
 	return { headers: { authorization: token ? `bearer${token}` : "" } };
 });
@@ -44,11 +48,7 @@ const spaceTypes = [
 	{x: "ห้องเรียน", v: "classroom"},
 	{x: "ห้องประชุม", v: "meeting_room"},
 	{x: "แล็บคอมพิวเตอร์", v: "computer_lab"}
-]
-
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use((req, res, next) => {token = req.session.token; next()});
+];
 
 router.get("/", (req, res) => {
 	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS", "SPACE_UPDATE_ACCESS"])) {
@@ -56,7 +56,6 @@ router.get("/", (req, res) => {
 			.then(spaces => {
 				res.render("manage-space", {
 					session: testData.session,
-					user: testData.user,
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					spaces: spaces.data.department.spaces,
@@ -76,7 +75,6 @@ router.get("/new", (req, res) => {
 	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS"])) {
 		res.render("manage-space-single", {
 			session: testData.session,
-			user: testData.user,
 			member: req.session.member,
 			currentDept: req.session.currentDept,
 			amenities: amenities,
@@ -99,7 +97,6 @@ router.get("/:dept/:name", (req, res) => {
 				console.log(data.data.space);
 				res.render("manage-space-single", {
 					session: testData.session,
-					user: testData.user,
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					amenities: amenities,
