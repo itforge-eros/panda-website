@@ -48,9 +48,9 @@ html
 							div.col-50.marg-b-1
 								label(for="slug") ประเภทสถานที่ *
 								div.select
-									select(aria-label="Choose a faculty", name="category")
-										each t in [{x: "ห้องเรียน", v: "CLASSROOM"}, {x: "ห้องประชุม", v: "MEETING_ROOM"}]
-											option(value=t.v, selected=(orgData.category == t.v), disabled=!canSave)= t.x
+									select(aria-label="ประเภทสถานที่", name="tags")
+										each t in spaceTypes
+											option(value=t.v, selected=(orgData.tags.includes(t.v)), disabled=!canSave)= t.x
 						div(style="margin-bottom:0.5em")
 							label(for="name_raw") ชื่อสำหรับใช้ใน URL (ภาษาอังกฤษเท่านั้น) *
 							input(type="text", name="name_raw", required, v-model="spaceURI", disabled=!canSave)

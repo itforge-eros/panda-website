@@ -178,7 +178,6 @@ ghp.createSpace = (apollo_auth, sp) => {
 				"fullName": sp.fullName,
 				"description": sp.description,
 				"capacity": parseInt(sp.capacity),
-				"category": sp.category,
 				"isAvailable": sp.isAvailable == "true" ? true : false,
 				"departmentId": sp.deptId,
 				"tags": sp.tags
@@ -262,7 +261,6 @@ ghp.updateSpace = (apollo_auth, sp) => {
 				"name": sp.name.toLowerCase().replace(/ /g, "-"),
 				"fullName": sp.fullName,
 				"description": sp.description,
-				"category": sp.category,
 				"capacity": parseInt(sp.capacity),
 				"isAvailable": sp.isAvailable == "true" ? true : false,
 				"tags": sp.tags

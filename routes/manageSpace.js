@@ -40,6 +40,12 @@ const amenities = [
 	{ id: "apple_tv", name: "Apple TV" }
 ];
 
+const spaceTypes = [
+	{x: "ห้องเรียน", v: "classroom"},
+	{x: "ห้องประชุม", v: "meeting_room"},
+	{x: "แล็บคอมพิวเตอร์", v: "computer_lab"}
+]
+
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use((req, res, next) => {token = req.session.token; next()});
@@ -74,6 +80,7 @@ router.get("/new", (req, res) => {
 			member: req.session.member,
 			currentDept: req.session.currentDept,
 			amenities: amenities,
+			spaceTypes: spaceTypes,
 			orgData: orgData,
 			status: createSpaceStatus,
 			canSave: true,
@@ -96,6 +103,7 @@ router.get("/:dept/:name", (req, res) => {
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					amenities: amenities,
+					spaceTypes: spaceTypes,
 					orgData: data.data.space,
 					status: createSpaceStatus,
 					canSave: ahp.hasAllAccess(req.session.member.currentAccesses, ["SPACE_UPDATE_ACCESS"]),
