@@ -3,18 +3,13 @@ const router = express.Router();
 const testData = require("../models/testData");
 
 router.get("/", (req, res) => {
-		res.render("manage-request", {
-		session: testData.session,
-		user: testData.user,
+	res.render("manage-request", {
 		member: req.session.member,
 		currentDept: req.session.currentDept,
-		faculty: testData.faculty
 	});
 });
 router.get("/:id", (req, res) => {
-		res.render("manage-request-single", {
-		session: testData.session,
-		user: testData.user,
+	res.render("manage-request-single", {
 		member: req.session.member,
 		currentDept: req.session.currentDept,
 		id: req.params.id,

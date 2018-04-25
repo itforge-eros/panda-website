@@ -5,6 +5,7 @@ const env = process.env.NODE_ENV || "dev";
 const port = env == "production" ? 3001 : 3000;
 const session = require("express-session");
 const compression = require("compression");
+const ghp = require("./helpers/gql");
 
 // Set view location
 app.set("views", "./views");
@@ -12,9 +13,6 @@ app.set("views", "./views");
 app.set("view engine", "pug");
 // Set publicly-accessible path
 app.use("/public", express.static(__dirname + "/public"));
-
-// Data
-const testData = require("./models/testData");
 
 // Routes
 const authenRouter = require("./routes/authen");
@@ -40,19 +38,34 @@ app.use("/space", spaceRouter);
 app.use("/my-request", myRequestRouter);
 app.use("/choose-dept", chooseDeptRouter);
 
+// Apollo
+const ApolloClient = require("apollo-client").ApolloClient;
+const InMemoryCache = require("apollo-cache-inmemory").InMemoryCache;
+const createHttpLink = require("apollo-link-http").createHttpLink;
+const setContext = require("apollo-link-context").setContext;
+const fetch = require("node-fetch");
+const gql = require("graphql-tag");
+const apollo = new ApolloClient({
+	link: createHttpLink({ uri: globalVars.gqlURL, fetch: fetch }),
+	cache: new InMemoryCache()
+});
+
 app.get("/", (req, res) => {
-	res.render("index", {
-		session: testData.session,
-		user: testData.user,
-		member: req.session.member,
-		currentDept: req.session.currentDept,
-		faculty: testData.faculty
-	});
+	ghp.getDepartments(apollo)
+		.then(depts => {
+			res.render("index", {
+				member: req.session.member,
+				currentDept: req.session.currentDept,
+				faculty: depts.data.departments
+			});
+		})
+		.catch(err => {
+			if (env != "production") console.log(err);
+			res.redirect("/error/");
+		})
 });
 app.get("/error", (req, res) => {
 	res.render("error", {
-		session: testData.session,
-		user: testData.user,
 		member: req.session.member,
 		currentDept: req.session.currentDept
 	});
@@ -60,7 +73,6 @@ app.get("/error", (req, res) => {
 app.get("/graphiql", (req, res) => {
 	res.render("graphiql", {
 		session: req.session,
-		user: testData.user,
 		host: globalVars.apiHostname,
 		member: req.session.member,
 		currentDept: req.session.currentDept

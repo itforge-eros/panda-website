@@ -65,6 +65,15 @@ ghp.getPermissions = apollo => {
 		`
 	})
 };
+ghp.getDepartments = apollo => {
+	return apollo.query({
+		query: gql`
+			{
+				departments { id name fullThaiName }
+			}
+		`
+	})
+};
 
 // require auth
 ghp.getAccesses = (apollo_auth, deptName) => {

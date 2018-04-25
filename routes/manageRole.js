@@ -1,7 +1,6 @@
 const globalVars = require("../globalVars");
 const express = require("express");
 const router = express.Router();
-const testData = require("../models/testData");
 const ghp = require("../helpers/gql");
 const ahp = require("../helpers/authen");
 
@@ -45,8 +44,6 @@ router.get("/", (req, res) => {
 		ghp.getRolesInDepartment(apollo_auth, req.session.currentDept.name)
 			.then(roles => {
 				res.render("manage-role", {
-					session: testData.session,
-					user: testData.user,
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					roles: roles.data.department.roles,
@@ -66,8 +63,6 @@ router.get("/new", (req, res) => {
 		ghp.getPermissions(apollo_auth)
 			.then(permissions => {
 				res.render("manage-role-single", {
-					session: testData.session,
-					user: testData.user,
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					orgData: orgData,
@@ -113,8 +108,6 @@ router.get("/:id", (req, res) => {
 				ghp.getPermissions(apollo_auth)
 					.then(permissions => {
 						res.render("manage-role-single", {
-							session: testData.session,
-							user: testData.user,
 							member: req.session.member,
 							currentDept: req.session.currentDept,
 							status: updateRoleStatus,
@@ -136,8 +129,6 @@ router.get("/:id/users", (req, res) => {
 		ghp.getRoleMembers(apollo_auth, req.params.id)
 			.then(role => {
 				res.render("manage-role-user", {
-					session: testData.session,
-					user: testData.user,
 					member: req.session.member,
 					memberToken: req.session.token,
 					currentDept: req.session.currentDept,
