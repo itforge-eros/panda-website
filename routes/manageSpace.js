@@ -33,11 +33,11 @@ const apollo_auth = new ApolloClient({
 });
 
 const amenities = [
-	{ id: "PROJECTOR", name: "โปรเจ็กเตอร์" },
-	{ id: "AIR_CONDITIONER", name: "แอร์" },
-	{ id: "SPEAKER", name: "ระบบเสียง" },
-	{ id: "INSTRUCTOR_PC", name: "คอมฯ ผู้สอน" },
-	{ id: "APPLE_TV", name: "Apple TV" }
+	{ id: "projector", name: "โปรเจ็กเตอร์" },
+	{ id: "air_conditioner", name: "แอร์" },
+	{ id: "speaker", name: "ระบบเสียง" },
+	{ id: "instructor_pc", name: "คอมฯ ผู้สอน" },
+	{ id: "apple_tv", name: "Apple TV" }
 ];
 
 router.use(bodyParser.json());

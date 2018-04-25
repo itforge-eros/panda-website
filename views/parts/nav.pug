@@ -4,7 +4,7 @@
 nav
 	.logo
 		a(href="/") KMITL OSRS
-	if member && member.roles != "undefined"
+	if member && member.roles != undefined
 		if member.roles.length > 0
 			div.dropdown
 				span #{currentDept ? "กำลังจัดการ" : "เลือกคณะ"} <strong>#{currentDept.name}</strong> 
@@ -20,7 +20,7 @@ nav
 			a.icon-link(href="/")
 				i.fas.fa-search
 			span.tooltip ค้นหาสถานที่
-		if member && member.roles != "undefined"
+		if member && member.roles != undefined
 			if accesses.some(a => a == "SPACE_CREATE_ACCESS" || a == "SPACE_UPDATE_ACCESS" || a == "PROBLEM_READ_ACCESS")
 				li
 					a.icon-link(href="/manage-space/")
@@ -58,7 +58,7 @@ if member
 			li
 				a.icon-link(href="/")
 					i.fas.fa-search
-			if member && member.roles != "undefined"
+			if member && member.roles != undefined
 				if accesses.some(a => a == "SPACE_CREATE_ACCESS" || a == "SPACE_UPDATE_ACCESS" || a == "PROBLEM_READ_ACCESS")
 					li
 						a.icon-link(href="/manage-space/")

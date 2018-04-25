@@ -26,7 +26,6 @@ function buildSearchQuery(room, faculty, tags, capacity) {
 
 document.getElementById("search-box")
 	.addEventListener("keyup", function(e) {
-		e.preventDefault();
 		if (e.keyCode === 13) {
 			document.getElementById("search-btn").click();
 		}
