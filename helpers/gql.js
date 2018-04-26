@@ -183,10 +183,10 @@ ghp.getDetailOfViewSpaces = (apollo_auth, requestID) => {
 				    status
 				    createdAt
 				    space {
-				      id
+				      id name
 				    }
 				    client {
-				      id
+				      id firstName
 				    }
 				    reviews {
 				      id

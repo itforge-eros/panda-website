@@ -60,14 +60,14 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
 			if (req.session.member){ 
 		ghp.getDetailOfViewSpaces(apollo_auth, req.params.id).then(detailEachSpace => {
-			console.log(detailEachSpace.data.request.id);
+			console.log(detailEachSpace.data.request);
 					 res.render("manage-request-single", {
 							session: testData.session,
 							user: testData.user,
 							member: req.session.member,
 							currentDept: req.session.currentDept,
 							id: req.params.id,
-							details: detailEachSpace,
+							details: detailEachSpace.data.request,
 					}); 
 				// console.log(requestInfo.data.department.spaces[0])
 		}).catch(error => {if (globalVars.env != "production") console.log(error); 

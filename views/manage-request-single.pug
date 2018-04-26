@@ -16,10 +16,24 @@ html
 						tr.status.pending
 							td สถานะ
 							td รอการอนุมัติ (1 จาก 2)
-						each item in details
-							tr
-								td= item.request
-								td= item
+						tr
+							td ผู้จอง
+							td=details.client.firstName
+						tr
+							td สถานที่
+							td=details.space.name
+						tr
+							td ยื่นคำร้องเมื่อ
+							td=details.createdAt
+						tr
+							td วันที่ต้องการจอง
+							td=details.dates
+						tr
+							td เวลาที่ต้องการ
+							td=details.period.start +'-'+ details.period.end
+						tr
+							td เหตุผล
+							td=details.body
 					a.button.raised(onclick="showModal('modal')")
 						i.fas.fa-check
 						| อนุมัติ
