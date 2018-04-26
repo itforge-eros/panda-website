@@ -126,6 +126,17 @@ var picker = new Pikaday({
 app.r_date = setApiDate(picker.getDate());
 
 // Time picker
+function drawSelected() {
+	for (var i = 18; i <= 39; i++) {
+		$("#" + i).removeClass("selected");
+	}
+	var startPoint = Math.min(app.r_startTime, app.r_endTime);
+	var endPoint = Math.max(app.r_startTime, app.r_endTime);
+	for (var j = startPoint; j < endPoint; j++) {
+		$("#" + j).addClass("selected");
+	}
+}
+
 const timeToSlot = time => {
 	let hr = parseInt(time.split(":")[0]);
 	let mn = parseInt(time.split(":")[1]);
@@ -151,6 +162,7 @@ $("#timeStart").clockTimePicker({
 	},
 	onClose: () => {
 		isFirstTimeChoosing = false;
+		drawSelected();
 	}
 });
 $("#timeEnd").clockTimePicker({
@@ -164,5 +176,6 @@ $("#timeEnd").clockTimePicker({
 	},
 	onClose: () => {
 		isFirstTimeChoosing = false;
+		drawSelected();
 	}
 });
