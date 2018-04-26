@@ -18,12 +18,14 @@ html
 						li.selected
 							a(href="/manage-report/") รายงานปัญหา
 					table.styled.striped
-						each item in [1,2,3,4,5,6,7,8]
+						each p in problems
 							tr
 								td
-									a.no-text-deco(href="/manage-report/" + item)
-										strong= "#" + item + " M03"
-										//- strong is for unread
+									a.no-text-deco(href="/manage-report/" + p.id + "/")
+										if p.isRead
+											strong= p.spaceName + ": " + p.probTitle
+										else
+											= p.spaceName + ": " + p.probTitle
 								td.actions
-									a(href="/manage-report/" + item)
+									a(href="/manage-report/" + p.id + "/")
 										i.fas.fa-eye

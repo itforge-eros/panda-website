@@ -163,11 +163,11 @@ ghp.getRoleMembers = (apollo_auth, roleId) => {
 		`
 	})
 }
-ghp.getReportsInDepartment = (apollo_auth, deptName) => {
+ghp.getProblemsInDepartment = (apollo_auth, deptName) => {
 	return apollo_auth.query({
 		query: gql`
 			{
-				department(name: "${deptName}") { spaces { fullName problems { id title } } }
+				department(name: "${deptName}") { spaces { fullName problems { id title isRead } } }
 			}
 		`
 	})

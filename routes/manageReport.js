@@ -32,12 +32,25 @@ const apollo_auth = new ApolloClient({
 
 router.get("/", (req, res) => {
 	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["PROBLEM_READ_ACCESS"])) {
-		ghp.getReportsInDepartment(apollo_auth, req.session.currentDept.name)
-			.then(reportsBySpaces => {
-				reportsBySpaces.data.department.spaces
+		ghp.getProblemsInDepartment(apollo_auth, req.session.currentDept.name)
+			.then(problemsBySpaces => {
+				let problemList = [];
+				problemsBySpaces.data.department.spaces.map(s => {
+					if (s.problems.length > 0) {
+						for (let i = 0; i < s.problems.length; i++) {
+							problemList.push({
+								probId: s.problems[i].id,
+								probTitle: s.problems[i].title,
+								isRead: s.problems[i].isRead,
+								spaceName: s.fullName
+							});
+						}
+					}
+				})
 				res.render("manage-report", {
 					member: req.session.member,
-					currentDept: req.session.currentDept
+					currentDept: req.session.currentDept,
+					problems: problemList
 				});
 			})
 			.catch(err => {
