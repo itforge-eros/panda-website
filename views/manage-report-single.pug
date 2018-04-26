@@ -12,13 +12,15 @@ html
 					div.page-title-wrap
 						h1.page-title รายงาน
 					div.marg-b-2
-						p สถานที่: Something
+						p สถานที่: #{problem.space.fullName}, #{problem.space.department.fullThaiName}
 						p วันที่แจ้ง: #{problem.createdAt_th}
-					div.marg-b-2
-						h3 หัวข้อ
-						p= problem.title
-						h3 รายละเอียด
-						p= problem.body
-					a.button.raised(href="#")
-						i.fas.fa-envelope-open
-						| บันทึกว่าอ่านแล้ว
+					div.card.marg-b-1
+						div.marg-b-1
+							h3 หัวข้อ
+							p= problem.title
+							h3 รายละเอียด
+							p= problem.body
+					if problem.isRead
+						a.button.raised(href="#")
+							i.fas.fa-envelope-open
+							| บันทึกว่าอ่านแล้ว

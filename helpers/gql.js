@@ -176,7 +176,7 @@ ghp.getProblem = (apollo_auth, probId) => {
 	return apollo_auth.query({
 		query: gql`
 			{
-				problem(id: "${probId}") { id body title isRead createdAt }
+				problem(id: "${probId}") { id body title isRead createdAt space { fullName department { fullThaiName } } }
 			}
 		`
 	})
