@@ -66,24 +66,25 @@ html
 				div.container.steep#search-results(v-if="!firstSearch")
 					spinner(v-show="loading")
 					h3.text-center(v-show="!searchResults.length && !loading && !firstSearch", style="margin-top:4em") ไม่พบผลลัพธ์
-					result-card(v-for="space in searchResults", :key="space.id", :slug="space.name", :name="space.fullName", :dept="space.department.fullThaiName", :dept-slug="space.department.name", :capacity="space.capacity", :amenities="['pc', 'sound', 'aircon', 'proj']")
+					result-card(v-for="space in searchResults", :key="space.id", :slug="space.name", :name="space.fullName", :dept="space.department.fullThaiName", :dept-slug="space.department.name", :capacity="space.capacity", :amenities="space.tags")
 		script(type="text/x-template", id="result-card")
 			a.card.shadow.hoverable.search-result-card(v-bind:href="'space/' + deptSlug + '/' + slug + '/'")
 				h1.card-title {{ name }}
-				//- div.result-time 2 hrs max available
 				p {{ dept }}
 				div.amenities
-					span
+					span(v-if="capacity")
 						i.fas.fa-users
 						|  {{ capacity }}
-					span(v-if="amenities.includes('sound')", title="sound system")
+					span(v-if="amenities.includes('speaker')", title="sound system")
 						i.fas.fa-volume-up
-					span(v-if="amenities.includes('pc')", title="teacher PC")
+					span(v-if="amenities.includes('instructor-pc')", title="teacher pc")
 						i.fas.fa-desktop
-					span(v-if="amenities.includes('aircon')", title="air conditioner")
+					span(v-if="amenities.includes('air-conditioner')", title="air conditioner")
 						img.i(src="/public/img/icons/snow.svg")
-					span(v-if="amenities.includes('proj')", title="projector")
+					span(v-if="amenities.includes('projector')", title="projector")
 						img.i(src="/public/img/icons/projector.svg")
+					span(v-if="amenities.includes('apple-tv')", title="apple tv")
+						img.i(src="/public/img/icons/apple-tv.svg")
 		script(src="/public/vendor/pikaday/pikaday.min.js")
 		script(src="/public/vendor/axios/axios.min.js")
 		script(src="/public/scripts/search-page.js")

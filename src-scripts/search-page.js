@@ -75,8 +75,7 @@ var app = new Vue({
 					query: `
 						query {
 							search(query: "${searchQuery}") {
-								id name fullName capacity
-								department {name fullThaiName}
+								id name fullName capacity tags department {name fullThaiName}
 							}
 						}
 					`
@@ -84,6 +83,7 @@ var app = new Vue({
 			})
 				.then(function(result) {
 					app.searchResults = result.data.data.search;
+					console.log(result.data.data.search);
 					app.loading = false;
 				})
 				.catch(function(err) {
