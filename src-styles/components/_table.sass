@@ -70,3 +70,13 @@ table
 			display: block
 	.w-10
 		width: 100%
+
+@media print
+	table
+		width: 100%
+		// border: 1px solid #000
+		border-collapse: collapse
+		tr.status
+			color: #000 !important
+		th, td
+			border: 1px solid #000
