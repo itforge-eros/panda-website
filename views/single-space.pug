@@ -30,19 +30,27 @@ html
 							div.card
 								span.amenity
 									i.fas.fa-2x.fa-users
-									span #{space.capacity} ที่นั่ง
-								span.amenity
-									i.fas.fa-2x.fa-volume-up
-									span ระบบเสียง
-								span.amenity
-									i.fas.fa-2x.fa-desktop
-									span คอมฯผู้สอน
-								span.amenity
-									img.i(src="/public/img/icons/snow.svg")
-									span แอร์
-								span.amenity
-									img.i(src="/public/img/icons/projector.svg")
-									span โปรเจ็กเตอร์
+									span #{space.capacity ? space.capacity : "ไม่ระบุ"} ที่นั่ง
+								if space.tags.includes("speaker")
+									span.amenity
+										i.fas.fa-2x.fa-volume-up
+										span ระบบเสียง
+								if space.tags.includes("instructor-pc")
+									span.amenity
+										i.fas.fa-2x.fa-desktop
+										span คอมฯผู้สอน
+								if space.tags.includes("air-conditioner")
+									span.amenity
+										img.i(src="/public/img/icons/snow.svg")
+										span แอร์
+								if space.tags.includes("projector")
+									span.amenity
+										img.i(src="/public/img/icons/projector.svg")
+										span โปรเจ็กเตอร์
+								if space.tags.includes("apple-tv")
+									span.amenity
+										img.i(src="/public/img/icons/apple-tv.svg")
+										span Apple TV
 					div.row#row-2
 						div.card.shadow
 							form.reservation-box(action="reserve/", method="POST")
