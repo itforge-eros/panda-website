@@ -123,7 +123,7 @@ var picker = new Pikaday({
 		}\u0020${day}\u0020${monthsTH[monthsEN.findIndex(monthsMapper)]}`;
 	}
 });
-app.r_date = setApiDate(picker.getDate()); // initial to present
+app.r_date = setApiDate(picker.getDate());
 
 // Time picker
 const timeToSlot = time => {

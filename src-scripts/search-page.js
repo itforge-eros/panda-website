@@ -24,12 +24,13 @@ function buildSearchQuery(room, faculty, tags, capacity) {
 	return temp;
 }
 
-document.getElementById("search-box")
-	.addEventListener("keyup", function(e) {
+setTimeout(function() {
+	document.getElementById("search-box").addEventListener("keyup", function(e) {
 		if (e.keyCode === 13) {
 			document.getElementById("search-btn").click();
 		}
-});
+	});
+}, 100);
 
 Vue.component("result-card", {
 	props: ["slug", "name", "dept", "deptSlug", "capacity", "amenities"],
