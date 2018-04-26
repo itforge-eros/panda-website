@@ -51,23 +51,30 @@ const spaceTypes = [
 ];
 
 router.get("/", (req, res) => {
-	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS", "SPACE_UPDATE_ACCESS"])) {
-		ghp.getSpacesInDepartment(apollo_auth, req.session.currentDept.name)
-			.then(spaces => {
-				res.render("manage-space", {
-					member: req.session.member,
-					currentDept: req.session.currentDept,
-					spaces: spaces.data.department.spaces,
-					createSpaceStatus: createSpaceStatus,
-					deleteSpaceStatus: deleteSpaceStatus
+	let acc = req.session.member.currentAccesses;
+	if (req.session.member && 
+		ahp.hasEitherAccess(acc, ["SPACE_CREATE_ACCESS", "SPACE_UPDATE_ACCESS", "SPACE_DELETE_ACCESS", "PROBLEM_READ_ACCESS"])) {
+		if (acc.includes("PROBLEM_READ_ACCESS") && !acc.includes("SPACE_CREATE_ACCESS") && 
+			!acc.includes("SPACE_UPDATE_ACCESS") && !acc.includes("SPACE_DELETE_ACCESS")) {
+			res.redirect("/manage-report/");
+		} else {
+			ghp.getSpacesInDepartment(apollo_auth, req.session.currentDept.name)
+				.then(spaces => {
+					res.render("manage-space", {
+						member: req.session.member,
+						currentDept: req.session.currentDept,
+						spaces: spaces.data.department.spaces,
+						createSpaceStatus: createSpaceStatus,
+						deleteSpaceStatus: deleteSpaceStatus
+					});
+					orgData = {};
+					createSpaceStatus = "";
+					deleteSpaceStatus = "";
+				})
+				.catch(err => {
+					res.redirect("/error/");
 				});
-				orgData = {};
-				createSpaceStatus = "";
-				deleteSpaceStatus = "";
-			})
-			.catch(err => {
-				res.redirect("/error/");
-			});
+		}
 	} else {
 		res.redirect("/error/")
 	}
