@@ -172,6 +172,15 @@ ghp.getProblemsInDepartment = (apollo_auth, deptName) => {
 		`
 	})
 }
+ghp.getProblem = (apollo_auth, probId) => {
+	return apollo_auth.query({
+		query: gql`
+			{
+				problem(id: "${probId}") { id body title isRead createdAt }
+			}
+		`
+	})
+}
 ghp.createSpace = (apollo_auth, sp) => {
 	return apollo_auth.mutate({
 		mutation: gql`
