@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const ghp = require("../helpers/gql");
 const ahp = require("../helpers/authen");
+const dhp = require("../helpers/date");
 const session = require("express-session");
 
 // required for apollo
@@ -39,8 +40,8 @@ router.get("/", (req, res) => {
 					if (s.problems.length > 0) {
 						for (let i = 0; i < s.problems.length; i++) {
 							problemList.push({
-								probId: s.problems[i].id,
-								probTitle: s.problems[i].title,
+								id: s.problems[i].id,
+								title: s.problems[i].title,
 								isRead: s.problems[i].isRead,
 								spaceName: s.fullName
 							});
@@ -60,11 +61,24 @@ router.get("/", (req, res) => {
 	} else { res.redirect("/error/") }
 });
 router.get("/:id", (req, res) => {
-	res.render("manage-report-single", {
-		member: req.session.member,
-		currentDept: req.session.currentDept,
-		id: req.params.id
-	});
+	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["PROBLEM_READ_ACCESS"])) {
+		ghp.getProblem(apollo_auth, req.params.id)
+			.then(returnedProblem => {
+				let updatedData = {
+					createdAt_th: dhp.thaiDateOf(dhp.epochToDate(returnedProblem.data.problem.createdAt))
+				}
+				const problem = Object.assign({}, returnedProblem.data.problem, updatedData);
+				res.render("manage-report-single", {
+					member: req.session.member,
+					currentDept: req.session.currentDept,
+					problem: problem
+				});
+			})
+			.catch(err => {
+				if (globalVars.env != "production") console.log(err);
+			res.redirect("/error/");
+			})
+	} else { res.redirect("/error/") }
 });
 
 module.exports = router;

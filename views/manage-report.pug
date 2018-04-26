@@ -23,9 +23,9 @@ html
 								td
 									a.no-text-deco(href="/manage-report/" + p.id + "/")
 										if p.isRead
-											strong= p.spaceName + ": " + p.probTitle
+											strong= p.spaceName + ": " + p.title
 										else
-											= p.spaceName + ": " + p.probTitle
+											= p.spaceName + ": " + p.title
 								td.actions
 									a(href="/manage-report/" + p.id + "/")
 										i.fas.fa-eye
