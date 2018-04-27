@@ -115,6 +115,9 @@ html
 		script(src="/public/vendor/pikaday/pikaday.min.js")
 		script(src="/public/vendor/jquery-clock-timepicker.min.js")
 		script(src="/public/vendor/axios/axios.min.js")
+		script
+			| var spaceName = "#{space.name}";
+			| var deptName = "#{space.department.name}";
 		script(src="/public/scripts/single-page.js")
 		script(src="/public/scripts/modal.js")
 		if member

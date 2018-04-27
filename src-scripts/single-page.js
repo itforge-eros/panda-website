@@ -33,6 +33,9 @@ function setApiDate(date) {
 		(d < 10 ? "0" + d : d)
 	);
 }
+function drawReservations() {
+	// do
+}
 
 var app = new Vue({
 	el: "#app",
@@ -49,7 +52,8 @@ var app = new Vue({
 		reportBody: "",
 		reportToken: "",
 		reportSent: false,
-		submitHasError: false
+		submitHasError: false,
+		reservations: {}
 	},
 	methods: {
 		sendReport: () => {
@@ -83,6 +87,33 @@ var app = new Vue({
 					app.submitHasError = true;
 				});
 		}
+	},
+	created: function() {
+		axios(apiURL, {
+			method: "POST",
+			data: {
+				query: `
+					query {
+						space(department: "${deptName}", name: "${spaceName}" ) { reservations {date period {start end}} }
+					}
+				`
+			}
+		})
+		.then(function(data) {
+			let reservationsByDay = {};
+			data.data.data.space.reservations.map(r => {
+				let newKey = r.date.replace(/-/g, "_");
+				if (reservationsByDay[newKey] === undefined) {
+					reservationsByDay[newKey] = [];
+					reservationsByDay[newKey].push({ start: r.period.start, end: r.period.end });
+				} else {
+					reservationsByDay[newKey].push({ start: r.period.start, end: r.period.end });
+				}
+			});
+			app.reservations = reservationsByDay;
+			// drawReservations();
+		})
+		.catch(function(err) { console.log(err) });
 	}
 });
 
