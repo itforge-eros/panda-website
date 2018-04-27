@@ -24,8 +24,9 @@ html
 						h2.page-subtitle= space.department.fullThaiName
 				div.container
 					div.row.flex.marg-b-1#row-1
-						div.featured-img
-							img(src="/public/img/single-feat.jpeg", alt="M23")
+						if space.images.length > 0
+							div.featured-img
+								img(src=space.images[0], alt=space.name)
 						div.amenities-box
 							div.card
 								span.amenity
