@@ -20,7 +20,7 @@ html
 							p= problem.title
 							h3 รายละเอียด
 							p= problem.body
-					if problem.isRead
-						a.button.raised(href="#")
+					if !problem.isRead
+						a.button.raised(href="isread")
 							i.fas.fa-envelope-open
 							| บันทึกว่าอ่านแล้ว

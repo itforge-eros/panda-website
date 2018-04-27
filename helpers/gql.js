@@ -303,6 +303,13 @@ ghp.updateRole = (apollo_auth, r) => {
 		}
 	})
 }
+ghp.updateProblem = (apollo_auth, probId) => {
+	return apollo_auth.mutate({
+		mutation: gql`
+			mutation { updateProblem(input: {problemId: "${probId}", isRead: true}) {id} }
+		`
+	})
+}
 ghp.deleteRole = (apollo_auth, roleId) => {
 	return apollo_auth.mutate({
 		mutation: gql`

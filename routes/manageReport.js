@@ -80,5 +80,17 @@ router.get("/:id", (req, res) => {
 			})
 	} else { res.redirect("/error/") }
 });
+router.get("/:id/isread", (req, res) => {
+	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["PROBLEM_UPDATE_ACCESS"])) {
+		ghp.updateProblem(apollo_auth, req.params.id)
+			.then(data => {
+				res.redirect("/manage-report/")
+			})
+			.catch(err => {
+				if (globalVars.env != "production") console.log(err);
+				res.redirect("/error")
+			});
+	} else { res.redirect("/error/") }
+})
 
 module.exports = router;
