@@ -2,6 +2,7 @@ const monthsTH = ["ม.ค.","ก.พ.","มี.ค","เม.ย.","พ.ค.","�
 const weekdaysTH = ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."];
 const monthsEN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const weekdaysEN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+var reservations = {};
 
 const times = [];
 for (let t = 0, i = 0; t <= 23.5; t += 0.5, i++)
@@ -33,8 +34,10 @@ function setApiDate(date) {
 		(d < 10 ? "0" + d : d)
 	);
 }
-function drawReservations() {
-	// do
+function drawReservations(date) {
+	var d = date.replace(/-/g, "_");
+	console.log(d);
+	console.log(reservations[d]);
 }
 
 var app = new Vue({
@@ -110,8 +113,8 @@ var app = new Vue({
 					reservationsByDay[newKey].push({ start: r.period.start, end: r.period.end });
 				}
 			});
-			app.reservations = reservationsByDay;
-			// drawReservations();
+			reservations = reservationsByDay;
+			drawReservations(setApiDate(new Date()));
 		})
 		.catch(function(err) { console.log(err) });
 	}
