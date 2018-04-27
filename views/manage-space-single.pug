@@ -83,13 +83,17 @@ html
 							label ภาพของห้อง
 							img.marg-b-1#currentImg(src="/public/img/single-feat.jpeg")
 							button.marg-b-1(type="button", @click="toggleUploadBox") {{ uploadBoxIsOpen ? "ยกเลิก" : "อัพโหลดภาพใหม่" }}
-							div.dropzone#imgDropzone(v-show="uploadBoxIsOpen")
+							span(v-show="uploadBoxIsLoading") กำลังโหลด
+							div.dpzone#imgDropzone(v-show="uploadBoxIsOpen")
 						if canSave
 							button.raised
 								i.fas.fa-save
 								| บันทึก
 		script(src="/public/vendor/dropzone/dropzone.min.js")
+		script(src="/public/vendor/axios/axios.min.js")
 		script(src="/public/scripts/manage-space-single.js")
 		script
 			| app.spaceName = "#{orgData.fullName ? orgData.fullName : ""}";
 			| app.spaceURI = "#{orgData.name ? orgData.name : ""}";
+			| app.spaceId = "#{orgData.id ? orgData.id : ""}";
+			| app.memberToken = "#{memberToken}";

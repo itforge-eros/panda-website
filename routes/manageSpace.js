@@ -83,6 +83,7 @@ router.get("/new", (req, res) => {
 	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS"])) {
 		res.render("manage-space-single", {
 			member: req.session.member,
+			memberToken: req.session.token,
 			currentDept: req.session.currentDept,
 			amenities: amenities,
 			spaceTypes: spaceTypes,
@@ -119,6 +120,7 @@ router.get("/:dept/:name", (req, res) => {
 			.then(data => {
 				res.render("manage-space-single", {
 					member: req.session.member,
+					memberToken: req.session.token,
 					currentDept: req.session.currentDept,
 					amenities: amenities,
 					spaceTypes: spaceTypes,
