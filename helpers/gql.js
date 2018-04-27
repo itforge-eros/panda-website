@@ -163,6 +163,20 @@ ghp.getRoleMembers = (apollo_auth, roleId) => {
 		`
 	})
 }
+
+ghp.getPermissionsAndRequestsBySPECIFIC_Department = (apollo_auth, currentDepartment) => {
+	return apollo_auth.query({
+		query: gql`
+			{			  
+				department(name: "${currentDepartment}") {
+				fullThaiName
+			    spaces { requests { 
+			    	body dates period {start end}
+			    id client { firstName email }
+			    space { name } } 
+					} 
+				}
+
 ghp.getProblemsInDepartment = (apollo_auth, deptName) => {
 	return apollo_auth.query({
 		query: gql`
@@ -172,6 +186,33 @@ ghp.getProblemsInDepartment = (apollo_auth, deptName) => {
 		`
 	})
 }
+
+ghp.getDetailOfViewSpaces = (apollo_auth, requestID) => {
+	return apollo_auth.query({
+		query: gql`
+				{
+				  request(id: "${requestID}") {
+				    id
+				    body
+				    dates
+				    period{start end}
+				    status
+				    createdAt
+				    space {
+				      id name
+				    }
+				    client {
+				      id firstName
+				    }
+				    reviews {
+				      id
+				    }
+				  }
+				}
+		`
+	})
+}
+
 ghp.getProblem = (apollo_auth, probId) => {
 	return apollo_auth.query({
 		query: gql`
@@ -328,5 +369,6 @@ ghp.deleteSpace = (apollo_auth, spaceId) => {
 		`
 	})
 }
+
 
 module.exports = ghp;

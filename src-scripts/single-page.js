@@ -88,6 +88,8 @@ var app = new Vue({
 
 // Date picker
 const today = new Date();
+
+var picker_date;
 var picker = new Pikaday({
 	field: document.getElementById("datepicker"),
 	i18n: {
@@ -98,6 +100,7 @@ var picker = new Pikaday({
 		weekdaysShort: weekdaysTH
 	},
 	firstDay: 1,
+	format: "DD-MM-YYYY",
 	minDate: today,
 	maxDate: new Date(
 		today.getFullYear() + 1,
