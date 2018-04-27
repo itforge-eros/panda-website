@@ -50,5 +50,8 @@ Dropzone.options.imgDropzone = {
 			var _send = xhr.send;
 			xhr.send = function() {_send.call(xhr, file);};
 		});
+		this.on("success", function(file) {
+			document.getElementById("currentImg").remove();
+		});
 	}
 }
