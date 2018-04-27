@@ -15,7 +15,7 @@ html
 					table.styled.striped.marg-b-2
 						tr.status.pending
 							td สถานะ
-							td รอการอนุมัติ (1 จาก 2)
+							td='รอการอนุมัติ('+(details.reviews).length+' จาก 3)'
 						tr
 							td ผู้จอง
 							td=details.client.firstName
@@ -24,13 +24,13 @@ html
 							td=details.space.name
 						tr
 							td ยื่นคำร้องเมื่อ
-							td=details.createdAt
+							td=details.createdAt_th
 						tr
 							td วันที่ต้องการจอง
-							td=details.dates
+							td=details.dates_th
 						tr
 							td เวลาที่ต้องการ
-							td=details.period.start +'-'+ details.period.end
+							td=details.startTime +'-'+ details.endTime + ' น.'
 						tr
 							td เหตุผล
 							td=details.body

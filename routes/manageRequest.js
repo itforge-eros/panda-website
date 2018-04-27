@@ -60,14 +60,21 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
 			if (req.session.member){ 
 		ghp.getDetailOfViewSpaces(apollo_auth, req.params.id).then(detailEachSpace => {
-			console.log(detailEachSpace.data.request);
+			let updatedData = {
+					createdAt_th: dhp.thaiDateOf(dhp.epochToDate(detailEachSpace.data.request.createdAt)),
+					dates_th: detailEachSpace.data.request.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d))),
+					startTime: dhp.slotToTime(detailEachSpace.data.request.period.start),
+					endTime: dhp.slotToTime(detailEachSpace.data.request.period.end)
+				}
+				const rq = Object.assign({}, updatedData, detailEachSpace.data.request);
+				// console.log(rq);
 					 res.render("manage-request-single", {
 							session: testData.session,
 							user: testData.user,
 							member: req.session.member,
 							currentDept: req.session.currentDept,
 							id: req.params.id,
-							details: detailEachSpace.data.request,
+							details: rq,
 					}); 
 				// console.log(requestInfo.data.department.spaces[0])
 		}).catch(error => {if (globalVars.env != "production") console.log(error); 
