@@ -15,7 +15,7 @@ var app = new Vue({
 		}
 	}
 });
-// Dropzone.autoDiscover = false;
+
 Dropzone.options.imgDropzone = {
 	url: "temp",
 	maxFiles: 1,
