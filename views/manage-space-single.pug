@@ -4,9 +4,11 @@ html
 		title จัดการสถานที่ M03 - KMITL OSRS
 		include parts/stylesheet
 		include parts/scripts
+		link(rel="stylesheet", href="/public/vendor/dropzone/dropzone.min.css")
 		style
 			| code#spaceURL {word-break: break-all}
 			| span#spaceURI {color: #00A0FF}
+			| img#currentImg {display:block;max-width: 100%}
 	body.manage-space-single
 		include parts/nav
 		-
@@ -79,11 +81,14 @@ html
 								= orgData.description ? orgData.description : ""
 						div.marg-b-1
 							label ภาพของห้อง
-							div(style="height: 250px; background-color: #F0F0F0")
+							img.marg-b-1#currentImg(src="/public/img/single-feat.jpeg")
+							button.marg-b-1(type="button", @click="toggleUploadBox") {{ uploadBoxIsOpen ? "ยกเลิก" : "อัพโหลดภาพใหม่" }}
+							div.dropzone#imgDropzone(v-show="uploadBoxIsOpen")
 						if canSave
 							button.raised
 								i.fas.fa-save
 								| บันทึก
+		script(src="/public/vendor/dropzone/dropzone.min.js")
 		script(src="/public/scripts/manage-space-single.js")
 		script
 			| app.spaceName = "#{orgData.fullName ? orgData.fullName : ""}";
