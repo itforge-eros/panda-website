@@ -82,9 +82,8 @@ html
 						div.marg-b-1
 							label ภาพของห้อง
 							img.marg-b-1#currentImg(src="/public/img/single-feat.jpeg")
-							button.marg-b-1(type="button", @click="toggleUploadBox") {{ uploadBoxIsOpen ? "ยกเลิก" : "อัพโหลดภาพใหม่" }}
-							span(v-show="uploadBoxIsLoading") กำลังโหลด
-							div.dpzone#imgDropzone(v-show="uploadBoxIsOpen")
+							button.marg-b-1(type="button", @click="uploadBoxIsOpen = true", v-if="!uploadBoxIsOpen") อัพโหลดภาพใหม่
+							div.dropzone#imgDropzone(v-show="uploadBoxIsOpen")
 						if canSave
 							button.raised
 								i.fas.fa-save
