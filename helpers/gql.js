@@ -126,6 +126,7 @@ ghp.getRequest = (apollo_auth, id) => {
 					status
 					createdAt
 					space { fullName department { fullThaiName } }
+					materials
 				}
 			}
 		`

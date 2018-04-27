@@ -36,8 +36,11 @@ function setApiDate(date) {
 }
 function drawReservations(date) {
 	var d = date.replace(/-/g, "_");
-	console.log(d);
-	console.log(reservations[d]);
+	for (var i = 0; i < reservations[d].length; i++) {
+		for (var j = reservations[d][i].start; j < reservations[d][i].end; j++) {
+			document.getElementById(j).classList.add("unavailable");
+		}
+	}
 }
 
 var app = new Vue({

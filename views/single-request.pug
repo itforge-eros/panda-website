@@ -36,3 +36,10 @@ html
 						tr
 							td เหตุผล
 							td= reqInfo.body
+						if reqInfo.materials.length > 0
+							tr
+								td อุปกรณ์ที่ต้องการยืม
+								td
+									ul(style="margin-top:0;margin-bottom:0;padding-left:1em")
+										each i in reqInfo.materials
+											li= i
