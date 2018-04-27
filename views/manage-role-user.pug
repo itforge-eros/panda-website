@@ -34,7 +34,7 @@ html
 							tr(id=m.id)
 								td.w-10= m.username
 								td= m.firstName + " " + m.lastName
-								if accesses.includes("ROLE_ASSIGN_ACCESS")
+								if accesses.includes("ROLE_REVOKE_ACCESS")
 									td.actions
 										a(@click=`revokeRole("${m.id}")`)
 											i.fas.fa-trash

@@ -9,17 +9,26 @@ html
 		div#app
 			div.content
 				div.container
-					if status == "success"
+					if createSpaceStatus == "success"
 						div.notice.success
 							i.fas.fa-check-circle
 							|  เพิ่มสถานที่เรียบร้อย
+					else if deleteSpaceStatus == "success"
+						div.notice.success
+							i.fas.fa-check-circle
+							|  ลบสถานที่เรียบร้อย
+					else if deleteSpaceStatus != ""
+						div.notice.warning
+							i.fas.fa-exclamation-circle
+							|  ไม่สามารถลบสถานที่ได้ (#{deleteSpaceStatus})
 					div.page-title-wrap
 						h1.page-title จัดการสถานที่
 					ul.tabs
 						li.selected
 							a(href="/manage-space/") สถานที่
-						li
-							a(href="/manage-report/") รายงานปัญหา
+						if member.currentAccesses.includes("PROBLEM_READ_ACCESS")
+							li
+								a(href="/manage-report/") รายงานปัญหา
 					div
 						a.button.marg-b-1(href="new/")
 							i.fas.fa-plus-circle
@@ -31,5 +40,6 @@ html
 								td.actions
 									a(href=currentDept.name + "/" + s.name + "/")
 										i.fas.fa-cog
-									a(href="#")
-										i.fas.fa-trash
+									if accesses.includes("SPACE_DELETE_ACCESS")
+										a(href=s.id + "/delete/", onclick="return confirm('ต้องการลบสถานที่นี้หรือไม่')")
+											i.fas.fa-trash

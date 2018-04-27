@@ -1,7 +1,6 @@
 const globalVars = require("../globalVars");
 const express = require("express");
 const router = express.Router();
-const testData = require("../models/testData");
 const dhp = require("../helpers/date");
 const ghp = require("../helpers/gql");
 
@@ -45,8 +44,6 @@ router.get("/", (req, res) => {
 					updatedRequests.push(tmp);
 				});
 				res.render("my-request", {
-					session: testData.session,
-					user: testData.user,
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					myRequests: updatedRequests
@@ -71,8 +68,6 @@ router.get("/:id", (req, res) => {
 				}
 				const rq = Object.assign({}, updatedData, returnedReq.data.request);
 				res.render("single-request", {
-					session: testData.session,
-					user: testData.user,
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					reqInfo: rq,

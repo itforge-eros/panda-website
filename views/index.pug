@@ -12,66 +12,79 @@ html
 				div.container.steep
 					.page-title-wrap#page-title
 						h1.page-title.text-center ค้นหาสถานที่
-					div.search-box
+					div.search-box#search-box
 						div.row.flex
 							div.input-with-icon.inp-flex
 								i.fas.fa-building
-								input(type="text", placeholder="ชื่อสถานที่", name="s-quick", v-model="s_quick")
-							div.input-with-icon.inp-date
+								input(type="text", placeholder="ชื่อสถานที่", name="s_room", v-model="s_room")
+							div.input-with-icon#inp-date
 								i.fas.fa-calendar-alt
-								input(type="text", placeholder="วันที่", name="s-date", v-model="s_date", id="datepicker")
-						div.row.flex#search-advanced(v-if="showAdvanced")
-							div.input-with-icon.inp-flex
-								i.fas.fa-map-marker
-								div.select
-									select(aria-label="Choose a faculty", name="s-faculty", v-model="s_faculty")
-										each fac in faculty
-											option(value=fac.slug)= fac.name
-							div.input-with-icon.inp-flex
-								i.fas.fa-map-marker
-								div.select
-									select(aria-label="Choose a space type", name="s-type", v-model="s_type")
-										option(value="1") ห้องเรียน
-										option(value="2") ห้องประชุม
-							div.input-with-icon.inp-25
+								input(type="text", placeholder="วันที่", name="s_date", v-model="s_date", id="datepicker")
+							div.input-with-icon#inp-seat
 								i.fas.fa-user
-								input(type="text", placeholder="ที่นั่ง", name="s-capacity", v-model="s_capacity")
-						div.row.text-center.marg-b-1#labels(v-show="!showAdvanced")
-							div.marg-b-1 ลองคลิกตัวอย่างเหล่านี้ <i class="fas fa-hand-point-down"></i>
-							ul.label-list
-								li(v-for="sample in trySamples" @click="s_quick = sample") {{ sample }}
-						div.row.text-center.marg-b-1
-							button(v-on:click="toggleAdvanced()")
-								i.fas.fa-xs.fa-sliders-h
-								| {{ showAdvanced ? 'ซ่อน' : 'แสดง' }}ตัวเลือก
+								input(type="text", placeholder="ที่นั่ง", name="s_capacity", v-model="s_capacity")
+						div.row.flex
+							div.input-with-icon.inp-50
+								i.fas.fa-map-marker
+								div.select
+									select(aria-label="Choose a faculty", name="s_faculty", v-model="s_faculty")
+										option(value="", selected) คณะใดก็ได้
+										each fac in faculty
+											option(value=fac.name)= fac.fullThaiName
+							div.input-with-icon.inp-50
+								i.fas.fa-map-marker
+								div.select
+									select(aria-label="Choose a space type", name="s_type", v-model="s_type")
+										option(value="", selected) ห้องชนิดใดก็ได้
+										option(value="classroom") ห้องเรียน
+										option(value="meeting_room") ห้องประชุม
+										option(value="computer_lab") แล็บคอมพิวเตอร์
+						div.tags
+							label.control.checkbox
+								input(type="checkbox", name="s_tags", value="projector")
+								span.control-indicator
+								| มีโปรเจ็กเตอร์
+							label.control.checkbox
+								input(type="checkbox", name="s_tags", value="instructor-pc")
+								span.control-indicator
+								| มีคอมฯ ผู้สอน
+							label.control.checkbox
+								input(type="checkbox", name="s_tags", value="speaker")
+								span.control-indicator
+								| มีระบบเสียง
+							label.control.checkbox
+								input(type="checkbox", name="s_tags", value="apple-tv")
+								span.control-indicator
+								| มี Apple TV
 						div(style="display:none")
 							input#raw_date(type="text", name="raw_date", v-model="s_date_raw")
 						div.row.text-center.marg-b-1
-							button.raised(@click="doSearch()")
+							button.raised#search-btn(@click="doSearch()")
 								i.fas.fa-search
 								| ค้นหา
 				img#search-house(src="/public/img/search-house.svg")
 				div.container.steep#search-results(v-if="!firstSearch")
 					spinner(v-show="loading")
 					h3.text-center(v-show="!searchResults.length && !loading && !firstSearch", style="margin-top:4em") ไม่พบผลลัพธ์
-					result-card(v-for="space in searchResults", :key="space.id", :slug="space.name", :name="space.fullName", :dept="space.department.fullThaiName", :dept-slug="space.department.name", :capacity="space.capacity", :amenities="['pc', 'sound', 'aircon', 'proj']")
+					result-card(v-for="space in searchResults", :key="space.id", :slug="space.name", :name="space.fullName", :dept="space.department.fullThaiName", :dept-slug="space.department.name", :capacity="space.capacity", :amenities="space.tags")
 		script(type="text/x-template", id="result-card")
 			a.card.shadow.hoverable.search-result-card(v-bind:href="'space/' + deptSlug + '/' + slug + '/'")
 				h1.card-title {{ name }}
-				//- div.result-time 2 hrs max available
 				p {{ dept }}
 				div.amenities
-					span
+					span(v-if="capacity")
 						i.fas.fa-users
 						|  {{ capacity }}
-					span(v-if="amenities.includes('sound')", title="sound system")
+					span(v-if="amenities.includes('speaker')", title="sound system")
 						i.fas.fa-volume-up
-					span(v-if="amenities.includes('pc')", title="teacher PC")
+					span(v-if="amenities.includes('instructor-pc')", title="teacher pc")
 						i.fas.fa-desktop
-					span(v-if="amenities.includes('aircon')", title="air conditioner")
+					span(v-if="amenities.includes('air-conditioner')", title="air conditioner")
 						img.i(src="/public/img/icons/snow.svg")
-					span(v-if="amenities.includes('proj')", title="projector")
+					span(v-if="amenities.includes('projector')", title="projector")
 						img.i(src="/public/img/icons/projector.svg")
+					span(v-if="amenities.includes('apple-tv')", title="apple tv")
+						img.i(src="/public/img/icons/apple-tv.svg")
 		script(src="/public/vendor/pikaday/pikaday.min.js")
 		script(src="/public/vendor/axios/axios.min.js")
 		script(src="/public/scripts/search-page.js")

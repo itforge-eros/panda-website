@@ -1,7 +1,6 @@
 const globalVars = require("../globalVars");
 const express = require("express");
 const router = express.Router();
-const testData = require("../models/testData");
 const ghp = require("../helpers/gql");
 
 // required for apollo
@@ -32,7 +31,6 @@ const apollo_auth = new ApolloClient({
 router.get("/", (req, res) => {
 	res.render("choose-dept", {
 		session: req.session,
-		user: testData.user,
 		member: req.session.member,
 		currentDept: req.session.currentDept
 	});

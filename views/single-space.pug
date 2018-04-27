@@ -24,25 +24,34 @@ html
 						h2.page-subtitle= space.department.fullThaiName
 				div.container
 					div.row.flex.marg-b-1#row-1
-						div.featured-img
-							img(src="/public/img/single-feat.jpeg", alt="M23")
+						if space.images.length > 0
+							div.featured-img
+								img(src=space.images[0], alt=space.name)
 						div.amenities-box
 							div.card
 								span.amenity
 									i.fas.fa-2x.fa-users
-									span #{space.capacity} ที่นั่ง
-								span.amenity
-									i.fas.fa-2x.fa-volume-up
-									span ระบบเสียง
-								span.amenity
-									i.fas.fa-2x.fa-desktop
-									span คอมฯผู้สอน
-								span.amenity
-									img.i(src="/public/img/icons/snow.svg")
-									span แอร์
-								span.amenity
-									img.i(src="/public/img/icons/projector.svg")
-									span โปรเจ็กเตอร์
+									span #{space.capacity ? space.capacity : "ไม่ระบุ"} ที่นั่ง
+								if space.tags.includes("speaker")
+									span.amenity
+										i.fas.fa-2x.fa-volume-up
+										span ระบบเสียง
+								if space.tags.includes("instructor-pc")
+									span.amenity
+										i.fas.fa-2x.fa-desktop
+										span คอมฯผู้สอน
+								if space.tags.includes("air-conditioner")
+									span.amenity
+										img.i(src="/public/img/icons/snow.svg")
+										span แอร์
+								if space.tags.includes("projector")
+									span.amenity
+										img.i(src="/public/img/icons/projector.svg")
+										span โปรเจ็กเตอร์
+								if space.tags.includes("apple-tv")
+									span.amenity
+										img.i(src="/public/img/icons/apple-tv.svg")
+										span Apple TV
 					div.row#row-2
 						div.card.shadow
 							form.reservation-box(action="reserve/", method="POST")
@@ -52,11 +61,11 @@ html
 									input(type="number", name="start", v-model="r_startTime")
 									input(type="number", name="end", v-model="r_endTime")
 								div.date
-									i.fas.fa-chevron-circle-left
+									//- i.fas.fa-chevron-circle-left
 									div.input-with-icon.inp-date
 										i.fas.fa-calendar-alt
 										input(type="text", placeholder="date", name="date_raw", v-model="r_date_raw", id="datepicker")
-									i.fas.fa-chevron-circle-right
+									//- i.fas.fa-chevron-circle-right
 								div.timetable
 									div.time
 										each time in displayTime

@@ -132,6 +132,9 @@ ul.tabs
 			text-decoration: none
 			color: $color-grey
 
+.print-sitename
+	display: none
+
 @media screen and (max-width: 600px)
 	nav
 		ul.menu
@@ -144,3 +147,13 @@ ul.tabs
 	nav
 		.logo
 			display: none
+
+@media print
+	nav
+		display: none
+	.print-sitename
+		display: block
+		position: fixed
+		bottom: 0
+		width: 100%
+		text-align: center

@@ -4,9 +4,11 @@ html
 		title จัดการสถานที่ M03 - KMITL OSRS
 		include parts/stylesheet
 		include parts/scripts
+		link(rel="stylesheet", href="/public/vendor/dropzone/dropzone.min.css")
 		style
 			| code#spaceURL {word-break: break-all}
 			| span#spaceURI {color: #00A0FF}
+			| img#currentImg {display:block;max-width: 100%}
 	body.manage-space-single
 		include parts/nav
 		-
@@ -48,9 +50,9 @@ html
 							div.col-50.marg-b-1
 								label(for="slug") ประเภทสถานที่ *
 								div.select
-									select(aria-label="Choose a faculty", name="category")
-										each t in [{x: "ห้องเรียน", v: "CLASSROOM"}, {x: "ห้องประชุม", v: "MEETING_ROOM"}]
-											option(value=t.v, selected=(orgData.category == t.v), disabled=!canSave)= t.x
+									select(aria-label="ประเภทสถานที่", name="tags")
+										each t in spaceTypes
+											option(value=t.v, selected=(orgData.tags.includes(t.v)), disabled=!canSave)= t.x
 						div(style="margin-bottom:0.5em")
 							label(for="name_raw") ชื่อสำหรับใช้ใน URL (ภาษาอังกฤษเท่านั้น) *
 							input(type="text", name="name_raw", required, v-model="spaceURI", disabled=!canSave)
@@ -79,12 +81,19 @@ html
 								= orgData.description ? orgData.description : ""
 						div.marg-b-1
 							label ภาพของห้อง
-							div(style="height: 250px; background-color: #F0F0F0")
+							if orgData.images.length > 0
+								img.marg-b-1#currentImg(src=orgData.images[0])
+							button.marg-b-1(type="button", @click="uploadBoxIsOpen = true", v-if="!uploadBoxIsOpen") อัพโหลดภาพใหม่
+							div.dropzone#imgDropzone(v-show="uploadBoxIsOpen")
 						if canSave
 							button.raised
 								i.fas.fa-save
 								| บันทึก
+		script(src="/public/vendor/dropzone/dropzone.min.js")
+		script(src="/public/vendor/axios/axios.min.js")
 		script(src="/public/scripts/manage-space-single.js")
 		script
 			| app.spaceName = "#{orgData.fullName ? orgData.fullName : ""}";
 			| app.spaceURI = "#{orgData.name ? orgData.name : ""}";
+			| app.spaceId = "#{orgData.id ? orgData.id : ""}";
+			| app.memberToken = "#{memberToken}";

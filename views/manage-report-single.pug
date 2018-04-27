@@ -10,14 +10,17 @@ html
 			div.content
 				div.container
 					div.page-title-wrap
-						h1.page-title Report ##{id}
+						h1.page-title รายงาน
 					div.marg-b-2
-						p สถานที่: M03
-						p วันที่แจ้ง: 30 กุมภาพันธ์ 2561
-					div.marg-b-2
-						p
-							strong รายละเอียด
-						p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel nulla voluptatem vero repudiandae voluptas in ea accusantium, officia error, iusto blanditiis! Quisquam pariatur aspernatur eveniet natus assumenda, expedita molestiae reprehenderit.
-					a.button.raised(href="#")
-						i.fas.fa-envelope-open
-						| อ่านแล้ว
+						p สถานที่: #{problem.space.fullName}, #{problem.space.department.fullThaiName}
+						p วันที่แจ้ง: #{problem.createdAt_th}
+					div.card.marg-b-1
+						div.marg-b-1
+							h3 หัวข้อ
+							p= problem.title
+							h3 รายละเอียด
+							p= problem.body
+					if !problem.isRead
+						a.button.raised(href="isread")
+							i.fas.fa-envelope-open
+							| บันทึกว่าอ่านแล้ว

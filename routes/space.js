@@ -1,7 +1,6 @@
 const globalVars = require("../globalVars");
 const express = require("express");
 const router = express.Router();
-const testData = require("../models/testData");
 const ghp = require("../helpers/gql");
 
 const bodyParser = require("body-parser");
@@ -43,12 +42,9 @@ router.get("/:dept/:name", (req, res) => {
 		.then(returnedData => {
 			if (returnedData.data.space != null) {
 				res.render("single-space", {
-					session: testData.session,
-					user: testData.user,
 					member: req.session.member,
 					memberToken: req.session.token,
 					currentDept: req.session.currentDept,
-					faculty: testData.faculty,
 					space: returnedData.data.space
 				});
 			} else {
@@ -70,8 +66,6 @@ router.post("/:dept/:name/reserve", multer().array(), (req, res) => {
 						.then(returnedMaterials => {
 							console.log(req.body);
 							res.render("fill-request", {
-								session: testData.session,
-								user: testData.user,
 								member: req.session.member,
 								currentDept: req.session.currentDept,
 								reservation: req.body,
@@ -98,8 +92,6 @@ router.post(/\/.*\/reserve\/submit/, multer().array(), (req, res) => {
 		ghp.createRequest(apollo_auth, req.body)
 			.then(rp => {
 				res.render("request-sent", {
-					session: testData.session,
-					user: testData.user,
 					member: req.session.member,
 					currentDept: req.session.currentDept
 				});

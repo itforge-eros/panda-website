@@ -12,17 +12,20 @@ html
 					div.page-title-wrap
 						h1.page-title จัดการสถานที่
 					ul.tabs
-						li
-							a(href="/manage-space/") สถานที่
+						if member.currentAccesses.includes("SPACE_CREATE_ACCESS") || member.currentAccesses.includes("SPACE_UPDATE_ACCESS")
+							li
+								a(href="/manage-space/") สถานที่
 						li.selected
 							a(href="/manage-report/") รายงานปัญหา
 					table.styled.striped
-						each item in [1,2,3,4,5,6,7,8]
+						each p in problems
 							tr
 								td
-									a.no-text-deco(href="/manage-report/" + item)
-										strong= "#" + item + " M03"
-										//- strong is for unread
+									a.no-text-deco(href="/manage-report/" + p.id + "/")
+										if p.isRead
+											= p.spaceName + ": " + p.title
+										else
+											strong= p.spaceName + ": " + p.title
 								td.actions
-									a(href="/manage-report/" + item)
+									a(href="/manage-report/" + p.id + "/")
 										i.fas.fa-eye

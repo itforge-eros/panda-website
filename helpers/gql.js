@@ -22,7 +22,7 @@ ghp.getSpace = (apollo, dept, spaceName) => {
 		query: gql`
 			{
 				space(department: "${dept}", name: "${spaceName}") {
-					id name fullName description capacity category tags isAvailable department {name fullThaiName}
+					id name fullName description capacity tags isAvailable images department {name fullThaiName}
 				}
 			}
 		`
@@ -32,7 +32,7 @@ ghp.getSpacesInDepartment = (apollo, deptName) => {
 	return apollo.query({
 		query: gql`
 			{
-				department(name: "${deptName}") {id name spaces {name fullName}}
+				department(name: "${deptName}") {id name spaces {id name fullName}}
 			}
 		`
 	})
@@ -61,6 +61,15 @@ ghp.getPermissions = apollo => {
 		query: gql`
 			{
 				permissions { name description }
+			}
+		`
+	})
+};
+ghp.getDepartments = apollo => {
+	return apollo.query({
+		query: gql`
+			{
+				departments { id name fullThaiName }
 			}
 		`
 	})
@@ -154,6 +163,7 @@ ghp.getRoleMembers = (apollo_auth, roleId) => {
 		`
 	})
 }
+
 ghp.getPermissionsAndRequestsBySPECIFIC_Department = (apollo_auth, currentDepartment) => {
 	return apollo_auth.query({
 		query: gql`
@@ -166,6 +176,12 @@ ghp.getPermissionsAndRequestsBySPECIFIC_Department = (apollo_auth, currentDepart
 			    space { name } } 
 					} 
 				}
+
+ghp.getProblemsInDepartment = (apollo_auth, deptName) => {
+	return apollo_auth.query({
+		query: gql`
+			{
+				department(name: "${deptName}") { spaces { fullName problems { id title isRead } } }
 			}
 		`
 	})
@@ -197,6 +213,15 @@ ghp.getDetailOfViewSpaces = (apollo_auth, requestID) => {
 	})
 }
 
+ghp.getProblem = (apollo_auth, probId) => {
+	return apollo_auth.query({
+		query: gql`
+			{
+				problem(id: "${probId}") { id body title isRead createdAt space { fullName department { fullThaiName } } }
+			}
+		`
+	})
+}
 ghp.createSpace = (apollo_auth, sp) => {
 	return apollo_auth.mutate({
 		mutation: gql`
@@ -212,7 +237,6 @@ ghp.createSpace = (apollo_auth, sp) => {
 				"fullName": sp.fullName,
 				"description": sp.description,
 				"capacity": parseInt(sp.capacity),
-				"category": sp.category,
 				"isAvailable": sp.isAvailable == "true" ? true : false,
 				"departmentId": sp.deptId,
 				"tags": sp.tags
@@ -296,7 +320,6 @@ ghp.updateSpace = (apollo_auth, sp) => {
 				"name": sp.name.toLowerCase().replace(/ /g, "-"),
 				"fullName": sp.fullName,
 				"description": sp.description,
-				"category": sp.category,
 				"capacity": parseInt(sp.capacity),
 				"isAvailable": sp.isAvailable == "true" ? true : false,
 				"tags": sp.tags
@@ -321,11 +344,27 @@ ghp.updateRole = (apollo_auth, r) => {
 		}
 	})
 }
+ghp.updateProblem = (apollo_auth, probId) => {
+	return apollo_auth.mutate({
+		mutation: gql`
+			mutation { updateProblem(input: {problemId: "${probId}", isRead: true}) {id} }
+		`
+	})
+}
 ghp.deleteRole = (apollo_auth, roleId) => {
 	return apollo_auth.mutate({
 		mutation: gql`
 			mutation {
 				deleteRole(input: {roleId: "${roleId}"}) { id }
+			}
+		`
+	})
+}
+ghp.deleteSpace = (apollo_auth, spaceId) => {
+	return apollo_auth.mutate({
+		mutation: gql`
+			mutation {
+				deleteSpace(input: {spaceId: "${spaceId}"}) { id }
 			}
 		`
 	})

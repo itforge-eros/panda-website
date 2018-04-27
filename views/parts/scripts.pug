@@ -1,4 +1,4 @@
-if (session.env == 'production')
+if (process.env.NODE_ENV == "production")
 	script(src="https://cdn.jsdelivr.net/npm/vue")
 else
-	script(src="/public/scripts/vue.js")
+	script(src="/public/vendor/vue.js")

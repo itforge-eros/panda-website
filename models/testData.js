@@ -1,17 +1,3 @@
-const env = process.env.NODE_ENV || "dev";
-
-let session = {
-	env: env,
-	currentUser: "",
-	authenUrl: "/authen/login"
-};
-let user = { isAdmin: true, isApprover: true };
-let faculty = [
-	{ name: "คณะเทคโนโลยีสารสนเทศ", slug: "fac-it" },
-	{ name: "คณะเทคโนโลยีการเกษตร", slug: "fac-agro" },
-	{ name: "คณะสถาปัตยกรรมศาสตร์", slug: "fac-arch" },
-	{ name: "คณะวิทยาศาสตร์", slug: "fac-sci" }
-];
 let requestInfo = [
 	{ name: "ผู้จอง", data: "นาย สมศรี ชาวไร่" },
 	{ name: "ยื่นคำร้องเมื่อ", data: "28 กุมภาพันธ์ 2561"},
@@ -22,9 +8,5 @@ let requestInfo = [
 ];
 
 module.exports = {
-	session: session,
-	user: user,
-	faculty: faculty,
-	requestInfo: requestInfo,
-	env: env
+	requestInfo: requestInfo
 }

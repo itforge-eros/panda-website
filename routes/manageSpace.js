@@ -1,7 +1,6 @@
 const globalVars = require("../globalVars");
 const express = require("express");
 const router = express.Router();
-const testData = require("../models/testData");
 const ghp = require("../helpers/gql");
 const ahp = require("../helpers/authen");
 
@@ -17,7 +16,12 @@ const gql = require("graphql-tag");
 
 let token = "";
 let createSpaceStatus = "";
+let deleteSpaceStatus = "";
 let orgData = {};
+
+router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
+router.use((req, res, next) => {token = req.session.token; next()});
 
 const authLink = setContext((_, { headers }) => {
 	return { headers: { authorization: token ? `bearer${token}` : "" } };
@@ -33,34 +37,44 @@ const apollo_auth = new ApolloClient({
 });
 
 const amenities = [
-	{ id: "PROJECTOR", name: "โปรเจ็กเตอร์" },
-	{ id: "AIR_CONDITIONER", name: "แอร์" },
-	{ id: "SPEAKER", name: "ระบบเสียง" },
-	{ id: "INSTRUCTOR_PC", name: "คอมฯ ผู้สอน" }
+	{ id: "projector", name: "โปรเจ็กเตอร์" },
+	{ id: "air-conditioner", name: "แอร์" },
+	{ id: "speaker", name: "ระบบเสียง" },
+	{ id: "instructor-pc", name: "คอมฯ ผู้สอน" },
+	{ id: "apple-tv", name: "Apple TV" }
 ];
 
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: true }));
-router.use((req, res, next) => {token = req.session.token; next()});
+const spaceTypes = [
+	{x: "ห้องเรียน", v: "classroom"},
+	{x: "ห้องประชุม", v: "meeting_room"},
+	{x: "แล็บคอมพิวเตอร์", v: "computer_lab"}
+];
 
 router.get("/", (req, res) => {
-	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS", "SPACE_UPDATE_ACCESS"])) {
-		ghp.getSpacesInDepartment(apollo_auth, req.session.currentDept.name)
-			.then(spaces => {
-				res.render("manage-space", {
-					session: testData.session,
-					user: testData.user,
-					member: req.session.member,
-					currentDept: req.session.currentDept,
-					spaces: spaces.data.department.spaces,
-					status: createSpaceStatus
+	let acc = req.session.member.currentAccesses;
+	if (req.session.member && 
+		ahp.hasEitherAccess(acc, ["SPACE_CREATE_ACCESS", "SPACE_UPDATE_ACCESS", "SPACE_DELETE_ACCESS", "PROBLEM_READ_ACCESS"])) {
+		if (acc.includes("PROBLEM_READ_ACCESS") && !acc.includes("SPACE_CREATE_ACCESS") && 
+			!acc.includes("SPACE_UPDATE_ACCESS") && !acc.includes("SPACE_DELETE_ACCESS")) {
+			res.redirect("/manage-report/");
+		} else {
+			ghp.getSpacesInDepartment(apollo_auth, req.session.currentDept.name)
+				.then(spaces => {
+					res.render("manage-space", {
+						member: req.session.member,
+						currentDept: req.session.currentDept,
+						spaces: spaces.data.department.spaces,
+						createSpaceStatus: createSpaceStatus,
+						deleteSpaceStatus: deleteSpaceStatus
+					});
+					orgData = {};
+					createSpaceStatus = "";
+					deleteSpaceStatus = "";
+				})
+				.catch(err => {
+					res.redirect("/error/");
 				});
-				orgData = {};
-				createSpaceStatus = "";
-			})
-			.catch(err => {
-				res.redirect("/error/");
-			});
+		}
 	} else {
 		res.redirect("/error/")
 	}
@@ -68,11 +82,11 @@ router.get("/", (req, res) => {
 router.get("/new", (req, res) => {
 	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS"])) {
 		res.render("manage-space-single", {
-			session: testData.session,
-			user: testData.user,
 			member: req.session.member,
+			memberToken: req.session.token,
 			currentDept: req.session.currentDept,
 			amenities: amenities,
+			spaceTypes: spaceTypes,
 			orgData: orgData,
 			status: createSpaceStatus,
 			canSave: true,
@@ -84,17 +98,32 @@ router.get("/new", (req, res) => {
 		res.redirect("/error/");
 	}
 });
+router.get("/:id/delete", (req, res) => {
+	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["SPACE_DELETE_ACCESS"])) {
+		ghp.deleteSpace(apollo_auth, req.params.id)
+			.then(data => {
+				deleteSpaceStatus = "success";
+				res.redirect("/manage-space/");
+			})
+			.catch(err => {
+				if (globalVars.env != "production") console.log(err);
+				deleteSpaceStatus = err.graphQLErrors[0].message;
+				res.redirect("/manage-space/");
+			})
+	} else {
+		res.redirect("/error/");
+	}
+});
 router.get("/:dept/:name", (req, res) => {
 	if (req.session.member && ahp.hasEitherAccess(req.session.member.currentAccesses, ["SPACE_CREATE_ACCESS", "SPACE_UPDATE_ACCESS"])) {
 		ghp.getSpace(apollo_auth, req.params.dept, req.params.name)
 			.then(data => {
-				console.log(data.data.space);
 				res.render("manage-space-single", {
-					session: testData.session,
-					user: testData.user,
 					member: req.session.member,
+					memberToken: req.session.token,
 					currentDept: req.session.currentDept,
 					amenities: amenities,
+					spaceTypes: spaceTypes,
 					orgData: data.data.space,
 					status: createSpaceStatus,
 					canSave: ahp.hasAllAccess(req.session.member.currentAccesses, ["SPACE_UPDATE_ACCESS"]),
