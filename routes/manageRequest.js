@@ -5,7 +5,7 @@ const testData = require("../models/testData");
 const dhp = require("../helpers/date");
 const ghp = require("../helpers/gql");
 const ahp = require("../helpers/authen");
-const R = require("Ramda");
+const R = require("ramda");
 
 const ApolloClient = require("apollo-client").ApolloClient;
 const InMemoryCache = require("apollo-cache-inmemory").InMemoryCache;
