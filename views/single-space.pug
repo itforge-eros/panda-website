@@ -86,7 +86,8 @@ html
 								div.text-center
 									p(v-if="hasNotChosenTime") กรุณาเลือกเวลา
 									p(v-show="unavailableSelected") เวลาที่ท่านเลือก มีช่วงที่ทับกับเวลาที่ถูกจองไปแล้ว
-									button.raised(v-show="!unavailableSelected && !hasNotChosenTime")
+									p(v-show="sameStartAndEnd") เวลาเริ่มต้นและเวลาสิ้นสุดไม่ถูกต้อง
+									button.raised(v-show="!unavailableSelected && !hasNotChosenTime && !sameStartAndEnd")
 										i.fas.fa-pencil-alt
 										| จอง
 						if space.description

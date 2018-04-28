@@ -59,6 +59,7 @@ var app = new Vue({
 		chosenSlots: [],
 		hasNotChosenTime: true,
 		unavailableSelected: false,
+		sameStartAndEnd: false,
 		submitText: "ส่งรายงาน",
 		spaceId: "",
 		reportTitle: "",
@@ -150,6 +151,7 @@ var picker = new Pikaday({
 		app.r_date_raw = document.getElementById("datepicker").value;
 		app.r_date = setApiDate(picker.getDate());
 		drawReservations(app.r_date);
+		drawSelected();
 	},
 	toString(date) {
 		const day = date.toString().split(" ")[2];
@@ -175,9 +177,15 @@ function drawSelected() {
 		$("#" + i).removeClass("selected");
 	var startPoint = Math.min(app.r_startTime, app.r_endTime);
 	var endPoint = Math.max(app.r_startTime, app.r_endTime);
-	for (var j = startPoint; j < endPoint; j++) {
-		if ($("#" + j).hasClass("unavailable")) app.unavailableSelected = true;
-		else $("#" + j).addClass("selected");
+	if (startPoint == endPoint) {
+		app.sameStartAndEnd = true;
+		console.log("stopped");
+	} else {
+		app.sameStartAndEnd = false;
+		for (var j = startPoint; j < endPoint; j++) {
+			if ($("#" + j).hasClass("unavailable")) app.unavailableSelected = true;
+			else $("#" + j).addClass("selected");
+		}
 	}
 }
 
@@ -208,6 +216,7 @@ $("#timeStart").clockTimePicker({
 	onClose: function() {
 		isFirstTimeChoosing = false;
 		app.hasNotChosenTime = false;
+		drawSelected();
 	}
 });
 $("#timeEnd").clockTimePicker({
@@ -223,5 +232,6 @@ $("#timeEnd").clockTimePicker({
 	onClose: function() {
 		isFirstTimeChoosing = false;
 		app.hasNotChosenTime = false;
+		drawSelected();
 	}
 });
