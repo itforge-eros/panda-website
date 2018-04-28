@@ -55,13 +55,15 @@ router.get("/archive", (req, res) => {
 	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["REVIEW_CREATE_ACCESS"])) {
 		ghp.getRequestsInDepartment(apollo_auth, req.session.currentDept.name)
 			.then(returnedRequests => {
+				let allRequests = R.chain(space => space.requests, returnedRequests.data.department.spaces);
+				let managedRequests = allRequests.filter(r => r.status != "PENDING");
 				res.render("manage-request", {
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					thisTab: "b",
 					dept_fullThaiName: returnedRequests.data.department.fullThaiName,
-					reqInfo: (R.chain(space => space.requests, returnedRequests.data.department.spaces))
-				}); 
+					reqInfo: managedRequests
+				});
 			})
 			.catch(err => {
 				if (globalVars.env != "production") console.log(err); 
