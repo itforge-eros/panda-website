@@ -35,12 +35,16 @@ function setApiDate(date) {
 	);
 }
 function drawReservations(date) {
-	for (var r = 18; r <= 39; r++)
+	for (var r = 18; r <= 39; r++) {
 		document.getElementById(r).classList.remove("selected");
+		document.getElementById(r).classList.remove("unavailable");
+	}
 	var d = date.replace(/-/g, "_");
-	for (var i = 0; i < reservations[d].length; i++) {
-		for (var j = reservations[d][i].start; j < reservations[d][i].end; j++)
-			document.getElementById(j).classList.add("unavailable");
+	if (reservations[d] != undefined) {
+		for (var i = 0; i < reservations[d].length; i++) {
+			for (var j = reservations[d][i].start; j < reservations[d][i].end; j++)
+				document.getElementById(j).classList.add("unavailable");
+		}
 	}
 }
 
@@ -145,6 +149,7 @@ var picker = new Pikaday({
 	onClose: () => {
 		app.r_date_raw = document.getElementById("datepicker").value;
 		app.r_date = setApiDate(picker.getDate());
+		drawReservations(app.r_date);
 	},
 	toString(date) {
 		const day = date.toString().split(" ")[2];
