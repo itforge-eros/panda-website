@@ -20,7 +20,7 @@ html
 						if !reqInfo
 							h3 ไม่พบคำร้อง
 						each r in reqInfo
-							a.card.shadow.hoverable.request-card(href=(thisTab == "a" ? r.id : "../" + r.id))
+							a.card.shadow.hoverable.request-card(href=(thisTab == "a" ? r.id + "/" : "../" + r.id + "/"))
 								div.req-info
 									h1.card-title #{r.space.fullName}, #{dept_fullThaiName}
 									p.grayed ผู้ยื่นคำร้อง: #{r.client.firstName} #{r.client.lastName}

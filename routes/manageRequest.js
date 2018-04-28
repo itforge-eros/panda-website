@@ -95,16 +95,15 @@ router.get("/:id", (req, res) => {
 	} else { res.redirect("/error/") }
 });
 
-router.get("/:id/approve", (req, res) => {
-	if (req.session.member){ 
-		ghp.createReview(apollo_auth, req.params.id)
-			.then(details => {
-				resultReview = "approve";
+router.get("/:id/:event", (req, res) => {
+	if (req.session.member) {
+		ghp.createReview(apollo_auth, req.params.id, req.params.event)
+			.then(detail => {
 				res.redirect("/manage-request/");
 			})
 			.catch(err => {
 				if (globalVars.env != "production") console.log(err);
-				res.redirect("/error/"); 
+				res.redirect("/error/");
 			});
 	} else { res.redirect("/error/") }
 });
