@@ -33,28 +33,20 @@ const apollo_auth = new ApolloClient({
 });
 
 router.get("/", (req, res) => {
-	if (req.session.member){ 
-		ghp.getPermissionsAndRequestsBySPECIFIC_Department(apollo_auth, req.session.currentDept.name).then(requestInfo => {
-			if (ahp.hasAllAccess(req.session.member.currentAccesses, ["REVIEW_CREATE_ACCESS"])) 
-					{ res.render("manage-request", {
-						session: req.session,
-						user: testData.user,
-						member: req.session.member,
-						currentDept: req.session.currentDept,
-						fullThaiCurrentDeptName: requestInfo.data.department.fullThaiName,
-						id: req.params.id,
-						reqInfo: (R.chain(space => space.requests, requestInfo.data.department.spaces))
-					}); 
-				// console.log(requestInfo.data.department.spaces[0])
-				console.log(R.chain(space => space.requests, requestInfo.data.department.spaces));
-			}
-
-            else { console.log("still stuck") } 
-		}).catch(error => {if (globalVars.env != "production") console.log(error); 
-		res.redirect("/error");})
-	} else {
-		res.redirect("/authen/login");
-	}
+	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["REVIEW_CREATE_ACCESS"])) {
+		ghp.getRequestsInDepartment(apollo_auth, req.session.currentDept.name)
+			.then(returnedRequests => {
+				res.render("manage-request", {
+					member: req.session.member,
+					currentDept: req.session.currentDept,
+					dept_fullThaiName: returnedRequests.data.department.fullThaiName,
+					reqInfo: (R.chain(space => space.requests, returnedRequests.data.department.spaces))
+				}); 
+			}).catch(err => {
+				if (globalVars.env != "production") console.log(err); 
+				res.redirect("/error");
+			});
+	} else { res.redirect("/error/") }
 });
 
 router.get("/:id", (req, res) => {

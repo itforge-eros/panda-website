@@ -165,15 +165,23 @@ ghp.getRoleMembers = (apollo_auth, roleId) => {
 	})
 }
 
-ghp.getPermissionsAndRequestsBySPECIFIC_Department = (apollo_auth, currentDepartment) => {
+ghp.getRequestsInDepartment = (apollo_auth, deptName) => {
 	return apollo_auth.query({
 		query: gql`
-				{			  
-					department(name: "${currentDepartment}") { fullThaiName spaces { requests { body dates period {start end} 
-					id client { firstName email } space { name } } 
-				} 
-			} 
-		} `
+			{			  
+				department(name: "${deptName}") {
+					fullThaiName
+					spaces {
+						requests {
+							id dates status
+							period { start end }
+							client { firstName lastName }
+							space { fullName }
+						}
+					}
+				}
+			}
+		`
 	})
 }
 
