@@ -24,7 +24,7 @@ html
 								div.req-info
 									h1.card-title #{r.space.fullName}, #{dept_fullThaiName}
 									p.grayed ผู้ยื่นคำร้อง: #{r.client.firstName} #{r.client.lastName}
-									p.grayed ต้องการใช้วันที่: #{r.dates} เวลา #{r.period.start} - #{r.period.end} น.
+									p.grayed ต้องการใช้วันที่: #{r.dates_th} เวลา #{r.startTime} - #{r.endTime} น.
 								div.req-status
 									if r.status == "PENDING"
 										img(src="/public/img/wait.svg", alt="pending", width="48", height="48")

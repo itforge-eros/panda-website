@@ -57,12 +57,21 @@ router.get("/archive", (req, res) => {
 			.then(returnedRequests => {
 				let allRequests = R.chain(space => space.requests, returnedRequests.data.department.spaces);
 				let managedRequests = allRequests.filter(r => r.status != "PENDING");
+				let formattedManagedRequests = [];
+				managedRequests.map(r => {
+					let tmp = Object.assign({}, r);
+					tmp.dates_th = tmp.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d)));
+					tmp.startTime = dhp.slotToTime(r.period.start);
+					tmp.endTime = dhp.slotToTime(r.period.end);
+					formattedManagedRequests.push(tmp);
+				});
+				console.log(formattedManagedRequests);
 				res.render("manage-request", {
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					thisTab: "b",
 					dept_fullThaiName: returnedRequests.data.department.fullThaiName,
-					reqInfo: managedRequests
+					reqInfo: formattedManagedRequests
 				});
 			})
 			.catch(err => {
