@@ -83,8 +83,10 @@ html
 									div.time-end
 										label(for="end_raw") เวลาสิ้นสุด
 										input.fluid.text-center#timeEnd(type="text", name="end_raw", value="09:30")
-								div.text-center(v-show="true")
-									button.raised
+								div.text-center
+									p(v-if="hasNotChosenTime") กรุณาเลือกเวลา
+									p(v-show="unavailableSelected") เวลาที่ท่านเลือก มีช่วงที่ทับกับเวลาที่ถูกจองไปแล้ว
+									button.raised(v-show="!unavailableSelected && !hasNotChosenTime")
 										i.fas.fa-pencil-alt
 										| จอง
 						if space.description

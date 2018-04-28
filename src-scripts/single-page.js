@@ -35,11 +35,12 @@ function setApiDate(date) {
 	);
 }
 function drawReservations(date) {
+	for (var r = 18; r <= 39; r++)
+		document.getElementById(r).classList.remove("selected");
 	var d = date.replace(/-/g, "_");
 	for (var i = 0; i < reservations[d].length; i++) {
-		for (var j = reservations[d][i].start; j < reservations[d][i].end; j++) {
+		for (var j = reservations[d][i].start; j < reservations[d][i].end; j++)
 			document.getElementById(j).classList.add("unavailable");
-		}
 	}
 }
 
@@ -52,14 +53,15 @@ var app = new Vue({
 		r_endTime: "19",
 		chosenTimes: [],
 		chosenSlots: [],
+		hasNotChosenTime: true,
+		unavailableSelected: false,
 		submitText: "ส่งรายงาน",
 		spaceId: "",
 		reportTitle: "",
 		reportBody: "",
 		reportToken: "",
 		reportSent: false,
-		submitHasError: false,
-		reservations: {}
+		submitHasError: false
 	},
 	methods: {
 		sendReport: () => {
@@ -69,11 +71,7 @@ var app = new Vue({
 				data: {
 					query: `
 						mutation {
-							createProblem(input: {spaceId: "${app.spaceId}", title: "${
-						app.reportTitle
-					}", body: "${app.reportBody}"}) {
-								id
-							}
+							createProblem(input: {spaceId: "${app.spaceId}", title: "${app.reportTitle}", body: "${app.reportBody}"}) {id}
 						}
 					`
 				},
@@ -125,7 +123,6 @@ var app = new Vue({
 
 // Date picker
 const today = new Date();
-
 var picker_date;
 var picker = new Pikaday({
 	field: document.getElementById("datepicker"),
@@ -163,27 +160,29 @@ var picker = new Pikaday({
 		}\u0020${day}\u0020${monthsTH[monthsEN.findIndex(monthsMapper)]}`;
 	}
 });
+
 app.r_date = setApiDate(picker.getDate());
 
 // Time picker
 function drawSelected() {
-	for (var i = 18; i <= 39; i++) {
+	app.unavailableSelected = false;
+	for (var i = 18; i <= 39; i++)
 		$("#" + i).removeClass("selected");
-	}
 	var startPoint = Math.min(app.r_startTime, app.r_endTime);
 	var endPoint = Math.max(app.r_startTime, app.r_endTime);
 	for (var j = startPoint; j < endPoint; j++) {
-		$("#" + j).addClass("selected");
+		if ($("#" + j).hasClass("unavailable")) app.unavailableSelected = true;
+		else $("#" + j).addClass("selected");
 	}
 }
 
+let isFirstTimeChoosing = true;
 const timeToSlot = time => {
 	let hr = parseInt(time.split(":")[0]);
 	let mn = parseInt(time.split(":")[1]);
 	if (mn == 0) return times[hr * 2].slot;
 	else return times[hr * 2 + 1].slot;
 };
-let isFirstTimeChoosing = true;
 
 $("#timeStart").clockTimePicker({
 	precision: 30,
@@ -202,6 +201,7 @@ $("#timeStart").clockTimePicker({
 	},
 	onClose: () => {
 		isFirstTimeChoosing = false;
+		app.hasNotChosenTime = false;
 		drawSelected();
 	}
 });
