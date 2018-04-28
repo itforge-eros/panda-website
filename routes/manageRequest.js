@@ -84,5 +84,20 @@ router.get("/:id", (req, res) => {
 	}
 });
 
+
+router.get("/:id/review", (req, res) => {
+	if (req.session.member){ 
+		ghp.createReview(apollo_auth, req.params.id).then(details => {
+			resultReview = "approve";
+			res.redirect("/manage-request/");
+		}).catch(err => {
+				if (globalVars.env != "production") console.log(err);
+				res.redirect("/error/"); 
+			});
+	} else {
+		res.redirect("/authen/login");
+	}
+});
+
 module.exports = router;
 
