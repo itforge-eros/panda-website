@@ -18,11 +18,11 @@ html
 			let thisSlot = 17;
 		div#app
 			div.content
-				div.container
+				div.container(class=(space.images.length == 0 ? "text-center" : ""))
 					div.page-title-wrap
 						h1.page-title= space.fullName
 						h2.page-subtitle= space.department.fullThaiName
-				div.container
+				div.container(class=(space.images.length == 0 ? "steep" : ""))
 					div.row.flex.marg-b-1#row-1
 						if space.images.length > 0
 							div.featured-img
