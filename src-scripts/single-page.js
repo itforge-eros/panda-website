@@ -182,7 +182,7 @@ function drawSelected() {
 }
 
 let isFirstTimeChoosing = true;
-const timeToSlot = time => {
+function timeToSlot(time) {
 	let hr = parseInt(time.split(":")[0]);
 	let mn = parseInt(time.split(":")[1]);
 	if (mn == 0) return times[hr * 2].slot;
@@ -194,7 +194,7 @@ $("#timeStart").clockTimePicker({
 	required: true,
 	minimum: "09:00",
 	maximum: "19:30",
-	onAdjust: (newVal, oldVal) => {
+	onAdjust: function(newVal, oldVal) {
 		let time = newVal.split(":");
 		app.r_startTime = timeToSlot(time[0] + ":" + time[1]);
 		if (isFirstTimeChoosing) {
@@ -203,11 +203,11 @@ $("#timeStart").clockTimePicker({
 			$("#timeEnd").val(endHr + ":" + endMn);
 			app.r_endTime = timeToSlot(endHr + ":" + endMn);
 		}
+		drawSelected();
 	},
-	onClose: () => {
+	onClose: function() {
 		isFirstTimeChoosing = false;
 		app.hasNotChosenTime = false;
-		drawSelected();
 	}
 });
 $("#timeEnd").clockTimePicker({
@@ -215,12 +215,10 @@ $("#timeEnd").clockTimePicker({
 	required: true,
 	minimum: "09:00",
 	maximum: "19:30",
-	onAdjust: (newVal, oldVal) => {
+	onAdjust: function(newVal, oldVal) {
 		let time = newVal.split(":");
 		app.r_endTime = timeToSlot(time[0] + ":" + time[1]);
-	},
-	onClose: () => {
-		isFirstTimeChoosing = false;
 		drawSelected();
-	}
+	},
+	onClose: function() {isFirstTimeChoosing = false;}
 });
