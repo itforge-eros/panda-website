@@ -38,11 +38,11 @@ router.get("/", (req, res) => {
 			.then(returnedRequests => {
 				res.render("manage-request", {
 					member: req.session.member,
-					currentDept: req.session.currentDept,
 					dept_fullThaiName: returnedRequests.data.department.fullThaiName,
 					reqInfo: (R.chain(space => space.requests, returnedRequests.data.department.spaces))
 				}); 
-			}).catch(err => {
+			})
+			.catch(err => {
 				if (globalVars.env != "production") console.log(err); 
 				res.redirect("/error");
 			});
