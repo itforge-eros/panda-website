@@ -71,7 +71,7 @@ router.post("/login", multer().array(), (req, res, next) => {
 
 				// get current user's info
 				ghp.getMe(apollo_auth).then(meData => {
-					req.session.member = Object.assign({}, req.session.member, meData.data.me);
+					req.session.member = {...req.session.member, ...meData.data.me};
 
 					// check how many departments the user is in
 					if (req.session.member.roles.length > 1) {

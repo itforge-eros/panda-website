@@ -40,7 +40,7 @@ router.get("/", (req, res) => {
 				let unmanagedRequests = allRequests.filter(r => r.status == "PENDING");
 				let formattedUnmanagedRequests = [];
 				unmanagedRequests.map(r => {
-					let tmp = Object.assign({}, r);
+					let tmp = {...r};
 					tmp.dates_th = tmp.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d)));
 					tmp.startTime = dhp.slotToTime(r.period.start);
 					tmp.endTime = dhp.slotToTime(r.period.end);
@@ -69,7 +69,7 @@ router.get("/archive", (req, res) => {
 				let managedRequests = allRequests.filter(r => r.status != "PENDING");
 				let formattedManagedRequests = [];
 				managedRequests.map(r => {
-					let tmp = Object.assign({}, r);
+					let tmp = {...r};
 					tmp.dates_th = tmp.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d)));
 					tmp.startTime = dhp.slotToTime(r.period.start);
 					tmp.endTime = dhp.slotToTime(r.period.end);
@@ -100,7 +100,7 @@ router.get("/:id", (req, res) => {
 					startTime: dhp.slotToTime(detailEachSpace.data.request.period.start),
 					endTime: dhp.slotToTime(detailEachSpace.data.request.period.end)
 				}
-				const rq = Object.assign({}, updatedData, detailEachSpace.data.request);
+				const rq = {...updatedData, ...detailEachSpace.data.request};
 				res.render("manage-request-single", {
 						member: req.session.member,
 						currentDept: req.session.currentDept,

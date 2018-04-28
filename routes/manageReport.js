@@ -67,7 +67,7 @@ router.get("/:id", (req, res) => {
 				let updatedData = {
 					createdAt_th: dhp.thaiDateOf(dhp.epochToDate(returnedProblem.data.problem.createdAt))
 				}
-				const problem = Object.assign({}, returnedProblem.data.problem, updatedData);
+				const problem = {...returnedProblem.data.problem, ...updatedData};
 				res.render("manage-report-single", {
 					member: req.session.member,
 					currentDept: req.session.currentDept,

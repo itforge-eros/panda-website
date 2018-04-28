@@ -36,7 +36,7 @@ router.get("/", (req, res) => {
 			.then(myRequests => {
 				const updatedRequests = [];
 				myRequests.data.me.requests.map(r => {
-					let tmp = Object.assign({}, r);
+					let tmp = {...r};
 					tmp.createdAt_th = dhp.thaiDateOf(dhp.epochToDate(tmp.createdAt));
 					tmp.dates_th = tmp.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d)));
 					tmp.startTime = dhp.slotToTime(r.period.start);
@@ -66,7 +66,7 @@ router.get("/:id", (req, res) => {
 					startTime: dhp.slotToTime(returnedReq.data.request.period.start),
 					endTime: dhp.slotToTime(returnedReq.data.request.period.end)
 				}
-				const rq = Object.assign({}, updatedData, returnedReq.data.request);
+				const rq = {...updatedData, ...returnedReq.data.request};
 				res.render("single-request", {
 					member: req.session.member,
 					currentDept: req.session.currentDept,
