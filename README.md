@@ -29,6 +29,8 @@ Steps to contribute to the project
 4. We will review your code, and eventually merge your code into our repository.
 5. You have made our system shinier everyday!
 
+> Note: This project is powered by NodeJS and ExpressJS.
+
 ## Editing Source Files
 
 This project uses Gulp to automate Sass and JavaScript compilation. Always run `gulp` to compile Sass and JS files. Please refer to the project structure below to understand the files.
@@ -56,20 +58,23 @@ app.get("/any-url-to-catch", function(req, res) {
 
 ```
 panda-website/
-├── models/		<-- classes
-├── node_modules/	<-- Node module resources
+├── helpers/		<-- Helper functions
+├── node_modules/
 ├── public/		<-- Publicly-accessible directory
-├── routes/		<-- route handlers
+├── routes/		<-- Route handlers
 ├── src-scripts/	<-- Source script files
 ├── src-styles/		<-- Source style files
-├── views/		<-- Page files
+├── views/		<-- Page templates
+├── .dockerignore
 ├── .gitignore
+├── Dockerfile
 ├── globalVars.js	<-- Global variables for JS files
+├── gulpfile.js		<-- Gulp configuration
 ├── LICENSE.txt
-├── README.md
-├── gulpfile.js
 ├── package-lock.json
 ├── package.json
+├── process.json	<-- PM2 configuration
+├── README.md
 └── server.js		<-- Runnable server application
 ```
 
@@ -89,7 +94,7 @@ We are from Information Technology, King Mongkut Institute of Technology Ladkrab
 |<img src="https://avatars0.githubusercontent.com/u/3814520" width="75px">|Nathan|Yiangsupapaanontr|[@DobaKung](https://github.com/DobaKung)|59070087|
 |<img src="https://avatars1.githubusercontent.com/u/20330195" width="75px">|Pornprom|Kiawjak|[@foofybuster](https://github.com/foofybuster)|59070113|
 
-This repository is part of these subjects
+This project is part of these subjects:
 - Web Programming 06016215
 - Information System and Analysis 06016216
 - Database System Concepts 06016217

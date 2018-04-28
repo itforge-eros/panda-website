@@ -1,7 +1,6 @@
 const globalVars = require("../globalVars");
 const express = require("express");
 const router = express.Router();
-const testData = require("../models/testData");
 const dhp = require("../helpers/date");
 const ghp = require("../helpers/gql");
 const ahp = require("../helpers/authen");
