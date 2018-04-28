@@ -115,7 +115,7 @@ $(function (global) {
 				"#\n" +
 				"# Press the run button above, or Cmd-Enter to execute the query, and the result\n" +
 				"# will appear in the pane to the right.\n\n" +
-				"query getSpaces {\n  spaces {\n    name\n    reservations {\n      dates\n    }\n  }\n}"
+				"query getSpaces {\n  spaces {\n    name\n    tags\n    department {\n      name\n    }\n  }\n}"
 			}),
 			element
 		);
