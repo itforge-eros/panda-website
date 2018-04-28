@@ -12,7 +12,7 @@ html
 					div.page-title-wrap.text-center
 						h1.page-title เข้าสู่ระบบ
 					div.card.shadow
-						form#login(action="/authen/login", method="POST")
+						form#login(action="/authen/login" + (queryString.redirect == "true" ? "?redirect=true&dept=" + queryString.dept + "&space=" + queryString.space : ""), method="POST")
 							div.input-wrap.marg-b-1
 								label(for="username") เลขประจำตัว
 								input(type="text", name="username", required, autofocus, v-model="usr")

@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 const session = require("express-session");
 const ghp = require("../helpers/gql");
+const qs = require("querystring");
 
 // required for apollo
 const ApolloClient = require("apollo-client").ApolloClient;
@@ -50,7 +51,8 @@ router.get("/login", (req, res, next) => {
 		member: req.session.member,
 		isCredEmpty: isCredEmpty,
 		isCredInvalid: isCredInvalid,
-		currentDept: req.session.currentDept
+		currentDept: req.session.currentDept,
+		queryString: req.query
 	});
 	// reset the flags so that the page hides the errors on refresh
 	isCredEmpty = false;
@@ -84,7 +86,10 @@ router.post("/login", multer().array(), (req, res, next) => {
 							.then(accesses => {
 								// set accesses of the current role
 								req.session.member.currentAccesses = accesses.data.me.accesses;
-								res.redirect("/choose-dept/");
+								if (req.query.redirect == "true")
+									res.redirect("/space/" + req.query.dept + "/" + req.query.space + "/");
+								else
+									res.redirect("/choose-dept/");
 							})
 							.catch(err => {
 								if (globalVars.env != "production") console.log(err);
@@ -96,7 +101,10 @@ router.post("/login", multer().array(), (req, res, next) => {
 						ghp.getAccesses(apollo_auth, req.session.currentDept.name)
 							.then(accesses => {
 								req.session.member.currentAccesses = accesses.data.me.accesses;
-								res.redirect("/");
+								if (req.query.redirect == "true")
+									res.redirect("/space/" + req.query.dept + "/" + req.query.space + "/");
+								else
+									res.redirect("/");
 							})
 							.catch(err => {
 								if (globalVars.env != "production") console.log(err);
@@ -106,7 +114,10 @@ router.post("/login", multer().array(), (req, res, next) => {
 					} else {
 						req.session.currentDept = {};
 						req.session.member.currentAccesses = ["SPACE_READ_ACCESS"]; // set access for no-role user
-						res.redirect("/");
+						if (req.query.redirect == "true")
+							res.redirect("/space/" + req.query.dept + "/" + req.query.space + "/");
+						else
+							res.redirect("/");
 					}
 				}).catch(err => {
 					// catch getMe() error
