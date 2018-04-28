@@ -15,4 +15,3 @@ html
 					each i in member.departments.edges
 						a.card.shadow.hoverable.marg-b-1(href=i.node.name + "/" + i.node.id)
 							h1.card-title= i.node.fullThaiName
-							p= i.node.description
