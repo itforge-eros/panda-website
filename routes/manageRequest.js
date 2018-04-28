@@ -36,12 +36,22 @@ router.get("/", (req, res) => {
 	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["REVIEW_CREATE_ACCESS"])) {
 		ghp.getRequestsInDepartment(apollo_auth, req.session.currentDept.name)
 			.then(returnedRequests => {
+				let allRequests = R.chain(space => space.requests, returnedRequests.data.department.spaces);
+				let unmanagedRequests = allRequests.filter(r => r.status == "PENDING");
+				let formattedUnmanagedRequests = [];
+				unmanagedRequests.map(r => {
+					let tmp = Object.assign({}, r);
+					tmp.dates_th = tmp.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d)));
+					tmp.startTime = dhp.slotToTime(r.period.start);
+					tmp.endTime = dhp.slotToTime(r.period.end);
+					formattedUnmanagedRequests.push(tmp);
+				});
 				res.render("manage-request", {
 					member: req.session.member,
 					currentDept: req.session.currentDept,
 					thisTab: "a",
 					dept_fullThaiName: returnedRequests.data.department.fullThaiName,
-					reqInfo: (R.chain(space => space.requests, returnedRequests.data.department.spaces))
+					reqInfo: formattedUnmanagedRequests
 				}); 
 			})
 			.catch(err => {
@@ -65,7 +75,6 @@ router.get("/archive", (req, res) => {
 					tmp.endTime = dhp.slotToTime(r.period.end);
 					formattedManagedRequests.push(tmp);
 				});
-				console.log(formattedManagedRequests);
 				res.render("manage-request", {
 					member: req.session.member,
 					currentDept: req.session.currentDept,
