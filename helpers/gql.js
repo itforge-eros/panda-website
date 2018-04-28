@@ -368,16 +368,14 @@ ghp.deleteSpace = (apollo_auth, spaceId) => {
 		`
 	})
 }
-
-ghp.createReview = (apollo_auth, rq) => {
+ghp.createReview = (apollo_auth, id, event) => {
 	return apollo_auth.mutate({
 		mutation: gql`
 			mutation {		  
-			 	createReview(input: {requestId: "${rq}", event: APPROVE}) { id }
+			 	createReview(input: {requestId: "${id}", event: ${event}}) { id }
 			}
 		`
 	})
 }
-
 
 module.exports = ghp;

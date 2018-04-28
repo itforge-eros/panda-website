@@ -42,10 +42,10 @@ html
 										each i in details.materials
 											li= i
 					if details.status == "PENDING"
-						a.button.raised(onclick="showModal('modal')")
+						a.button.raised(href="./APPROVE")
 							i.fas.fa-check
 							| อนุมัติ
-						a.button.raised.color-red(onclick="showModal('modal')")
+						a.button.raised.color-red(href="./REJECT")
 							i.fas.fa-times
 							| ปฏิเสธ
 			div.modal#modal
