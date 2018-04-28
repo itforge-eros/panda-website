@@ -38,58 +38,75 @@ router.get("/", (req, res) => {
 			.then(returnedRequests => {
 				res.render("manage-request", {
 					member: req.session.member,
+					currentDept: req.session.currentDept,
+					thisTab: "a",
 					dept_fullThaiName: returnedRequests.data.department.fullThaiName,
 					reqInfo: (R.chain(space => space.requests, returnedRequests.data.department.spaces))
 				}); 
 			})
 			.catch(err => {
 				if (globalVars.env != "production") console.log(err); 
-				res.redirect("/error");
+				res.redirect("/error/");
 			});
 	} else { res.redirect("/error/") }
 });
 
+router.get("/archive", (req, res) => {
+	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["REVIEW_CREATE_ACCESS"])) {
+		ghp.getRequestsInDepartment(apollo_auth, req.session.currentDept.name)
+			.then(returnedRequests => {
+				res.render("manage-request", {
+					member: req.session.member,
+					currentDept: req.session.currentDept,
+					thisTab: "b",
+					dept_fullThaiName: returnedRequests.data.department.fullThaiName,
+					reqInfo: (R.chain(space => space.requests, returnedRequests.data.department.spaces))
+				}); 
+			})
+			.catch(err => {
+				if (globalVars.env != "production") console.log(err); 
+				res.redirect("/error/");
+			});
+	} else { res.redirect("/error/") }
+})
+
 router.get("/:id", (req, res) => {
-			if (req.session.member){ 
-		ghp.getDetailOfViewSpaces(apollo_auth, req.params.id).then(detailEachSpace => {
-			let updatedData = {
+	if (req.session.member && ahp.hasAllAccess(req.session.member.currentAccesses, ["REVIEW_CREATE_ACCESS"])) {
+		ghp.getRequestDetailForReviewing(apollo_auth, req.params.id)
+			.then(detailEachSpace => {
+				let updatedData = {
 					createdAt_th: dhp.thaiDateOf(dhp.epochToDate(detailEachSpace.data.request.createdAt)),
 					dates_th: detailEachSpace.data.request.dates.map(d => dhp.thaiDateOf(dhp.bigEndianToDate(d))),
 					startTime: dhp.slotToTime(detailEachSpace.data.request.period.start),
 					endTime: dhp.slotToTime(detailEachSpace.data.request.period.end)
 				}
 				const rq = Object.assign({}, updatedData, detailEachSpace.data.request);
-				// console.log(rq);
-					 res.render("manage-request-single", {
-							session: testData.session,
-							user: testData.user,
-							member: req.session.member,
-							currentDept: req.session.currentDept,
-							id: req.params.id,
-							details: rq,
-					}); 
-				// console.log(requestInfo.data.department.spaces[0])
-		}).catch(error => {if (globalVars.env != "production") console.log(error); 
-		res.redirect("/error");})
-	} else {
-		res.redirect("/authen/login");
-	}
+				res.render("manage-request-single", {
+						member: req.session.member,
+						currentDept: req.session.currentDept,
+						id: req.params.id,
+						details: rq,
+				});
+			})
+			.catch(error => {
+				if (globalVars.env != "production") console.log(error);
+				res.redirect("/error/");
+			});
+	} else { res.redirect("/error/") }
 });
 
-
-router.get("/:id/review", (req, res) => {
+router.get("/:id/approve", (req, res) => {
 	if (req.session.member){ 
-		ghp.createReview(apollo_auth, req.params.id).then(details => {
-			resultReview = "approve";
-			res.redirect("/manage-request/");
-		}).catch(err => {
+		ghp.createReview(apollo_auth, req.params.id)
+			.then(details => {
+				resultReview = "approve";
+				res.redirect("/manage-request/");
+			})
+			.catch(err => {
 				if (globalVars.env != "production") console.log(err);
 				res.redirect("/error/"); 
 			});
-	} else {
-		res.redirect("/authen/login");
-	}
+	} else { res.redirect("/error/") }
 });
 
 module.exports = router;
-

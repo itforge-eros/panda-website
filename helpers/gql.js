@@ -195,28 +195,18 @@ ghp.getProblemsInDepartment = (apollo_auth, deptName) => {
 	})
 }
 
-ghp.getDetailOfViewSpaces = (apollo_auth, requestID) => {
+ghp.getRequestDetailForReviewing = (apollo_auth, requestID) => {
 	return apollo_auth.query({
 		query: gql`
-				{
-				  request(id: "${requestID}") {
-				    id
-				    body
-				    dates
-				    period{start end}
-				    status
-				    createdAt
-				    space {
-				      id name
-				    }
-				    client {
-				      id firstName
-				    }
-				    reviews {
-				      id
-				    }
-				  }
+			{
+				request(id: "${requestID}") {
+					id body dates status createdAt materials
+					period {start end}
+					space {fullName department {fullThaiName}}
+					client {firstName lastName}
+					reviews {id}
 				}
+			}
 		`
 	})
 }

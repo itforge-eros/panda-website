@@ -12,15 +12,15 @@ html
 					div.page-title-wrap
 						h1.page-title จัดการคำร้อง
 					ul.tabs
-						li.selected
-							a(href="#") รอการจัดการ
-						li
-							a(href="#") จัดการแล้ว
+						li(class=(thisTab == "a" ? "selected" : ""))
+							a(href="/manage-request/") รอการจัดการ
+						li(class=(thisTab == "b" ? "selected" : ""))
+							a(href="/manage-request/archive/") จัดการแล้ว
 					div
 						if !reqInfo
 							h3 ไม่พบคำร้อง
 						each r in reqInfo
-							a.card.shadow.hoverable.request-card(href=r.id)
+							a.card.shadow.hoverable.request-card(href=(thisTab == "a" ? r.id : "../" + r.id))
 								div.req-info
 									h1.card-title #{r.space.fullName}, #{dept_fullThaiName}
 									p.grayed ผู้ยื่นคำร้อง: #{r.client.firstName} #{r.client.lastName}
