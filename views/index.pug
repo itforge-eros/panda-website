@@ -19,7 +19,7 @@ html
 								input(type="text", placeholder="ชื่อสถานที่", name="s_room", v-model="s_room")
 							div.input-with-icon#inp-date
 								i.fas.fa-calendar-alt
-								input(type="text", placeholder="วันที่", name="s_date", v-model="s_date", id="datepicker")
+								input(type="text", placeholder="วันที่", name="s_date_raw", v-model="s_date_raw", id="datepicker")
 							div.input-with-icon#inp-seat
 								i.fas.fa-user
 								input(type="text", placeholder="ที่นั่ง", name="s_capacity", v-model="s_capacity")
@@ -57,7 +57,7 @@ html
 								span.control-indicator
 								| มี Apple TV
 						div(style="display:none")
-							input#raw_date(type="text", name="raw_date", v-model="s_date_raw")
+							input#raw_date(type="text", name="raw_date", v-model="s_date")
 						div.row.text-center.marg-b-1
 							button.raised#search-btn(@click="doSearch()")
 								i.fas.fa-search

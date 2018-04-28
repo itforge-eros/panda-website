@@ -15,8 +15,9 @@ function buildTagQuery(tags, type) {
 	return temp;
 }
 
-function buildSearchQuery(room, faculty, tags, capacity) {
+function buildSearchQuery(room, faculty, tags, capacity, date) {
 	var temp = "";
+	temp += ("date:" + date + " ");
 	if (room) temp += (room + " ");
 	if (faculty) temp += ("department:" + faculty + " ");
 	if (tags) temp += ("tags:" + tags + " ");
@@ -45,8 +46,8 @@ var app = new Vue({
 	el: "#app",
 	data: {
 		s_room: "",
-		s_date: new Date(),
-		s_date_raw: "",
+		s_date_raw: new Date(),
+		s_date: "",
 		s_faculty: "",
 		s_tags: [],
 		s_type: "",
@@ -63,7 +64,7 @@ var app = new Vue({
 			var tagInput = document.getElementsByName("s_tags");
 			for (var i = 0; i < tagInput.length; i++) if (tagInput[i].checked) this.s_tags.push(tagInput[i].value);
 			var tagQuery = buildTagQuery(this.s_tags, this.s_type);
-			var searchQuery = buildSearchQuery(this.s_room, this.s_faculty, tagQuery, this.s_capacity);
+			var searchQuery = buildSearchQuery(this.s_room, this.s_faculty, tagQuery, this.s_capacity, this.s_date);
 			console.log("query: " + searchQuery);
 			if (this.firstSearch) {
 				document.getElementById("page-title").remove();
@@ -125,8 +126,8 @@ var picker = new Pikaday({
 	),
 	yearRange: [today.getFullYear(), today.getFullYear() + 1],
 	onClose: function() {
-		app.s_date = document.getElementById("datepicker").value;
-		app.s_date_raw = setRawDate(picker.getDate());
+		app.s_date_raw = document.getElementById("datepicker").value;
+		app.s_date = setRawDate(picker.getDate());
 	},
 	toString(date) {
 		const day = date.toString().split(" ")[2];
@@ -138,9 +139,9 @@ var picker = new Pikaday({
 		function weekdaysMapper(element) {
 			return element == `${weekday}`;
 		}
-		app.s_date = `${weekdaysTH[weekdaysEN.findIndex(weekdaysMapper)]}\u0020${day}\u0020${monthsTH[monthsEN.findIndex(monthsMapper)]}`;
+		app.s_date_raw = `${weekdaysTH[weekdaysEN.findIndex(weekdaysMapper)]}\u0020${day}\u0020${monthsTH[monthsEN.findIndex(monthsMapper)]}`;
 		return `${weekdaysTH[weekdaysEN.findIndex(weekdaysMapper)]}\u0020${day}\u0020${monthsTH[monthsEN.findIndex(monthsMapper)]}`;
 	}
 });
 
-app.s_date_raw = setRawDate(picker.getDate()); // initial to present
+app.s_date = setRawDate(picker.getDate()); // initial to present
