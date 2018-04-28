@@ -13,7 +13,9 @@ const createHttpLink = require("apollo-link-http").createHttpLink;
 const setContext = require("apollo-link-context").setContext;
 const fetch = require("node-fetch");
 const gql = require("graphql-tag");
+
 let token = "";
+let createReviewStatus = "";
 
 router.use((req, res, next) => {
 	token = req.session.token;
@@ -51,8 +53,10 @@ router.get("/", (req, res) => {
 					currentDept: req.session.currentDept,
 					thisTab: "a",
 					dept_fullThaiName: returnedRequests.data.department.fullThaiName,
-					reqInfo: formattedUnmanagedRequests
-				}); 
+					requests: formattedUnmanagedRequests,
+					createReviewStatus: createReviewStatus
+				});
+				createReviewStatus = "";
 			})
 			.catch(err => {
 				if (globalVars.env != "production") console.log(err); 
@@ -80,7 +84,7 @@ router.get("/archive", (req, res) => {
 					currentDept: req.session.currentDept,
 					thisTab: "b",
 					dept_fullThaiName: returnedRequests.data.department.fullThaiName,
-					reqInfo: formattedManagedRequests
+					requests: formattedManagedRequests
 				});
 			})
 			.catch(err => {
@@ -105,7 +109,7 @@ router.get("/:id", (req, res) => {
 						member: req.session.member,
 						currentDept: req.session.currentDept,
 						id: req.params.id,
-						details: rq,
+						request: rq,
 				});
 			})
 			.catch(error => {
@@ -119,6 +123,7 @@ router.get("/:id/:event", (req, res) => {
 	if (req.session.member) {
 		ghp.createReview(apollo_auth, req.params.id, req.params.event)
 			.then(detail => {
+				createReviewStatus = req.params.event;
 				res.redirect("/manage-request/");
 			})
 			.catch(err => {

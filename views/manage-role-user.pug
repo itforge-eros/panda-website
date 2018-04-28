@@ -12,11 +12,11 @@ html
 					if status == "success"
 						div.notice.success
 							i.fas.fa-check-circle
-							|  เพิ่มผู้ใช้เรียบร้อย
+							| เพิ่มผู้ใช้เรียบร้อย
 					else if status != ""
 						div.notice.warning
 							i.fas.fa-exclamation-circle
-							= " " + status
+							= status
 					div.page-title-wrap
 						h2.page-pretitle จัดการผู้ใช้ในสิทธิ์
 						h1.page-title= role.name

@@ -9,6 +9,14 @@ html
 		div#app
 			div.content
 				div.container
+					if createReviewStatus == "APPROVE"
+						div.notice.success
+							i.fas.fa-check-circle
+							| อนุมัติเรียบร้อย
+					else if createReviewStatus == "REJECT"
+						div.notice.success
+							i.fas.fa-check-circle
+							| ปฏิเสธเรียบร้อย
 					div.page-title-wrap
 						h1.page-title จัดการคำร้อง
 					ul.tabs
@@ -17,9 +25,9 @@ html
 						li(class=(thisTab == "b" ? "selected" : ""))
 							a(href="/manage-request/archive/") จัดการแล้ว
 					div
-						if !reqInfo
+						if !requests
 							h3 ไม่พบคำร้อง
-						each r in reqInfo
+						each r in requests
 							a.card.shadow.hoverable.request-card(href=(thisTab == "a" ? r.id + "/" : "../" + r.id + "/"))
 								div.req-info
 									h1.card-title #{r.space.fullName}, #{dept_fullThaiName}

@@ -13,35 +13,35 @@ html
 						h1.page-title รายละเอียดคำร้อง
 						h2.page-subtitle คำร้อง ##{id}
 					table.styled.striped.marg-b-2
-						tr.status(class=details.status.toLowerCase())
+						tr.status(class=request.status.toLowerCase())
 							td สถานะ
-							td #{details.status} (#{details.reviews.length} จาก 2)
+							td #{request.status} (#{request.reviews.length} จาก 2)
 						tr
 							td ผู้จอง
-							td= details.client.firstName + " " + details.client.lastName
+							td= request.client.firstName + " " + request.client.lastName
 						tr
 							td สถานที่
-							td= details.space.fullName + ", " + details.space.department.fullThaiName
+							td= request.space.fullName + ", " + request.space.department.fullThaiName
 						tr
 							td ยื่นคำร้องเมื่อ
-							td= details.createdAt_th
+							td= request.createdAt_th
 						tr
 							td วันที่ต้องการจอง
-							td= details.dates_th
+							td= request.dates_th
 						tr
 							td เวลาที่ต้องการ
-							td= details.startTime + " - " + details.endTime + " น."
+							td= request.startTime + " - " + request.endTime + " น."
 						tr
 							td เหตุผล
-							td=details.body
-						if details.materials.length > 0
+							td=request.body
+						if request.materials.length > 0
 							tr
 								td อุปกรณ์ที่ต้องการยืม
 								td
 									ul(style="margin-top:0;margin-bottom:0;padding-left:1em")
-										each i in details.materials
+										each i in request.materials
 											li= i
-					if details.status == "PENDING"
+					if request.status == "PENDING"
 						a.button.raised(href="./APPROVE")
 							i.fas.fa-check
 							| อนุมัติ

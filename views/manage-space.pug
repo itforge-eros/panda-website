@@ -12,15 +12,15 @@ html
 					if createSpaceStatus == "success"
 						div.notice.success
 							i.fas.fa-check-circle
-							|  เพิ่มสถานที่เรียบร้อย
+							| เพิ่มสถานที่เรียบร้อย
 					else if deleteSpaceStatus == "success"
 						div.notice.success
 							i.fas.fa-check-circle
-							|  ลบสถานที่เรียบร้อย
+							| ลบสถานที่เรียบร้อย
 					else if deleteSpaceStatus != ""
 						div.notice.warning
 							i.fas.fa-exclamation-circle
-							|  ไม่สามารถลบสถานที่ได้ (#{deleteSpaceStatus})
+							| ไม่สามารถลบสถานที่ได้ (#{deleteSpaceStatus})
 					div.page-title-wrap
 						h1.page-title จัดการสถานที่
 					ul.tabs
