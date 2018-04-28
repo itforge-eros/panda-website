@@ -220,5 +220,8 @@ $("#timeEnd").clockTimePicker({
 		app.r_endTime = timeToSlot(time[0] + ":" + time[1]);
 		drawSelected();
 	},
-	onClose: function() {isFirstTimeChoosing = false;}
+	onClose: function() {
+		isFirstTimeChoosing = false;
+		app.hasNotChosenTime = false;
+	}
 });

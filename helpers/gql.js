@@ -275,7 +275,7 @@ ghp.createRequest = (apollo_auth, rq) => {
 				},
 				"spaceId": rq.space,
 				"body": rq.reason,
-				"materials": rq.materials
+				"materials": rq.materials != undefined ? rq.materials : []
 			}
 		}
 	});
