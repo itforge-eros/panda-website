@@ -204,7 +204,7 @@ ghp.getRequestDetailForReviewing = (apollo_auth, requestID) => {
 					period {start end}
 					space {fullName department {fullThaiName}}
 					client {firstName lastName}
-					reviews {id}
+					reviews {id reviewer {id}}
 				}
 			}
 		`

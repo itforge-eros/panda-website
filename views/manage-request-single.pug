@@ -6,6 +6,8 @@ html
 		include parts/scripts
 	body.manage-request-single
 		include parts/nav
+		-
+			let reviewers = request.reviews.map(r => r.reviewer.id);
 		div#app
 			div.content
 				div.container
@@ -41,7 +43,7 @@ html
 									ul(style="margin-top:0;margin-bottom:0;padding-left:1em")
 										each i in request.materials
 											li= i
-					if request.status == "PENDING"
+					if (request.status == "PENDING" && !reviewers.includes(member.id))
 						a.button.raised(href="./APPROVE")
 							i.fas.fa-check
 							| อนุมัติ
