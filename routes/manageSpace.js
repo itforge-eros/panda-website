@@ -46,8 +46,9 @@ const amenities = [
 
 const spaceTypes = [
 	{x: "ห้องเรียน", v: "classroom"},
-	{x: "ห้องประชุม", v: "meeting_room"},
-	{x: "แล็บคอมพิวเตอร์", v: "computer_lab"}
+	{x: "ห้องประชุม", v: "meeting-room"},
+	{x: "หอประชุม", v: "auditorium"},
+	{x: "แล็บคอมพิวเตอร์", v: "computer-lab"}
 ];
 
 router.get("/", (req, res) => {
