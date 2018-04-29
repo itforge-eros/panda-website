@@ -297,6 +297,26 @@ ghp.createRole = (apollo_auth, r) => {
 		}
 	});
 };
+ghp.createReview = (apollo_auth, id, event) => {
+	return apollo_auth.mutate({
+		mutation: gql`
+			mutation {		  
+			 	createReview(input: {requestId: "${id}", event: ${event}}) { id }
+			}
+		`
+	})
+}
+ghp.cancelRequest = (apollo_auth, requestId) => {
+	return apollo_auth.mutate({
+		mutation: gql`
+			{
+				mutation {
+					cancelRequest(input: {requestId: "${requestId}"}) {id}
+				}
+			}
+		`
+	})
+}
 ghp.assignRole = (apollo_auth, roleId, memberId) => {
 	return apollo_auth.mutate({
 		mutation: gql`
@@ -364,15 +384,6 @@ ghp.deleteSpace = (apollo_auth, spaceId) => {
 		mutation: gql`
 			mutation {
 				deleteSpace(input: {spaceId: "${spaceId}"}) { id }
-			}
-		`
-	})
-}
-ghp.createReview = (apollo_auth, id, event) => {
-	return apollo_auth.mutate({
-		mutation: gql`
-			mutation {		  
-			 	createReview(input: {requestId: "${id}", event: ${event}}) { id }
 			}
 		`
 	})
