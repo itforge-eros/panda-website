@@ -14,7 +14,7 @@ html
 					div.page-title-wrap
 						h1.page-title รายละเอียดคำร้อง
 						h2.page-subtitle คำร้อง ##{reqInfo.id}
-					table.styled.striped
+					table.styled.striped.marg-b-2
 						tr.status(class=reqInfo.status.toLowerCase())
 							td สถานะ
 							td= reqInfo.status
@@ -43,3 +43,7 @@ html
 									ul(style="margin-top:0;margin-bottom:0;padding-left:1em")
 										each i in reqInfo.materials
 											li= i
+					if (request.status == "PENDING")
+						a.button.raised.color-red(href="./REJECT")
+							i.fas.fa-times
+							| ยกเลิกคำร้อง
