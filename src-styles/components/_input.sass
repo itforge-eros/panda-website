@@ -10,6 +10,10 @@ input, .select select, textarea
 	&:focus
 		border-color: $color-primary
 		outline: none
+input[type=number]
+	&::-webkit-inner-spin-button, &::-webkit-inner-spin-button
+		-webkit-appearance: none !important
+		margin: 0 !important
 .input-with-icon
 	display: inline-block
 	position: relative
