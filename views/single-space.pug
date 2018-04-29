@@ -87,13 +87,13 @@ html
 								div.text-center
 									p(v-if="hasNotChosenTime") กรุณาเลือกเวลา
 									p(v-show="unavailableSelected") เวลาที่ท่านเลือก มีช่วงที่ทับกับเวลาที่ถูกจองไปแล้ว
-									p(v-show="sameStartAndEnd") เวลาเริ่มต้นและเวลาสิ้นสุดไม่ถูกต้อง
+									p(v-show="r_startTime >= r_endTime") เวลาเริ่มต้นและเวลาสิ้นสุดไม่ถูกต้อง
 									if member
-										button.raised(v-show="!unavailableSelected && !hasNotChosenTime && !sameStartAndEnd")
+										button.raised(v-show="!unavailableSelected && !hasNotChosenTime && r_startTime < r_endTime")
 											i.fas.fa-pencil-alt
 											| จอง
 									else
-										a.button.raised(href="/authen/login?redirect=true&dept=" + space.department.name + "&space=" + space.name, v-show="!unavailableSelected && !hasNotChosenTime && !sameStartAndEnd")
+										a.button.raised(href="/authen/login?redirect=true&dept=" + space.department.name + "&space=" + space.name, v-show="!unavailableSelected && !hasNotChosenTime && r_startTime < r_endTime")
 											i.fas.fa-pencil-alt
 											| จอง
 						if space.description
