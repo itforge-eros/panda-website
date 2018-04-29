@@ -81,5 +81,15 @@ router.get("/:id", (req, res) => {
 		res.redirect("/authen/login");
 	}
 });
+router.get("/:id/cancel", (req, res) => {
+	if (req.session.member) {
+		ghp.cancelRequest(apollo_auth, req.params.id)
+			.then(data => res.redirect("/my-request/" + req.params.id + "/"))
+			.catch(err => {
+				if (globalVars.env != "production") console.log(err);
+				res.redirect("/error/")
+			});
+	} else { res.redirect("/error/") }
+});
 
 module.exports = router;

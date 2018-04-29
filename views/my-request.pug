@@ -20,7 +20,7 @@ html
 								img.marg-b-1(src="/public/img/no_data.svg", alt="no data", width="200")
 								h3 ยังไม่มีประวัติคำร้อง
 						each m in myRequests
-							a.card.shadow.hoverable.request-card(href=m.id)
+							a.card.shadow.hoverable.request-card(href=m.id + "/")
 								div.req-info
 									h1.card-title= m.space.fullName + ", " + m.space.department.fullThaiName
 									p #{m.dates_th} เวลา #{m.startTime} - #{m.endTime} น.
