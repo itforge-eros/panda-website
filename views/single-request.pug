@@ -43,7 +43,7 @@ html
 									ul(style="margin-top:0;margin-bottom:0;padding-left:1em")
 										each i in reqInfo.materials
 											li= i
-					if (request.status == "PENDING")
-						a.button.raised.color-red(href="./REJECT")
+					if (reqInfo.status == "PENDING")
+						a.button.raised.color-red(href="./cancel")
 							i.fas.fa-times
 							| ยกเลิกคำร้อง

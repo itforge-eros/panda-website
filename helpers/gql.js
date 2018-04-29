@@ -309,10 +309,8 @@ ghp.createReview = (apollo_auth, id, event) => {
 ghp.cancelRequest = (apollo_auth, requestId) => {
 	return apollo_auth.mutate({
 		mutation: gql`
-			{
-				mutation {
-					cancelRequest(input: {requestId: "${requestId}"}) {id}
-				}
+			mutation {
+				cancelRequest(input: {requestId: "${requestId}"}) {id}
 			}
 		`
 	})
