@@ -81,8 +81,9 @@ html
 								= orgData.description ? orgData.description : ""
 						div.marg-b-1
 							label ภาพของห้อง
-							if orgData.images.length > 0
-								img.marg-b-1#currentImg(src=orgData.images[0])
+							if orgData.images != undefined
+								if orgData.images.length > 0
+									img.marg-b-1#currentImg(src=orgData.images[0])
 							button.marg-b-1(type="button", @click="uploadBoxIsOpen = true", v-if="!uploadBoxIsOpen") อัพโหลดภาพใหม่
 							div.dropzone#imgDropzone(v-show="uploadBoxIsOpen")
 						if canSave
