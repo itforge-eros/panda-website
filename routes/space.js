@@ -62,7 +62,7 @@ router.post("/:dept/:name/reserve", multer().array(), (req, res) => {
 		ghp.getSpace(apollo_auth, req.params.dept, req.params.name)
 			.then(returnedSpace => {
 				if (returnedSpace.data.space != null) {
-					ghp.getMaterials(apollo, returnedSpace.data.space.department.name)
+					ghp.getMaterials(apollo_auth, returnedSpace.data.space.department.name)
 						.then(returnedMaterials => {
 							res.render("fill-request", {
 								member: req.session.member,

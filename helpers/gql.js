@@ -225,7 +225,7 @@ ghp.createSpace = (apollo_auth, sp) => {
 		mutation: gql`
 			mutation($spaceInput: CreateSpaceInput!) {
 				createSpace(input: $spaceInput) {
-					name department { name }
+					id name department { name }
 				}
 			}
 		`,
@@ -246,7 +246,7 @@ ghp.createMaterial = (apollo_auth, deptId, name) => {
 	return apollo_auth.mutate({
 		mutation: gql`
 			mutation($materialInput: CreateMaterialInput!) {
-				createMaterial(input: $materialInput) {name {th}}
+				createMaterial(input: $materialInput) { id name {th} }
 			}
 		`,
 		variables: {
@@ -261,9 +261,7 @@ ghp.createRequest = (apollo_auth, rq) => {
 	return apollo_auth.mutate({
 		mutation: gql`
 			mutation($requestInput: CreateRequestInput!) {
-				createRequest(input: $requestInput) {
-					id
-				}
+				createRequest(input: $requestInput) { id }
 			}
 		`,
 		variables: {
@@ -284,7 +282,7 @@ ghp.createRole = (apollo_auth, r) => {
 	return apollo_auth.mutate({
 		mutation: gql`
 			mutation($roleInput: CreateRoleInput!) {
-				createRole(input: $roleInput) {id}
+				createRole(input: $roleInput) { id }
 			}
 		`,
 		variables: {
@@ -310,7 +308,7 @@ ghp.cancelRequest = (apollo_auth, requestId) => {
 	return apollo_auth.mutate({
 		mutation: gql`
 			mutation {
-				cancelRequest(input: {requestId: "${requestId}"}) {id}
+				cancelRequest(input: {requestId: "${requestId}"}) { id }
 			}
 		`
 	})
