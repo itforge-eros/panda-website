@@ -3,7 +3,7 @@ var weekdaysTH = ['อา.','จ.','อ.','พ.','พฤ.','ศ.','ส.'];
 var monthsEN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 var weekdaysEN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
-const apiURL = "https://api.space.itforge.io/graphql";
+const apiURL = "http://api:9000/graphql";
 
 function buildTagQuery(tags, type) {
 	var temp = "";

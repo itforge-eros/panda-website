@@ -1,4 +1,4 @@
-const apiURL = "https://api.space.itforge.io/graphql";
+const apiURL = "http://api:9000/graphql";
 
 var app = new Vue({
 	el: "#app",

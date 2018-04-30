@@ -8,7 +8,7 @@ const times = [];
 for (let t = 0, i = 0; t <= 23.5; t += 0.5, i++)
 	times.push({ slot: i, time: t });
 
-const apiURL = "https://api.space.itforge.io/graphql";
+const apiURL = "http://api:9000/graphql";
 
 function findMin_Max() {
 	min_time = Math.min.apply(null, app.chosenTimes);
