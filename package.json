@@ -4,7 +4,10 @@
   "description": "Panda website",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
+  },
+  "directories": {
+    "test": "test"
   },
   "repository": {
     "type": "git",
@@ -37,13 +40,15 @@
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.6.1",
+    "chai": "^4.1.2",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-babel": "^7.0.1",
     "gulp-js-minify": "0.0.3",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.2.1",
-    "gulp-sourcemaps": "^2.6.4"
+    "gulp-sourcemaps": "^2.6.4",
+    "mocha": "^5.2.0"
   },
   "babel": {
     "presets": [
